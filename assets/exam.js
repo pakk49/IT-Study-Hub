@@ -12,7 +12,7 @@ export function showExam(subject,period,root) {
  const bank=buildExamBank(subject,period);
  const label=period==="midterm"?"Midterm":"Final";
  const path='#/year/'+subject.year+'/term/'+subject.term+'/subject/'+subject.id+'/'+period;
- const prefix='<nav class="breadcrumbs"><a href="#/">คลังวิชา</a> / <a href="#/year/'+subject.year+'/term/'+subject.term+'/subject/'+subject.id+'">MULTIMEDIA TECHNOLOGY</a> / '+label+'</nav>';
+ const prefix='<nav class="breadcrumbs"><a href="#/">คลังวิชา</a> / <a href="#/year/'+subject.year+'/term/'+subject.term+'/subject/'+subject.id+'">'+htmlSafe(subject.title)+'</a> / '+label+'</nav>';
  root.innerHTML=prefix+'<div class="exam-hub"><header class="exam-heading"><span>'+htmlSafe(subject.title)+' · '+label.toUpperCase()+'</span><h1>ข้อสอบ '+label+' 60 ข้อ</h1><p>ฝึกวิเคราะห์สถานการณ์ด้วยศัพท์อังกฤษจากสไลด์ กดดูความหมายไทยได้ พร้อมเฉลย ไม่ใช่ข้อสอบจริง</p></header><div id="exam-stage" aria-live="polite"></div></div>';
  const target=root.querySelector("#exam-stage");
  if(!bank.ready){
