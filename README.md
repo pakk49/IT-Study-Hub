@@ -11,7 +11,7 @@
 [![Year](https://img.shields.io/badge/ชั้นปี-2-ffd7ad?style=for-the-badge&labelColor=90bce0)](https://pakk49.github.io/IT-Study-Hub/#/year/2)
 [![Semester](https://img.shields.io/badge/เทอม-1-ffd7ad?style=for-the-badge&labelColor=90bce0)](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1)
 
-[หน้าแรก](https://pakk49.github.io/IT-Study-Hub/) · [Database Midterm](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/midterm) · [Database Final](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/final) · [รายวิชา](#รายวิชา) · [เริ่มอ่าน](#เริ่มอ่าน) · [วิธีใช้งาน](#วิธีใช้งาน) · [เพิ่มเนื้อหา](#เพิ่มเนื้อหา) · [ตั้งค่าเว็บ](#ตั้งค่าเว็บ)
+[หน้าแรก](https://pakk49.github.io/IT-Study-Hub/) · [Physical Computing](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing) · [Physical Labs](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/labs) · [Database Midterm](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/midterm) · [Database Final](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/final) · [รายวิชา](#รายวิชา) · [เริ่มอ่าน](#เริ่มอ่าน) · [วิธีใช้งาน](#วิธีใช้งาน) · [เพิ่มเนื้อหา](#เพิ่มเนื้อหา) · [ตั้งค่าเว็บ](#ตั้งค่าเว็บ)
 
 </div>
 
@@ -27,10 +27,64 @@
 | 06066300 | [DATABASE SYSTEM CONCEPTS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts) | **Midterm บท 1, 3, 4 / Final บท 7, 9, 15, 20** · พร้อมสรุปและข้อสอบ |
 | 06066000 | [DISCRETE MATHEMATICS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/discrete-mathematics) | รอเพิ่มเนื้อหา |
 | 06016413 | [INTRODUCTION TO NETWORK SYSTEMS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems) | **Midterm ก่อน Week 9 / Final ตั้งแต่ Week 9** · สรุปภาษาไทยพร้อมคำศัพท์อังกฤษและข้อสอบ |
-| 06016409 | [PHYSICAL COMPUTING](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing) | รอเพิ่มเนื้อหา |
+| 06016409 | [PHYSICAL COMPUTING](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing) | **Chapter 0 แนะนำวิชา · Midterm 1–7 · Final Pointer/Structure/Circuit/MCU/Sensor/IoT · Lab 11 ชุด** |
 | 06016403 | [MULTIMEDIA TECHNOLOGY](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology) | Midterm 1–5 / Final 6–12 พร้อมใช้งาน |
 
 > รายวิชาตามรายการที่ผู้ใช้ให้มา วิชาที่ยังไม่มีเอกสารแสดงสถานะรอเพิ่มบทเรียน ไม่ใส่เนื้อหาที่สมมติขึ้น
+
+## PHYSICAL COMPUTING — Lecture, Midterm, Final & Lab
+
+> รหัส **06016409** · สรุปภาษาไทย + ศัพท์อังกฤษพร้อมคำแปลและตัวอย่าง · โจทย์สถานการณ์ตามหัวข้อที่มีในเอกสาร ไม่ใช่ข้อสอบจริง
+
+| [📖 Chapter 0: แนะนำรายวิชา](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-0/summary) | [📘 Midterm: Chapter 1–7](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/midterm) | [🟠 Final: จากบทที่ 8 เป็นต้นไป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/final) | [🧪 Lab: ทบทวนและฝึกทำ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/labs) |
+|:---:|:---:|:---:|:---:|
+| ขอบเขตวิชา/คะแนน | 7 บท | 6 บทที่มีเอกสาร | 11 Labs |
+
+**ข้อสอบรวม:** [Midterm 60 ข้อ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/midterm/exam) · [Final 60 ข้อ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/final/exam)
+
+<details open>
+<summary><b>📘 เปิดสารบัญ Lecture ทั้งสองช่วงสอบ</b></summary>
+
+| สอบ | บท/ครั้ง | เนื้อหา | สรุป | ศัพท์ | ข้อสอบรายบท |
+|---|---:|---|---|---|---|
+| Midterm | 1 | Introduction to Computer Programming | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-1/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-1/flashcards) | [ฝึกโจทย์](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-1/quiz) |
+| Midterm | 2 | Introduction to C | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-2/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-2/flashcards) | [ฝึกโจทย์](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-2/quiz) |
+| Midterm | 3 | Expression | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-3/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-3/flashcards) | [ฝึกโจทย์](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-3/quiz) |
+| Midterm | 4 | Selection-making Decisions | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-4/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-4/flashcards) | [ฝึกโจทย์](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-4/quiz) |
+| Midterm | 5 | Loop Structure | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-5/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-5/flashcards) | [ฝึกโจทย์](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-5/quiz) |
+| Midterm | 6 | Array | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-6/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-6/flashcards) | [ฝึกโจทย์](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-6/quiz) |
+| Midterm | 7 | Function | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-7/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-7/flashcards) | [ฝึกโจทย์](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-7/quiz) |
+| Final | 9 | Pointer Variables | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-9/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-9/flashcards) | [ฝึกโจทย์](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-9/quiz) |
+| Final | 10 | Structure Variables | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-10/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-10/flashcards) | [ฝึกโจทย์](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-10/quiz) |
+| Final | 11 | Basic Circuit Analysis | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-11/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-11/flashcards) | [ฝึกโจทย์](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-11/quiz) |
+| Final | 12 | Microcontroller & Arduino UNO R4 WiFi | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-12/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-12/flashcards) | [ฝึกโจทย์](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-12/quiz) |
+| Final | 14 | Sensors, Ultrasonic & LCD | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-14/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-14/flashcards) | [ฝึกโจทย์](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-14/quiz) |
+| Final | 15 | Internet of Things & MQTT | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-15/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-15/flashcards) | [ฝึกโจทย์](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-15/quiz) |
+
+</details>
+
+<details>
+<summary><b>🧪 เปิดรายการ Lab ทั้ง 11 ชุด</b></summary>
+
+| Lab | ฝึกเรื่อง | แหล่งอ้างอิง |
+|---:|---|---|
+| 01 | [Raptor Flowchart](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/labs/1) | PDF ที่แนบ + Checklist |
+| 02 | [Cygwin, GCC and Linux Commands](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/labs/2) | PDF ที่แนบ + Checklist |
+| 03 | [GDB Debugging Basics](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/labs/3) | คู่มือ GitHub + Checklist |
+| 04 | [GDB Debugging Expressions](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/labs/4) | คู่มือ GitHub + Checklist |
+| 06 | [Array and Integer Representation](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/labs/6) | PDF ที่แนบ + Checklist |
+| 09 | [Pointer, Dynamic Memory and Stack](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/labs/9) | PDF ที่แนบ + Checklist |
+| 10 | [Singly Linked List](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/labs/10) | PDF ที่แนบ + Checklist |
+| 12 | [Arduino R4 WiFi, RGB LED and 7-Segment](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/labs/12) | คู่มือ GitHub + Checklist |
+| 13 | [Digital Read and Analog Signal](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/labs/13) | คู่มือ GitHub + Checklist |
+| 14 | [Sensor and LCD](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/labs/14) | คู่มือ GitHub + Checklist |
+| 15 | [Internet of Things and MQTT](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/labs/15) | คู่มือ GitHub + Checklist |
+
+</details>
+
+**คู่มือ Lab บน GitHub ที่ตรวจพบครบ 6 ชุด:** [Lab 03 GDB](https://github.com/TaeTanakrit0089/PhysicalComputing-167/tree/main/labs/labs03-gdb) · [Lab 04 GDB 02](https://github.com/TaeTanakrit0089/PhysicalComputing-167/tree/main/labs/labs04-gdb02) · [Lab 12 Arduino](https://github.com/TaeTanakrit0089/PhysicalComputing-167/tree/main/labs/labs12-IntroToMicrocontroller) · [Lab 13 Analog/PWM](https://github.com/TaeTanakrit0089/PhysicalComputing-167/tree/main/labs/labs13-Digital_Read_and_Analog_Signal) · [Lab 14 Sensors](https://github.com/TaeTanakrit0089/PhysicalComputing-167/tree/main/labs/labs14-Sensor_and_LCD) · [Lab 15 MQTT/IoT](https://github.com/TaeTanakrit0089/PhysicalComputing-167/tree/main/labs/labs15-internet_of_things)
+
+**ขอบเขตตามไฟล์:** Chapter 0 ใช้แนะนำวิชา ไม่เข้าธนาคารข้อสอบ; Chapter 1–7 จัดเป็น Midterm; เอกสารช่วงหลังจัดเป็น Final โดยใช้เลขครั้งตามหน้าปกสไลด์ (Pointer แสดงครั้งที่ 9 แม้ชื่อไฟล์ขึ้นต้น PC69-08) ไม่มีเอกสาร Lecture แยกสำหรับครั้งที่ 8 และ 13 จึงไม่สร้างบทสมมติ ส่วน Lab 13 มีเอกสาร GitHub จึงยังอยู่ในหมวด Lab
 
 ## INTRODUCTION TO NETWORK SYSTEMS — Midterm & Final
 
