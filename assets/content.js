@@ -1,3 +1,5 @@
+import { finalChapters } from './final-chapters.js';
+import { midtermChapters } from './midterm-chapters.js';
 // เพิ่มวิชา/บทที่นี่: year + term + subject.id + chapter.id เป็นเส้นทางถาวรของแต่ละบท
 // คงศัพท์เฉพาะภาษาอังกฤษ; สรุปเรียบเรียงใหม่จาก mm169_ch6.pdf ไม่ใช่สำเนาสไลด์
 const sections = [
@@ -158,10 +160,10 @@ const rawQuestions = [
 export const chapter = {
  id: 'chapter-6', number: 6, title: '2D & 3D Graphics', description: 'จากรูปทรงบนระนาบ สู่โลกสามมิติที่สร้างด้วยแสง', minutes: 25,
  source: 'เรียบเรียงจาก mm169_ch6.pdf · Multimedia Technology · N. Chotikakamthorn · Semester 1/2026 · IT KMITL · เลขหน้าอ้างอิงตามลำดับหน้า PDF',
- sections, flashcards: pairs.map(([front, back], i) => ({id: `f${i + 1}`, front, back})),
+ sections, flashcards: pairs.map(([front, back], i) => ({id: `f${i + 1}`, front, back, term: front.split(' คือ')[0].replace(/[?？]$/,''), meaning: back})),
  questions: rawQuestions.map(([topic, level, prompt, options, answer, reasons], i) => ({id: `q${i+1}`, topic, level, prompt, options, answer, reasons}))
 };
-export const subjects = [{ id: 'multimedia-technology', code: '06016403', title: 'MULTIMEDIA TECHNOLOGY', thai: 'เทคโนโลยีสื่อประสม', year: 2, term: 1, label: 'MM', description: 'ทำความเข้าใจภาพ กราฟิก และสื่อดิจิทัล ผ่านสรุปที่อ่านง่ายและการลงมือทบทวน', chapters: [chapter] }];
+export const subjects = [{ id: 'multimedia-technology', code: '06016403', title: 'MULTIMEDIA TECHNOLOGY', thai: 'เทคโนโลยีสื่อประสม', year: 2, term: 1, label: 'MM', description: 'ทำความเข้าใจภาพ กราฟิก และสื่อดิจิทัล ผ่านสรุปที่อ่านง่ายและการลงมือทบทวน', chapters: [...midtermChapters, chapter, ...finalChapters] }];
 
 // รายวิชาปี 2 เทอม 1 ตามรายการที่ผู้ใช้ส่งมา ยังไม่สร้างบทเรียนจนกว่าจะมีเอกสาร
 subjects.unshift(

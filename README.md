@@ -170,3 +170,35 @@ npm test
 [กลับขึ้นด้านบน ↑](#it--study-hub)
 
 </div>
+
+<!-- MULTIMEDIA-FINAL-2026 -->
+## 📚 MULTIMEDIA TECHNOLOGY — Midterm / Final
+
+[🏠 หน้าแรก](https://pakk49.github.io/IT-Study-Hub/) · [📘 Midterm](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/midterm) · [🟠 Final](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/final)
+
+<details open><summary><strong>🟠 Final — บท 6–12</strong></summary>
+
+| บท | เนื้อหา |
+|---|---|
+| 6 | 2D & 3D Graphics |
+| 7 | Computer Animation |
+| 8 | Sound |
+| 9 | Text & Typography |
+| 10 | Hypermedia and Web Platform |
+| 11 | Multimedia Networking & Security |
+| 12 | Multimedia Devices |
+
+มีสรุปแต่ละหัวข้อ แฟลชการ์ดพร้อมคำศัพท์และความหมาย และข้อสอบที่อธิบายทุกตัวเลือก
+
+[**ทำข้อสอบ Final 60 ข้อ**](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/final/exam)
+</details>
+
+<details><summary><strong>📘 Midterm — รอสไลด์กลางภาค</strong></summary>
+
+เตรียมหน้า Midterm และชุดข้อสอบ 60 ข้อไว้แล้ว แต่ยังไม่ใส่คำถามก่อนรับเนื้อหากลางภาค
+
+[เปิดหน้า Midterm](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/midterm/exam)
+</details>
+
+> แบบฝึกหัดจัดทำจากสไลด์เพื่อทบทวน ไม่ใช่ข้อสอบจริงของอาจารย์
+<!-- /MULTIMEDIA-FINAL-2026 -->

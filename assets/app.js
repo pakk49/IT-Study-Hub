@@ -1,3 +1,4 @@
+import { showExam } from './exam.js';
 import { subjects } from './content.js';
 import { grade, shuffle, readProgress, saveProgress, validBest } from './engine.js';
 const $ = s => document.querySelector(s);
@@ -48,11 +49,14 @@ function subjectList(year,term) {
  const list=subjects.filter(s=>s.year===year&&s.term===term);
  main.innerHTML=crumbs([[`ปี ${year}`,`/year/${year}`],[`เทอม ${term}`]])+steps(2)+banner(`YEAR ${year} / SEMESTER ${term}`,`วิชาของคุณ <span class="green">ปี ${year} เทอม ${term}</span>`,'เลือกวิชาเพื่อดูบทเรียน สรุป และแบบทดสอบ',`<span class="count-badge">${list.length} วิชา</span>`)+ (list.length?`<div class="subject-grid">${list.map((s,i)=>`<a class="subject-card tone-${i%3}" href="#${base(s,null)}"><div class="subject-top"><span class="subject-symbol">${s.label}</span><span class="pill ${s.chapters.length?'ready':''}">${s.chapters.length?'พร้อมทบทวน':'รอเพิ่มบทเรียน'}</span></div><p class="course-code">${s.code}</p><h2>${s.title}</h2><p>${s.thai}</p><div class="subject-bottom"><span>${s.chapters.length} บทเรียน</span>${icon('arrow')}</div></a>`).join('')}</div>`:empty('เทอมนี้ยังไม่มีวิชา','รายวิชาจะปรากฏที่นี่เมื่อเพิ่มเนื้อหาแล้ว'));
 }
-function chapters(s) {
- main.innerHTML=crumbs([[`ปี ${s.year}`,`/year/${s.year}`],[`เทอม ${s.term}`,`/year/${s.year}/term/${s.term}`],[s.title]])+steps(3)+banner(`${s.code} / YEAR ${s.year} / SEMESTER ${s.term}`,s.title,s.thai)+`<p class="intro-note">${s.description}</p>`+(s.chapters.length?`<div class="section-heading"><h2>บทเรียนทั้งหมด</h2><span>${s.chapters.length} CHAPTER</span></div><div class="chapters">${s.chapters.map(c=>{
+function chapters(s,selectedExam='final') {
+ const mm=s.id==='multimedia-technology';
+ const shown=mm?s.chapters.filter(c=>(c.exam||'final')===selectedExam):s.chapters;
+ const periodNav=mm?periodNavigation(s,selectedExam):'';
+ main.innerHTML=crumbs([[`ปี ${s.year}`,`/year/${s.year}`],[`เทอม ${s.term}`,`/year/${s.year}/term/${s.term}`],[s.title]])+steps(3)+banner(`${s.code} / YEAR ${s.year} / SEMESTER ${s.term}`,s.title,s.thai)+`<p class="intro-note">${s.description}</p>${periodNav}`+(shown.length?`<div class="section-heading"><h2>บทเรียนทั้งหมด</h2><span>${shown.length} CHAPTER</span></div><div class="chapters">${shown.map(c=>{
  const p=chapterState(c),best=validBest(p.best);
  return `<a class="chapter-card" href="#${base(s,c)}/summary"><span class="chapter-number">${String(c.number).padStart(2,'0')}</span><div class="chapter-info"><div class="chapter-meta"><span>CHAPTER ${String(c.number).padStart(2,'0')}</span>${p.read?'<span class="pill ready">อ่านแล้ว</span>':''}</div><h2>${c.title}</h2><p>${c.description}</p><div class="chapter-details"><span>${icon('clock')}${c.minutes} นาที</span><span>${icon('cards')}${c.flashcards.length} แฟลชการ์ด</span><span>${icon('quiz')}${c.questions.length} ข้อ</span></div></div><div class="chapter-trailing">${best!==null?`<small>คะแนนสูงสุด</small><strong>${best}%</strong>`:'<span class="pill ready">พร้อมอ่าน</span>'}${icon('arrow')}</div></a>`;
- }).join('')}</div><p class="muted source-note">ขณะนี้มีเอกสารบท 6 เท่านั้น บทอื่นจะเพิ่มเมื่อได้รับเนื้อหา</p>`:empty('ยังไม่มีบทเรียนในวิชานี้','เพิ่มเอกสารของวิชานี้ แล้วจะมีสรุปและข้อสอบแยกเป็นรายบท'));
+ }).join('')}</div><p class="muted source-note">สรุปเพื่อทบทวนจากสไลด์ Multimedia Technology ไม่ใช่ข้อสอบจริงของอาจารย์</p>`:(mm&&selectedExam==='midterm'?empty('Midterm · รอสไลด์กลางภาค','เตรียมหน้ากลางภาคไว้แล้ว และจะเพิ่มข้อสอบ 60 ข้อเมื่อได้รับสไลด์'):empty('ยังไม่มีบทเรียนในวิชานี้','เพิ่มเอกสารของวิชานี้ แล้วจะมีสรุปและข้อสอบแยกเป็นรายบท')));
 }
 function readerShell(s,c) {
  const tabs=[['summary','book','สรุปบทเรียน'],['flashcards','cards',`แฟลชการ์ด (${c.flashcards.length})`],['quiz','quiz',`ลองทำข้อสอบ (${c.questions.length})`]];
@@ -69,7 +73,7 @@ function renderSummary(c) {
 function renderFlash(c) {
  if(!flash.cards.length || flash.chapter!==c.id) flash={chapter:c.id,index:0,flipped:false,cards:[...c.flashcards]};
  const f=flash.cards[flash.index];
- $('#reader-content').innerHTML=`<div class="practice-intro"><div><p class="eyebrow">ACTIVE RECALL</p><h2>นึกคำตอบก่อน แล้วค่อยเปิดดู</h2><p>แตะการ์ดหรือกด Space เมื่อโฟกัสที่การ์ดเพื่อพลิกดูคำตอบ</p></div><button class="button secondary" id="shuffle-cards">สลับการ์ด ↻</button></div><div class="flash-wrap"><div class="flash-counter"><span>FLASHCARD</span><b>${flash.index+1} / ${flash.cards.length}</b></div><button class="flash-card ${flash.flipped?'flipped':''}" id="flip-card" aria-label="${flash.flipped?'คำตอบ':'คำถาม'}: ${esc(flash.flipped?f.back:f.front)}. กดเพื่อพลิก"><span class="flash-type">${flash.flipped?'THE ANSWER':'THE QUESTION'}</span><strong>${esc(flash.flipped?f.back:f.front)}</strong><span class="flip-hint">↻ ${flash.flipped?'แตะเพื่อกลับไปดูคำถาม':'แตะเพื่อเปิดคำตอบ'}</span></button><div class="flash-controls"><button class="button secondary" id="prev-card" ${flash.index===0?'disabled':''}>← ก่อนหน้า</button><span>${flash.flipped?'ลองอธิบายด้วยคำของตัวเอง':'ให้เวลาตัวเองคิดสักนิด'}</span><button class="button primary" id="next-card" ${flash.index===flash.cards.length-1?'disabled':''}>ถัดไป →</button></div><div class="progress-track"><div style="width:${(flash.index+1)/flash.cards.length*100}%"></div></div></div>`;
+ $('#reader-content').innerHTML=`<div class="practice-intro"><div><p class="eyebrow">ACTIVE RECALL</p><h2>นึกคำตอบก่อน แล้วค่อยเปิดดู</h2><p>แตะการ์ดหรือกด Space เมื่อโฟกัสที่การ์ดเพื่อพลิกดูคำตอบ</p></div><button class="button secondary" id="shuffle-cards">สลับการ์ด ↻</button></div><div class="flash-wrap"><div class="flash-counter"><span>FLASHCARD</span><b>${flash.index+1} / ${flash.cards.length}</b></div><button class="flash-card ${flash.flipped?'flipped':''}" id="flip-card" aria-label="${flash.flipped?'คำตอบ':'คำถาม'}: ${esc(flash.flipped?f.back:f.front)}. กดเพื่อพลิก"><span class="flash-type">${flash.flipped?'THE ANSWER':'THE QUESTION'}</span><strong>${esc(flash.flipped?f.back:f.front)}</strong>${flash.flipped&&f.meaning?`<span class="flash-meaning"><b>คำศัพท์: ${esc(f.term||f.front)}</b><span>${esc(f.meaning)}</span></span>`:""}<span class="flip-hint">↻ ${flash.flipped?'แตะเพื่อกลับไปดูคำถาม':'แตะเพื่อเปิดคำตอบ'}</span></button><div class="flash-controls"><button class="button secondary" id="prev-card" ${flash.index===0?'disabled':''}>← ก่อนหน้า</button><span>${flash.flipped?'ลองอธิบายด้วยคำของตัวเอง':'ให้เวลาตัวเองคิดสักนิด'}</span><button class="button primary" id="next-card" ${flash.index===flash.cards.length-1?'disabled':''}>ถัดไป →</button></div><div class="progress-track"><div style="width:${(flash.index+1)/flash.cards.length*100}%"></div></div></div>`;
  $('#flip-card').onclick=()=>{flash.flipped=!flash.flipped;renderFlash(c);$('#flip-card').focus();};
  $('#prev-card').onclick=()=>{flash.index--;flash.flipped=false;renderFlash(c);};
  $('#next-card').onclick=()=>{flash.index++;flash.flipped=false;renderFlash(c);};
@@ -126,6 +130,8 @@ function navigate() {
   if(route[4]!=='subject'||!s){notFound();return;}
   activeSubject=s;
   if(route.length===6)chapters(s);
+   else if(route.length===7 && s.id==='multimedia-technology' && ['midterm','final'].includes(route[6])) chapters(s,route[6]);
+   else if(route.length===8 && s.id==='multimedia-technology' && ['midterm','final'].includes(route[6]) && route[7]==='exam') showExam(s,route[6],main);
   else {
    const c=s.chapters.find(c=>c.id===route[7]);
    if(route[6]!=='chapter'||!c||route.length>9||!['summary','flashcards','quiz'].includes(route[8]||'summary')){notFound();return;}
@@ -143,3 +149,13 @@ window.addEventListener('keydown',e=>{if(e.key==='/'&&!/INPUT|TEXTAREA/.test(doc
 document.querySelector('.skip-link').addEventListener('click', e => { e.preventDefault(); main.focus(); main.scrollIntoView(); });
 window.addEventListener('hashchange',navigate);
 navigate();
+
+function periodNavigation(s, selected){
+ const base="/year/"+s.year+"/term/"+s.term+"/subject/"+s.id;
+ const choices=[
+  {id:"midterm",name:"Midterm · กลางภาค",desc:"รอสไลด์กลางภาค",emoji:"📘"},
+  {id:"final",name:"Final · ปลายภาค",desc:"บท 6–12 พร้อมสรุปและข้อสอบ",emoji:"🟠"}
+ ];
+ return '<div class="period-tiles" aria-label="เลือกช่วงสอบ">'+choices.map(c=>'<a class="period-tile '+(selected===c.id?'active':'')+'" href="#'+base+'/'+c.id+'"><span class="period-emoji">'+c.emoji+'</span><strong>'+c.name+'</strong><small>'+c.desc+'</small></a>').join('')+'</div>'
+  +'<div class="exam-shortcut"><b>ข้อสอบรวม 60 ข้อ</b><div><a href="#'+base+'/midterm/exam">Midterm 60 ข้อ · รอเนื้อหา</a><a href="#'+base+'/final/exam">Final 60 ข้อ · เริ่มฝึก</a></div></div>';
+}
