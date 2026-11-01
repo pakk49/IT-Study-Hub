@@ -172,6 +172,17 @@ npm test
 </div>
 
 <!-- MULTIMEDIA-FINAL-2026 -->
+## 🗄️ DATABASE SYSTEM CONCEPTS — Midterm / Final
+
+[📘 Midterm — รอไฟล์กลางภาค](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/midterm) · [🟠 Final — รอรายละเอียดหัวข้อ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/final)
+
+<details><summary>แนวทางการทบทวนศัพท์ภาษาอังกฤษของฐานข้อมูล</summary>
+
+เมื่อมีเอกสาร จะจัด **English Term → คำแปลไทย → ตัวอย่าง SQL / ตารางข้อมูล → คำถามประยุกต์** โดยเน้นอ่านและเลือกใช้ศัพท์ในสถานการณ์จริง ไม่ถามนิยามตรง ๆ
+
+> หน้านี้ยังไม่มีสรุปหรือข้อสอบ DATABASE SYSTEM CONCEPTS เพราะยังไม่ได้รับไฟล์เนื้อหาที่อ่านได้สำหรับ Midterm/Final
+</details>
+
 ## 📚 MULTIMEDIA TECHNOLOGY — Midterm / Final
 
 [🏠 หน้าแรก](https://pakk49.github.io/IT-Study-Hub/) · [📘 Midterm](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/midterm) · [🟠 Final](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/final)
