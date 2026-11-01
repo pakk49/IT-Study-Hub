@@ -12,7 +12,7 @@ export const physicalOrientation={
    remember:'เรียนทั้งการคิดเป็นขั้นตอน เขียนโปรแกรม ตรวจวงจร และบูรณาการให้ระบบทำงานจริง'},
   {id:'pc0-outline',title:'ภาพรวมเนื้อหา Midterm / Final',pages:'หน้า 6–7',
    intro:'ช่วงแรกเน้นพื้นฐานการเขียนโปรแกรม C ส่วนช่วงหลังเชื่อมการเขียนโปรแกรมกับวงจร อุปกรณ์ และอินเทอร์เน็ตของสรรพสิ่ง',
-   points:['Midterm: Computer Programming, C Basic Structure, Expression, Selection, Loop, Array, Function','Final: Pointer, Structure, Circuit Analysis, Microcontroller, Input/Output Interfacing, Sensor และ IoT จากเอกสารที่แนบ','หมวด Lab แยกจากบทบรรยาย เพื่อฝึกทำโปรแกรมและการต่อวงจรตามเอกสาร'],
+   points:['Midterm (Chapter 1–8): Computer Programming, C Basic Structure, Expression, Selection, Loop, Array และ Function เป็นบทที่มีเอกสารในขณะนี้ ส่วนบท 8 ยังไม่มีไฟล์','Final (ตั้งแต่ Chapter 9): Pointer, Structure, Circuit Analysis, Microcontroller, Input/Output Interfacing, Sensor และ IoT จากเอกสารที่แนบ','หมวด Lab แยกจากบทบรรยาย เพื่อฝึกทำโปรแกรมและการต่อวงจรตามเอกสาร'],
    remember:'Chapter 0 มีไว้แนะนำวิชา ไม่รวมเป็นข้อสอบกลางภาคหรือปลายภาค'},
   {id:'pc0-evaluation',title:'สัดส่วนการประเมินผล',pages:'หน้า 8–9',
    intro:'โครงสร้างคะแนนตาม Course Introduction ที่แนบมาครอบคลุม Lab, Quiz, Midterm, Final และ Mini Project',
