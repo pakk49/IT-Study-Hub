@@ -12,3 +12,16 @@
 .exam-actions{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;margin-top:25px}.exam-question .exam-actions{justify-content:flex-end}.exam-percent{display:block;font-size:56px;color:#2e83b9;line-height:1.3;margin:15px 0}
 .exam-review{margin-top:30px}.exam-review h2{font-size:21px}.exam-review h3{font-size:16px}
 @media(max-width:600px){.exam-panel{padding:22px 15px}.exam-welcome,.exam-pending,.exam-result{padding:28px 16px}.exam-question h2{font-size:18px}.exam-option{padding:12px 10px;font-size:12px}.exam-hub{margin-bottom:30px}}
+
+/* Vocabulary explanations, shared by lesson quizzes and 60-question exams */
+.quiz-vocabulary{margin:12px 0 22px;border:1px solid #b9d8eb;border-radius:10px;background:#f2f9ff;color:#355873;overflow:hidden}
+.quiz-vocabulary summary{list-style-position:inside;cursor:pointer;padding:13px 15px;font-size:12px;font-weight:700;color:#176b9d}
+.quiz-vocabulary summary:hover{background:#e4f3fd}
+.quiz-vocabulary summary:focus-visible{outline:3px solid #f2a35e;outline-offset:-3px}
+.quiz-vocabulary[open] summary{border-bottom:1px solid #c8e0ef}
+.quiz-vocabulary dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:9px 13px;padding:13px 15px;margin:0}
+.quiz-vocabulary dl div{background:#fff;border:1px solid #d3e6f2;border-radius:7px;padding:10px 12px}
+.quiz-vocabulary dt{font-size:12px;font-weight:700;color:#1e6694;margin-bottom:4px;overflow-wrap:anywhere}
+.quiz-vocabulary dd{font-size:12px;line-height:1.7;color:#48677d;margin:0}
+.quiz-vocabulary>p{font-size:11px;color:#6b8496;line-height:1.7;padding:0 15px 12px;margin:0}
+@media(max-width:600px){.quiz-vocabulary dl{grid-template-columns:1fr}.quiz-vocabulary summary{font-size:11px}}
