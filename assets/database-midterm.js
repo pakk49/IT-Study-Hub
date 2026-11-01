@@ -10,7 +10,7 @@ export const databaseMidtermChapters = createDatabaseChapters([
     "groups": [
       {
         "title": "Data, Information and Database",
-        "intro": "สไลด์เริ่มจากการใช้ข้อมูลดิบสร้างสารสนเทศเพื่อประกอบการตัดสินใจ และอธิบาย Database/DBMS",
+        "intro": "Data เป็นข้อเท็จจริงดิบ เมื่อประมวลผลจนมีบริบทจะได้ Information สำหรับตัดสินใจ ส่วน Database จัดเก็บข้อมูลอย่างมีโครงสร้างและ DBMS ช่วยบริหารจัดการ",
         "items": [
           [
             "Data",
@@ -47,7 +47,7 @@ export const databaseMidtermChapters = createDatabaseChapters([
       },
       {
         "title": "Types of Databases",
-        "intro": "จำแนกฐานข้อมูลตามผู้ใช้ ตำแหน่งข้อมูล และวัตถุประสงค์การใช้งานจากตัวอย่างในสไลด์",
+        "intro": "การเลือกชนิดฐานข้อมูลขึ้นอยู่กับจำนวนผู้ใช้งานพร้อมกัน ตำแหน่งที่จัดเก็บ และวัตถุประสงค์ เช่น ใช้งานส่วนตัว ใช้งานหลายสาขา หรือรองรับธุรกรรมรายวัน",
         "items": [
           [
             "Single-user Database",
@@ -83,7 +83,7 @@ export const databaseMidtermChapters = createDatabaseChapters([
       },
       {
         "title": "From File Systems to Databases",
-        "intro": "สไลด์อธิบายปัญหาการจัดการข้อมูลด้วยแฟ้มข้อมูลแยกโปรแกรม ได้แก่ ความซ้ำซ้อน ความขึ้นต่อกัน และความผิดปกติ",
+        "intro": "การแยกข้อมูลไว้หลายแฟ้มอาจทำให้ข้อมูลซ้ำ แก้ค่าไม่ตรงกัน และบังคับให้โปรแกรมต้องปรับตามโครงสร้างไฟล์ จึงควรออกแบบการจัดเก็บข้อมูลให้มีมาตรฐานร่วมกัน",
         "items": [
           [
             "File System",
