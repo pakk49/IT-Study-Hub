@@ -211,7 +211,7 @@ function periodNavigation(s, selected){
   const chapters=s.chapters.filter(c=>(c.exam||"final")===period);
   const count=chapters.reduce((n,c)=>n+(c.questions?.length||0),0);
   return {id:period,name:period==="midterm"?"Midterm · กลางภาค":"Final · ปลายภาค",
-   desc:chapters.length?"บท "+chapters.map(c=>c.number).join(", ")+" · พร้อมสรุปและศัพท์อังกฤษ":"รอเอกสาร",count,
+   desc:s.id==='physical-computing'?(period==='midterm'?'บท 1–8 · พร้อมอ่านบท 1–7 (บท 8 รอเอกสาร)':'ตั้งแต่บท 9 · พร้อมอ่านบท '+chapters.map(c=>c.number).join(', ')):(chapters.length?'บท '+chapters.map(c=>c.number).join(', ')+' · พร้อมสรุปและศัพท์อังกฤษ':'รอเอกสาร'),count,
    emoji:period==="midterm"?"📘":"🟠",ready:count>=60};
  });
  return '<div class="period-tiles" aria-label="เลือกช่วงสอบ">'+choices.map(c=>'<a class="period-tile '+(selected===c.id?'active':'')+'" href="#'+base+'/'+c.id+'"><span class="period-emoji">'+c.emoji+'</span><strong>'+c.name+'</strong><small>'+c.desc+'</small></a>').join('')+'</div>'
