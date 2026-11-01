@@ -44,7 +44,8 @@ const fallbacks = {
   'chapter-12::ch12-q18':['Multimedia Computing Pipeline']
 };
 const norm = value => String(value ?? '').trim().replace(/\s+/g,' ').toLowerCase();
-const containsTerm = (text,term) => String(text).toLowerCase().includes(String(term).toLowerCase());
+const fold = text => String(text).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+const containsTerm = (text,term) => fold(text).includes(fold(term));
 
 export function prepareEnglishQuizVocabulary(chapters) {
  for (const chapter of chapters) {
