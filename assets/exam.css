@@ -25,3 +25,9 @@
 .quiz-vocabulary dd{font-size:12px;line-height:1.7;color:#48677d;margin:0}
 .quiz-vocabulary>p{font-size:11px;color:#6b8496;line-height:1.7;padding:0 15px 12px;margin:0}
 @media(max-width:600px){.quiz-vocabulary dl{grid-template-columns:1fr}.quiz-vocabulary summary{font-size:11px}}
+
+/* Thai examples under English vocabulary, shared across courses */
+.flash-meaning .flash-example,.quiz-vocabulary .vocab-example{display:block;margin-top:9px;padding-top:9px;border-top:1px solid #d9e8f3;font-size:12px;line-height:1.8;color:#5a6e80;font-weight:400}
+.flash-meaning{width:100%;max-width:570px;text-align:left;line-height:1.8}
+.flash-card.flipped strong{overflow-wrap:anywhere}
+@media(max-width:650px){.flash-card{padding:20px 14px}.flash-meaning{font-size:12px}.flash-card.flipped strong{font-size:17px}}
