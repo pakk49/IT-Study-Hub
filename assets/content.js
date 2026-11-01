@@ -4,6 +4,8 @@ import { prepareEnglishQuizVocabulary } from './english-quiz.js';
 import { midtermChapters } from './midterm-chapters.js';
 import { databaseMidtermChapters } from './database-midterm.js';
 import { databaseFinalChapters } from './database-final.js';
+import { networkMidtermChapters } from './network-midterm.js';
+import { networkFinalChapters } from './network-final.js';
 // เพิ่มวิชา/บทที่นี่: year + term + subject.id + chapter.id เป็นเส้นทางถาวรของแต่ละบท
 // คงศัพท์เฉพาะภาษาอังกฤษ; สรุปเรียบเรียงใหม่จาก mm169_ch6.pdf ไม่ใช่สำเนาสไลด์
 const sections = [
@@ -183,6 +185,6 @@ subjects.unshift(
  {id:'information-system-analysis-and-design', code:'06066304', title:'INFORMATION SYSTEM ANALYSIS AND DESIGN', thai:'การวิเคราะห์และออกแบบระบบสารสนเทศ', year:2, term:1, label:'IS', description:'พื้นที่รวบรวมสรุปและแบบทดสอบรายบท', chapters:[]},
  {id:'database-system-concepts', code:'06066300', title:'DATABASE SYSTEM CONCEPTS', thai:'แนวคิดระบบฐานข้อมูล', year:2, term:1, label:'DB', description:'ทบทวน Database ผ่านสรุปศัพท์อังกฤษ ความหมายไทย ตัวอย่าง ERD และข้อสอบวิเคราะห์ Midterm/Final', chapters:[...databaseMidtermChapters,...databaseFinalChapters]},
  {id:'discrete-mathematics', code:'06066000', title:'DISCRETE MATHEMATICS', thai:'คณิตศาสตร์ดิสครีต', year:2, term:1, label:'DM', description:'พื้นที่รวบรวมสรุปและแบบทดสอบรายบท', chapters:[]},
- {id:'introduction-to-network-systems', code:'06016413', title:'INTRODUCTION TO NETWORK SYSTEMS', thai:'ระบบเครือข่ายเบื้องต้น', year:2, term:1, label:'NW', description:'พื้นที่รวบรวมสรุปและแบบทดสอบรายบท', chapters:[]},
+ {id:'introduction-to-network-systems', code:'06016413', title:'INTRODUCTION TO NETWORK SYSTEMS', thai:'ระบบเครือข่ายเบื้องต้น', year:2, term:1, label:'NW', description:'สรุปเครือข่ายเป็นภาษาไทย พร้อมศัพท์อังกฤษ ความหมาย ตัวอย่าง และข้อสอบแยกก่อน Week 9 กับตั้งแต่ Week 9', chapters:[...networkMidtermChapters,...networkFinalChapters]},
  {id:'physical-computing', code:'06016409', title:'PHYSICAL COMPUTING', thai:'การประมวลผลทางกายภาพ', year:2, term:1, label:'PC', description:'พื้นที่รวบรวมสรุปและแบบทดสอบรายบท', chapters:[]}
 );
