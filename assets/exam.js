@@ -24,7 +24,7 @@ export function showExam(subject,period,root) {
  const persist=(score)=>{try{localStorage.setItem(storageKey,JSON.stringify({best:Math.max(savedBest()??0,score),last:score}));}catch{}};
  let state=null;
  function start(items=bank.questions,mode="full"){
-  state={questions:randomized(items),mode,index:0,selected:null,checked:false,answers:{},finished:false};
+  state={questions:randomized(items),mode,index:0,selected:null,checked:false,answers:{},finished:false,vocabOpen:false};
   render();
  }
  function renderHome(){
@@ -47,12 +47,13 @@ export function showExam(subject,period,root) {
   const q=state.questions[state.index],checked=state.checked,ok=state.selected===q.answer;
   const choices=q.options.map((option,i)=>'<label class="exam-option '+(state.selected===i?"chosen ":"")+(checked&&i===q.answer?"right ":"")+(checked&&i===state.selected&&!ok?"wrong ":"")+'"><input type="radio" name="exam-choice" value="'+i+'" '+(state.selected===i?"checked ":"")+(checked?"disabled ":"")+'><b>'+String.fromCharCode(65+i)+'</b><span>'+htmlSafe(option)+'</span></label>').join("");
   const explanation=checked?'<section class="exam-explanation"><h3>'+(ok?"✓ ตอบถูก":"✕ คำตอบยังไม่ถูก")+'</h3><p><b>เฉลย: '+htmlSafe(q.options[q.answer])+'</b></p>'+(!ok?'<p>เหตุผลที่เลือกผิด: '+htmlSafe(q.reasons[state.selected])+'</p>':"")+'<p>เหตุผลที่ถูก: '+htmlSafe(q.reasons[q.answer])+'</p><details><summary>ดูเหตุผลของทุกตัวเลือก</summary>'+q.options.map((o,i)=>'<p><b>'+String.fromCharCode(65+i)+'. '+htmlSafe(o)+'</b> — '+htmlSafe(q.reasons[i])+'</p>').join("")+'</details><a href="#/year/2/term/1/subject/multimedia-technology/chapter/'+q.chapterId+'/summary">ทบทวนบท '+q.chapterNo+'</a></section>':"";
-  target.innerHTML='<div class="exam-progress"><span>'+(state.mode==="wrong"?"ทบทวนข้อที่ผิด":"ข้อสอบรวม 60 ข้อ")+'</span><b>ข้อ '+(state.index+1)+' / '+state.questions.length+'</b></div><div class="exam-progress-track"><div style="width:'+(100*(state.index+(checked?1:0))/state.questions.length)+'%"></div></div><article class="exam-panel exam-question"><small>บท '+q.chapterNo+' · '+htmlSafe(q.chapterTitle)+' · '+htmlSafe(q.sectionTitle)+'</small><h2>'+htmlSafe(q.prompt)+'</h2>'+vocabularyHtml(q,htmlSafe,checked)+'<fieldset class="exam-options" '+(checked?"disabled":"")+'><legend class="sr-only">เลือกคำตอบหนึ่งข้อ</legend>'+choices+'</fieldset>'+explanation+'<div class="exam-actions"><button class="button primary" id="exam-next" '+(!checked&&state.selected===null?"disabled":"")+'>'+(checked?(state.index===state.questions.length-1?"ดูคะแนน":"ข้อถัดไป →"):"ตรวจคำตอบ")+'</button><button class="button secondary" id="exam-new">เริ่มใหม่</button></div></article>';
+  target.innerHTML='<div class="exam-progress"><span>'+(state.mode==="wrong"?"ทบทวนข้อที่ผิด":"ข้อสอบรวม 60 ข้อ")+'</span><b>ข้อ '+(state.index+1)+' / '+state.questions.length+'</b></div><div class="exam-progress-track"><div style="width:'+(100*(state.index+(checked?1:0))/state.questions.length)+'%"></div></div><article class="exam-panel exam-question"><small>บท '+q.chapterNo+' · '+htmlSafe(q.chapterTitle)+' · '+htmlSafe(q.sectionTitle)+'</small><h2>'+htmlSafe(q.prompt)+'</h2>'+vocabularyHtml(q,htmlSafe,checked||state.vocabOpen)+'<fieldset class="exam-options" '+(checked?"disabled":"")+'><legend class="sr-only">เลือกคำตอบหนึ่งข้อ</legend>'+choices+'</fieldset>'+explanation+'<div class="exam-actions"><button class="button primary" id="exam-next" '+(!checked&&state.selected===null?"disabled":"")+'>'+(checked?(state.index===state.questions.length-1?"ดูคะแนน":"ข้อถัดไป →"):"ตรวจคำตอบ")+'</button><button class="button secondary" id="exam-new">เริ่มใหม่</button></div></article>';
+  const vocabDetails=target.querySelector('.quiz-vocabulary');if(vocabDetails&&!checked)vocabDetails.addEventListener('toggle',()=>{state.vocabOpen=vocabDetails.open;});
   target.querySelectorAll('input[name="exam-choice"]').forEach(el=>el.onchange=()=>{state.selected=Number(el.value);render();});
   target.querySelector("#exam-next").onclick=()=>{
    if(!state.checked){if(state.selected===null)return;state.answers[q.id]=state.selected;state.checked=true;render();return;}
    if(state.index===state.questions.length-1){state.finished=true;render();return;}
-   state.index++;state.selected=null;state.checked=false;render();
+   state.index++;state.selected=null;state.checked=false;state.vocabOpen=false;render();
   };
   target.querySelector("#exam-new").onclick=()=>start(state.questions,state.mode);
  }
