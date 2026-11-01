@@ -51,13 +51,13 @@ function subjectList(year,term) {
  main.innerHTML=crumbs([[`ปี ${year}`,`/year/${year}`],[`เทอม ${term}`]])+steps(2)+banner(`YEAR ${year} / SEMESTER ${term}`,`วิชาของคุณ <span class="green">ปี ${year} เทอม ${term}</span>`,'เลือกวิชาเพื่อดูบทเรียน สรุป และแบบทดสอบ',`<span class="count-badge">${list.length} วิชา</span>`)+ (list.length?`<div class="subject-grid">${list.map((s,i)=>`<a class="subject-card tone-${i%3}" href="#${base(s,null)}"><div class="subject-top"><span class="subject-symbol">${s.label}</span><span class="pill ${s.chapters.length?'ready':''}">${s.chapters.length?'พร้อมทบทวน':'รอเพิ่มบทเรียน'}</span></div><p class="course-code">${s.code}</p><h2>${s.title}</h2><p>${s.thai}</p><div class="subject-bottom"><span>${s.chapters.length} บทเรียน</span>${icon('arrow')}</div></a>`).join('')}</div>`:empty('เทอมนี้ยังไม่มีวิชา','รายวิชาจะปรากฏที่นี่เมื่อเพิ่มเนื้อหาแล้ว'));
 }
 function chapters(s,selectedExam='final') {
- const mm=s.id==='multimedia-technology';
+ const mm=['multimedia-technology','database-system-concepts'].includes(s.id);
  const shown=mm?s.chapters.filter(c=>(c.exam||'final')===selectedExam):s.chapters;
  const periodNav=mm?periodNavigation(s,selectedExam):'';
  main.innerHTML=crumbs([[`ปี ${s.year}`,`/year/${s.year}`],[`เทอม ${s.term}`,`/year/${s.year}/term/${s.term}`],[s.title]])+steps(3)+banner(`${s.code} / YEAR ${s.year} / SEMESTER ${s.term}`,s.title,s.thai)+`<p class="intro-note">${s.description}</p>${periodNav}`+(shown.length?`<div class="section-heading"><h2>บทเรียนทั้งหมด</h2><span>${shown.length} CHAPTER</span></div><div class="chapters">${shown.map(c=>{
  const p=chapterState(c),best=validBest(p.best);
  return `<a class="chapter-card" href="#${base(s,c)}/summary"><span class="chapter-number">${String(c.number).padStart(2,'0')}</span><div class="chapter-info"><div class="chapter-meta"><span>CHAPTER ${String(c.number).padStart(2,'0')}</span>${p.read?'<span class="pill ready">อ่านแล้ว</span>':''}</div><h2>${c.title}</h2><p>${c.description}</p><div class="chapter-details"><span>${icon('clock')}${c.minutes} นาที</span><span>${icon('cards')}${c.flashcards.length} แฟลชการ์ด</span><span>${icon('quiz')}${c.questions.length} ข้อ</span></div></div><div class="chapter-trailing">${best!==null?`<small>คะแนนสูงสุด</small><strong>${best}%</strong>`:'<span class="pill ready">พร้อมอ่าน</span>'}${icon('arrow')}</div></a>`;
- }).join('')}</div><p class="muted source-note">สรุปเพื่อทบทวนจากสไลด์ Multimedia Technology ไม่ใช่ข้อสอบจริงของอาจารย์</p>`:(mm&&selectedExam==='midterm'?empty('Midterm · รอสไลด์กลางภาค','เตรียมหน้ากลางภาคไว้แล้ว และจะเพิ่มข้อสอบ 60 ข้อเมื่อได้รับสไลด์'):empty('ยังไม่มีบทเรียนในวิชานี้','เพิ่มเอกสารของวิชานี้ แล้วจะมีสรุปและข้อสอบแยกเป็นรายบท')));
+ }).join('')}</div><p class="muted source-note">สรุปจากเอกสารรายวิชาเพื่อทบทวน ไม่ใช่ข้อสอบจริงของอาจารย์</p>`:(mm&&selectedExam==='midterm'?empty('Midterm · รอเอกสารกลางภาค','เตรียมหน้าไว้แล้ว และจะเพิ่มบทเรียนกับข้อสอบเมื่อได้รับเอกสารรายวิชา'):empty('ยังไม่มีบทเรียนในวิชานี้','เพิ่มเอกสารของวิชานี้ แล้วจะมีสรุปและข้อสอบแยกเป็นรายบท')));
 }
 function readerShell(s,c) {
  const tabs=[['summary','book','สรุปบทเรียน'],['flashcards','cards',`แฟลชการ์ด (${c.flashcards.length})`],['quiz','quiz',`ลองทำข้อสอบ (${c.questions.length})`]];
@@ -132,8 +132,8 @@ function navigate() {
   if(route[4]!=='subject'||!s){notFound();return;}
   activeSubject=s;
   if(route.length===6)chapters(s);
-   else if(route.length===7 && s.id==='multimedia-technology' && ['midterm','final'].includes(route[6])) chapters(s,route[6]);
-   else if(route.length===8 && s.id==='multimedia-technology' && ['midterm','final'].includes(route[6]) && route[7]==='exam') showExam(s,route[6],main);
+   else if(route.length===7 && ['multimedia-technology','database-system-concepts'].includes(s.id) && ['midterm','final'].includes(route[6])) chapters(s,route[6]);
+   else if(route.length===8 && ['multimedia-technology','database-system-concepts'].includes(s.id) && ['midterm','final'].includes(route[6]) && route[7]==='exam') showExam(s,route[6],main);
   else {
    const c=s.chapters.find(c=>c.id===route[7]);
    if(route[6]!=='chapter'||!c||route.length>9||!['summary','flashcards','quiz'].includes(route[8]||'summary')){notFound();return;}
@@ -154,10 +154,14 @@ navigate();
 
 function periodNavigation(s, selected){
  const base="/year/"+s.year+"/term/"+s.term+"/subject/"+s.id;
- const choices=[
-  {id:"midterm",name:"Midterm · กลางภาค",desc:"บท 1–5 พร้อมสรุปศัพท์และข้อสอบ",emoji:"📘"},
-  {id:"final",name:"Final · ปลายภาค",desc:"บท 6–12 พร้อมสรุปและข้อสอบ",emoji:"🟠"}
- ];
+ const periods=["midterm","final"];
+ const choices=periods.map(period=>{
+  const chapters=s.chapters.filter(c=>(c.exam||"final")===period);
+  const count=chapters.reduce((n,c)=>n+(c.questions?.length||0),0);
+  return {id:period,name:period==="midterm"?"Midterm · กลางภาค":"Final · ปลายภาค",
+   desc:chapters.length?"บท "+chapters.map(c=>c.number).join(", ")+" · พร้อมสรุปและศัพท์อังกฤษ":"รอเอกสาร",count,
+   emoji:period==="midterm"?"📘":"🟠",ready:count>=60};
+ });
  return '<div class="period-tiles" aria-label="เลือกช่วงสอบ">'+choices.map(c=>'<a class="period-tile '+(selected===c.id?'active':'')+'" href="#'+base+'/'+c.id+'"><span class="period-emoji">'+c.emoji+'</span><strong>'+c.name+'</strong><small>'+c.desc+'</small></a>').join('')+'</div>'
-  +'<div class="exam-shortcut"><b>ข้อสอบรวม 60 ข้อ</b><div><a href="#'+base+'/midterm/exam">Midterm 60 ข้อ · เริ่มฝึก</a><a href="#'+base+'/final/exam">Final 60 ข้อ · เริ่มฝึก</a></div></div>';
+  +'<div class="exam-shortcut"><b>ข้อสอบรวม 60 ข้อ</b><div>'+choices.map(c=>'<a href="#'+base+'/'+c.id+'/exam">'+c.name+' 60 ข้อ · '+(c.ready?'เริ่มฝึก':'รอเนื้อหา')+'</a>').join('')+'</div></div>';
 }
