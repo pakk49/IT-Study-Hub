@@ -43,9 +43,8 @@ const fallbacks = {
   'chapter-8::ch8-q38':['Additive Synthesis','FM Synthesis'],
   'chapter-12::ch12-q18':['Multimedia Computing Pipeline']
 };
-const norm = value => String(value ?? '').trim().replace(/\\s+/g,' ').toLowerCase();
-const escapeRegex = value => value.replace(/[.*+?^${}()|[\\]\\]/g,'\\$&');
-const containsTerm = (text,term) => new RegExp('(^|[^A-Za-z0-9])' + escapeRegex(term) + '(?=$|[^A-Za-z0-9])','i').test(text);
+const norm = value => String(value ?? '').trim().replace(/\s+/g,' ').toLowerCase();
+const containsTerm = (text,term) => String(text).toLowerCase().includes(String(term).toLowerCase());
 
 export function prepareEnglishQuizVocabulary(chapters) {
  for (const chapter of chapters) {
