@@ -7,11 +7,11 @@ export function createNetworkChapters(raw) {
    const group=ch.groups[si],topic='net-'+ch.week+'-topic-'+(si+1),terms=group.items;
    if(terms.length<4) throw Error('Network topic needs at least 4 distinct concepts: '+ch.week);
    sections.push({
-    id:topic,title:group.title,pages:group.pages||ch.source,
+    id:topic,title:group.title,pages:group.pages||'',
     intro:group.intro,
-    points:terms.map(([term,meaning,example])=>term+' — '+meaning+' ตัวอย่าง: '+example),
+    points:group.points||[], // vocabulary and examples stay in the table, not duplicated below
     table:{headers:['English Term','ความหมายภาษาไทย','ตัวอย่างใช้งาน'],rows:terms.map(t=>t.slice(0,3))},
-    remember:group.remember||'ให้เข้าใจการนำศัพท์แต่ละคำไปใช้ในสถานการณ์เครือข่าย ไม่จำเพียงคำแปล'
+    remember:group.remember||''
    });
    for(let i=0;i<terms.length;i++){
     const [term,meaning,example,prompt]=terms[i];
