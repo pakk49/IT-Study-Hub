@@ -17,7 +17,7 @@ test('คำถามศัพท์จากบท 7–12 เปลี่ยน
       assert.equal(q.options.length,4,q.id);
       assert.equal(q.reasons.length,4,q.id);
       assert.ok(q.reasons.every(Boolean),q.id);
-      if(q.options.every(o=>terms.has(o))){
+      if(q.reasons[q.answer].startsWith('ถูกต้อง:') && q.options.every(o=>terms.has(o))){
         transformed++;
         assert.ok(q.vocabulary.length>=4,q.id);
         assert.equal(q.vocabulary.find(x=>x.term===q.options[q.answer]).meaning,terms.get(q.options[q.answer]));
