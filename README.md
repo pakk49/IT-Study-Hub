@@ -11,7 +11,7 @@
 [![Year](https://img.shields.io/badge/ชั้นปี-2-ffd7ad?style=for-the-badge&labelColor=90bce0)](https://pakk49.github.io/IT-Study-Hub/#/year/2)
 [![Semester](https://img.shields.io/badge/เทอม-1-ffd7ad?style=for-the-badge&labelColor=90bce0)](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1)
 
-[หน้าแรก](https://pakk49.github.io/IT-Study-Hub/) · [รายวิชา](#รายวิชา) · [เริ่มอ่าน](#เริ่มอ่าน) · [วิธีใช้งาน](#วิธีใช้งาน) · [เพิ่มเนื้อหา](#เพิ่มเนื้อหา) · [ตั้งค่าเว็บ](#ตั้งค่าเว็บ)
+[หน้าแรก](https://pakk49.github.io/IT-Study-Hub/) · [Database Midterm](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/midterm) · [Database Final](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/final) · [รายวิชา](#รายวิชา) · [เริ่มอ่าน](#เริ่มอ่าน) · [วิธีใช้งาน](#วิธีใช้งาน) · [เพิ่มเนื้อหา](#เพิ่มเนื้อหา) · [ตั้งค่าเว็บ](#ตั้งค่าเว็บ)
 
 </div>
 
@@ -24,13 +24,38 @@
 | รหัส | วิชา | บทเรียน |
 |---|---|---|
 | 06066304 | [INFORMATION SYSTEM ANALYSIS AND DESIGN](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/information-system-analysis-and-design) | รอเพิ่มเนื้อหา |
-| 06066300 | [DATABASE SYSTEM CONCEPTS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts) | รอเพิ่มเนื้อหา |
+| 06066300 | [DATABASE SYSTEM CONCEPTS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts) | **Midterm บท 1, 3, 4 / Final บท 7, 9, 15, 20** · พร้อมสรุปและข้อสอบ |
 | 06066000 | [DISCRETE MATHEMATICS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/discrete-mathematics) | รอเพิ่มเนื้อหา |
 | 06016413 | [INTRODUCTION TO NETWORK SYSTEMS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems) | รอเพิ่มเนื้อหา |
 | 06016409 | [PHYSICAL COMPUTING](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing) | รอเพิ่มเนื้อหา |
 | 06016403 | [MULTIMEDIA TECHNOLOGY](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology) | Midterm 1–5 / Final 6–12 พร้อมใช้งาน |
 
 > รายวิชาตามรายการที่ผู้ใช้ให้มา วิชาที่ยังไม่มีเอกสารแสดงสถานะรอเพิ่มบทเรียน ไม่ใส่เนื้อหาที่สมมติขึ้น
+
+## DATABASE SYSTEM CONCEPTS — Midterm & Final
+
+> อ่านจากสไลด์ `ch01.pdf`, `ch03.pdf`, `ch04.pdf`, `ch07.pdf`, `ch09.pdf`, `DBSC_Transaction.pdf` และ `DBSC_DataWarehouse.pdf`; เนื้อหาแบบย่อและโจทย์ฝึกใหม่ไม่ใช่ข้อสอบจริง
+
+| [📘 Midterm: บท 1, 3, 4](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/midterm) | [✍️ ทำข้อสอบ Midterm 60 ข้อ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/midterm/exam) | [🟠 Final: บท 7, 9, 15, 20](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/final) | [✍️ ทำข้อสอบ Final 60 ข้อ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/final/exam) |
+|:---:|:---:|:---:|:---:|
+| 3 บท / 60 แฟลชการ์ด | ข้อสอบสถานการณ์ 60 ข้อ | 4 บท / 80 แฟลชการ์ด | ข้อสอบสถานการณ์ 60 ข้อ |
+
+<details open>
+<summary><b>คลิกเปิดแต่ละบท: สรุปศัพท์อังกฤษ → ความหมายไทย → ตัวอย่าง → ข้อสอบ</b></summary>
+
+| ช่วงสอบ | บท | หัวข้อ | เนื้อหา | ศัพท์ | ฝึกทำ |
+|---|---:|---|---|---|---|
+| กลางภาค | 1 | **The Database Approach** | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-1/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-1/flashcards) | [ข้อสอบรายบท](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-1/quiz) |
+| กลางภาค | 3 | **Data Models** | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-3/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-3/flashcards) | [ข้อสอบรายบท](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-3/quiz) |
+| กลางภาค | 4 | **Relational Model Characteristics** | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-4/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-4/flashcards) | [ข้อสอบรายบท](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-4/quiz) |
+| ปลายภาค | 7 | **Data Modeling with Entity-Relationship Diagrams** | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-7/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-7/flashcards) | [ข้อสอบรายบท](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-7/quiz) |
+| ปลายภาค | 9 | **Normalizing Database Designs** | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-9/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-9/flashcards) | [ข้อสอบรายบท](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-9/quiz) |
+| ปลายภาค | 15 | **Data Warehouse & Multidimensional Analysis** | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-15/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-15/flashcards) | [ข้อสอบรายบท](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-15/quiz) |
+| ปลายภาค | 20 | **Transaction Management** | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-20/summary) | [Flashcards](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-20/flashcards) | [ข้อสอบรายบท](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/chapter/db-chapter-20/quiz) |
+
+</details>
+
+แบบฝึกหัดออกแบบเป็นคำถามเชิงสถานการณ์ โดยใช้ English Technical Terms เป็นตัวเลือก พร้อมคำแปล เหตุผลของแต่ละตัวเลือก ตัวอย่างที่ใช้งานจริง และฝึกเฉพาะข้อผิดได้
 
 ## เริ่มอ่าน
 
