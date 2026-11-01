@@ -1,0 +1,43 @@
+// Convert curriculum-specific concepts into review sections, flashcards and applied quizzes.
+// Definitions are grounded in the supplied PDF lecture slides. Scenarios are original practice examples.
+const tidy = value => String(value||'').trim();
+export function createDatabaseChapters(raw) {
+ return raw.map(ch => {
+  const sections=[],flashcards=[],questions=[];
+  for(let si=0;si<ch.groups.length;si++){
+   const group=ch.groups[si],topic=`db-${ch.number}-${si+1}`,terms=group.items;
+   sections.push({
+    id:topic,title:group.title,pages:group.pages||'สไลด์ที่ผู้ใช้ส่งมา',
+    intro:group.intro,
+    points:terms.map(([term,meaning,example])=>`${term} — ${meaning} ตัวอย่าง: ${example}`),
+    table:{headers:['English Term','ความหมายภาษาไทย','ตัวอย่าง'],rows:terms.map(t=>t.slice(0,3))},
+    remember:group.remember||`จำคำศัพท์กลุ่ม ${group.title} โดยเชื่อมกับสถานการณ์ใช้งานจริง แทนการท่องคำแปลอย่างเดียว`
+   });
+   for(let i=0;i<terms.length;i++){
+    const [term,meaning,example,prompt]=terms[i];
+    const gidx=flashcards.length+1;
+    flashcards.push({id:`db-${ch.number}-f${gidx}`,term,meaning,example,front:`${term} ใช้เมื่อใด?`,back:`${meaning}\nตัวอย่าง: ${example}`});
+    // Three alternatives from the same topic wherever possible.
+    const pool=terms.map((x,j)=>j).filter(j=>j!==i);
+    let choices=[i,...pool.slice(0,3)];
+    // Change distractors deterministically; do not vary answer when shuffled by UI.
+    if(pool.length>3){
+      const start=i%pool.length;
+      choices=[i,pool[start],pool[(start+1)%pool.length],pool[(start+2)%pool.length]];
+    }
+    if(new Set(choices).size!==4) throw Error(`Need at least 4 unique terms: ${ch.number} ${si}`);
+    const shift=(i+si)%4;
+    const order=choices.slice(shift).concat(choices.slice(0,shift));
+    const correct=order.indexOf(i);
+    const options=order.map(j=>terms[j][0]);
+    const reasons=order.map(j=>j===i
+     ? `ถูกต้อง: ${term} — ${meaning} ตัวอย่างประกอบ: ${example}`
+     : `ไม่ตรงกับสถานการณ์: ${terms[j][0]} ใช้สำหรับ ${terms[j][1]} ขณะที่กรณีนี้ต้องใช้ ${term} (${meaning})`);
+    questions.push({id:`db-${ch.number}-q${gidx}`,topic,level:'วิเคราะห์ / ประยุกต์',prompt,options,answer:correct,reasons,
+      vocabulary:order.map(j=>({term:terms[j][0],meaning:terms[j][1],example:terms[j][2]}))});
+   }
+  }
+  return {id:`db-chapter-${ch.number}`,number:ch.number,exam:ch.period,title:ch.title,
+    description:ch.description,minutes:ch.minutes||30,source:ch.source,sections,flashcards,questions};
+ });
+}
