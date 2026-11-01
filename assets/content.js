@@ -1,5 +1,6 @@
 import { finalChapters } from './final-chapters.js';
 import { applyScenarioQuestions } from './question-scenarios.js';
+import { prepareEnglishQuizVocabulary } from './english-quiz.js';
 import { midtermChapters } from './midterm-chapters.js';
 // เพิ่มวิชา/บทที่นี่: year + term + subject.id + chapter.id เป็นเส้นทางถาวรของแต่ละบท
 // คงศัพท์เฉพาะภาษาอังกฤษ; สรุปเรียบเรียงใหม่จาก mm169_ch6.pdf ไม่ใช่สำเนาสไลด์
@@ -166,6 +167,8 @@ export const chapter = {
 };
 // แปลงคำถามที่เคยท่องจำศัพท์ให้เป็นโจทย์วิเคราะห์/ประยุกต์ ก่อนส่งเข้าระบบข้อสอบรายบทและข้อสอบรวม
 applyScenarioQuestions([chapter, ...finalChapters]);
+// ใช้ English Technical Terms เป็นตัวเลือก และแนบความหมายไทยให้คำตอบและคำหลอก
+prepareEnglishQuizVocabulary([chapter, ...finalChapters]);
 export const subjects = [{ id: 'multimedia-technology', code: '06016403', title: 'MULTIMEDIA TECHNOLOGY', thai: 'เทคโนโลยีสื่อประสม', year: 2, term: 1, label: 'MM', description: 'ทำความเข้าใจภาพ กราฟิก และสื่อดิจิทัล ผ่านสรุปที่อ่านง่ายและการลงมือทบทวน', chapters: [...midtermChapters, chapter, ...finalChapters] }];
 
 // รายวิชาปี 2 เทอม 1 ตามรายการที่ผู้ใช้ส่งมา ยังไม่สร้างบทเรียนจนกว่าจะมีเอกสาร
