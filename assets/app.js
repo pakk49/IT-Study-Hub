@@ -1,6 +1,7 @@
 import { showExam } from './exam.js';
 import { vocabularyHtml } from './english-quiz.js';
 import { slideHintHtml } from './slide-hints.js';
+import { sectionPresentation,highlightStudyTerms,cleanStudyProse } from './summary-format.js';
 import { subjects } from './content.js';
 import { grade, shuffle, readProgress, saveProgress, validBest } from './engine.js';
 const $ = s => document.querySelector(s);
@@ -94,9 +95,21 @@ function readerShell(s,c) {
  if(view==='quiz') renderQuiz(c);
 }
 function renderSummary(c) {
- $('#reader-content').innerHTML=`<div class="reading-layout"><article class="summary">${c.sections.map((sec,i)=>`<section class="summary-section" id="section-${sec.id}"><p class="section-index">PART 0${i+1} <span>${sec.pages}</span></p><h2>${sec.title}</h2><p>${sec.intro}</p>${sec.table?`<div class="table-scroll"><table><thead><tr>${sec.table.headers.map(h=>`<th scope="col">${h}</th>`).join('')}</tr></thead><tbody>${sec.table.rows.map(row=>`<tr>${row.map(t=>`<td>${t}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`:''}<ul>${sec.points.map(p=>`<li>${p}</li>`).join('')}</ul>${sec.formula?`<div class="formula"><span>FORMULA / EXAMPLE</span><pre>${sec.formula}</pre></div>`:''}<div class="remember"><b>จำตรงนี้ให้แม่น</b><p>${sec.remember}</p></div></section>`).join('')}<div class="reading-finish"><h3>อ่านครบแล้ว ลองเช็กความเข้าใจกัน</h3><p>ทบทวนด้วยแฟลชการ์ด หรือลองทำข้อสอบพร้อมเหตุผลทุกตัวเลือก</p><div class="actions"><button class="button primary" id="mark-read">${chapterState(c).read?'✓ อ่านบทนี้แล้ว':'ทำเครื่องหมายว่าอ่านแล้ว'}</button><a class="button secondary" href="#${base()}/quiz">ลองทำข้อสอบ ${icon('arrow')}</a></div></div><p class="source-note">แหล่งเนื้อหา: ${c.source}</p></article><aside class="toc"><p class="eyebrow">ในบทนี้</p>${c.sections.map((s,i)=>`<button data-section="${s.id}"><span>0${i+1}</span>${s.title}</button>`).join('')}<div class="toc-note">อ่านทีละหัวข้อ<br>แล้วใช้คำถามช่วยทบทวน</div></aside></div>`;
+ const sections=c.sections.map(sectionPresentation);
+ const termCount=c.flashcards.length;
+ const overview=`<section class="chapter-overview" aria-label="ภาพรวมบทเรียน"><div class="overview-top"><span class="overview-kicker">CHAPTER OVERVIEW</span><span class="overview-progress">${sections.length} หัวข้อ · ${termCount} คำศัพท์/แฟลชการ์ด</span></div><h2>ภาพรวมบทเรียน</h2><p>${esc(cleanStudyProse(c.description))}</p><div class="overview-topics">${sections.map((sec,i)=>`<a href="#section-${esc(sec.number)}" data-jump="${esc(sec.number)}"><b>${String(i+1).padStart(2,'0')}</b>${esc(sec.title)}</a>`).join('')}</div></section>`;
+ const articles=sections.map((sec,i)=>{
+  const glossaryTerms=sec.table?.rows?.map(row=>row[0])||[];
+  const names=glossaryTerms.filter(t=>/[a-z]/i.test(t));
+  const table=sec.table?`<div class="study-block-heading"><h3>${sec.glossary?'คำศัพท์สำคัญและตัวอย่าง':'ตารางเปรียบเทียบ'}</h3><span>${sec.table.rows.length} รายการ</span></div><div class="table-scroll study-table-wrap"><table class="study-table ${sec.glossary?'glossary-table':''}"><thead><tr>${sec.table.headers.map(h=>`<th scope="col">${esc(h)}</th>`).join('')}</tr></thead><tbody>${sec.table.rows.map(row=>`<tr>${row.map((cell,j)=>`<td>${sec.glossary&&j===0?`<strong class="study-term">${esc(cell)}</strong>`:j===2&&sec.glossary?`<span class="study-example">${esc(cleanStudyProse(cell))}</span>`:esc(cleanStudyProse(cell))}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`:'';
+  const bulletList=sec.points.length?`<div class="study-block-heading"><h3>อธิบายเพิ่มเติม</h3><span>${sec.points.length} ประเด็น</span></div><ul class="study-points">${sec.points.map(point=>`<li>${highlightStudyTerms(point,names,esc)}</li>`).join('')}</ul>`:'';
+  const key=sec.remember?`<div class="study-takeaway"><span class="study-takeaway-symbol" aria-hidden="true">★</span><div><b>จุดสำคัญที่ควรจำ</b><p>${highlightStudyTerms(sec.remember,names,esc)}</p></div></div>`:'';
+  const formula=sec.formula?`<div class="formula study-formula"><span>สูตรและตัวอย่างคำนวณ</span><pre>${esc(sec.formula)}</pre></div>`:'';
+  return `<section class="summary-section study-section" id="section-${esc(sec.number)}"><div class="section-index"><span>หัวข้อ ${String(i+1).padStart(2,'0')} / ${String(sections.length).padStart(2,'0')}</span><small>${esc(sec.pages)}</small></div><h2>${esc(sec.title)}</h2><div class="study-definition"><span class="study-definition-label">ใจความสำคัญ</span><p>${highlightStudyTerms(sec.intro,names,esc)}</p></div>${bulletList}${table}${formula}${key}</section>`;
+ }).join('');
+ $('#reader-content').innerHTML=`<div class="reading-layout study-reading"><article class="summary">${overview}${articles}<div class="reading-finish"><h3>ทบทวนเนื้อหาครบแล้ว</h3><p>ลองใช้แฟลชการ์ดเพื่อจำศัพท์อังกฤษ หรือทำข้อสอบที่อิงจากเนื้อหาในบทนี้ พร้อมเฉลยและเหตุผล</p><div class="actions"><button class="button primary" id="mark-read">${chapterState(c).read?'✓ อ่านบทนี้แล้ว':'ทำเครื่องหมายว่าอ่านแล้ว'}</button><a class="button secondary" href="#${base()}/quiz">ทำข้อสอบรายบท ${icon('arrow')}</a></div></div><p class="source-note">เอกสารประกอบบทเรียน: ${esc(c.source||'ข้อมูลที่ใช้จัดทำสรุปตามรายวิชา')}</p></article><aside class="toc study-toc"><p class="eyebrow">หัวข้อในบทเรียน</p>${sections.map((sec,i)=>`<button data-section="${esc(sec.number)}"><span>${String(i+1).padStart(2,'0')}</span>${esc(sec.title)}</button>`).join('')}<div class="toc-note">เลือกหัวข้อเพื่ออ่านสรุปและทบทวนศัพท์สำคัญ</div></aside></div>`;
  $('#mark-read').onclick=()=>{progress[c.id]={...chapterState(c),read:true};persist();$('#mark-read').textContent='✓ อ่านบทนี้แล้ว';};
- document.querySelectorAll('[data-section]').forEach(b=>b.onclick=()=>document.getElementById(`section-${b.dataset.section}`).scrollIntoView({behavior:'smooth',block:'start'}));
+ document.querySelectorAll('[data-section],[data-jump]').forEach(button=>button.onclick=e=>{e.preventDefault();const targetId=button.dataset.section||button.dataset.jump;document.getElementById('section-'+targetId)?.scrollIntoView({behavior:'smooth',block:'start'});});
 }
 function renderFlash(c) {
  if(!flash.cards.length || flash.chapter!==c.id) flash={chapter:c.id,index:0,flipped:false,cards:[...c.flashcards]};
