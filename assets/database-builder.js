@@ -7,11 +7,11 @@ export function createDatabaseChapters(raw) {
   for(let si=0;si<ch.groups.length;si++){
    const group=ch.groups[si],topic=`db-${ch.number}-${si+1}`,terms=group.items;
    sections.push({
-    id:topic,title:group.title,pages:group.pages||'สไลด์ที่ผู้ใช้ส่งมา',
+    id:topic,title:group.title,pages:group.pages||'',
     intro:group.intro,
-    points:terms.map(([term,meaning,example])=>`${term} — ${meaning} ตัวอย่าง: ${example}`),
+    points:group.points||[], // definitions and examples appear once in the vocabulary table
     table:{headers:['English Term','ความหมายภาษาไทย','ตัวอย่าง'],rows:terms.map(t=>t.slice(0,3))},
-    remember:group.remember||`จำคำศัพท์กลุ่ม ${group.title} โดยเชื่อมกับสถานการณ์ใช้งานจริง แทนการท่องคำแปลอย่างเดียว`
+    remember:group.remember||''
    });
    for(let i=0;i<terms.length;i++){
     const [term,meaning,example,prompt]=terms[i];
