@@ -1,0 +1,494 @@
+import { createNetworkChapters } from './network-builder.js';
+// Week >= 9 is Final. Scenarios paraphrased from handouts; week10 scan notes include subnet calculations.
+export const networkFinalChapters = createNetworkChapters([
+  {
+    "week": 9,
+    "title": "Network Layer: The Data Plane",
+    "description": "Data Plane, Router Forwarding, IPv4, NAT, IPv6 และ SDN",
+    "source": "week9-Chapter_4_V7.01.pdf · Chapter 4 Network Layer: The Data Plane",
+    "groups": [
+      {
+        "title": "Network Layer and Router",
+        "intro": "Network Layer มีงาน Forwarding ในแต่ละ Router และการจัดเส้นทางผ่านเครือข่าย โดยแยก Data Plane กับ Control Plane",
+        "items": [
+          [
+            "Data Plane",
+            "ส่วนใน Router ที่ส่งต่อ Packet จาก Input Port ไป Output Port ตามตาราง",
+            "Datagram เข้ามาที่ eth0 แล้วถูกส่งออก eth1",
+            "เราเตอร์รับ Datagram แล้วตัดสินใจ Output Port จากตารางในทันที การทำงานส่วนใดถูกใช้อยู่?"
+          ],
+          [
+            "Control Plane",
+            "ส่วนตรรกะคำนวณ/กำหนดเส้นทางและตารางส่งต่อ",
+            "Routing Protocol อัปเดต Forwarding Table",
+            "ลิงก์ขัดข้องและ Router ต้องคำนวณเส้นทางใหม่เพื่ออัปเดตตาราง งานนี้เป็นหน้าที่ส่วนใด?"
+          ],
+          [
+            "Forwarding",
+            "การย้าย Datagram ภายใน Router จากพอร์ตเข้ายังพอร์ตออกที่เลือก",
+            "เลือก Output Port ตาม Destination IP",
+            "Packet มาถึง Router แล้ว Router ย้ายไปพอร์ต WAN ตาม Lookup Table กระบวนการใดกำลังเกิด?"
+          ],
+          [
+            "Routing",
+            "กระบวนการหาเส้นทางระดับเครือข่ายจากต้นทางถึงปลายทาง",
+            "หาเส้นทางผ่าน Router A–B–C",
+            "องค์กรต้องกำหนดเส้นทาง IP ระหว่างหลายเครือข่ายให้ไปถึงปลายทางได้ ควรใช้กระบวนการใด?"
+          ]
+        ]
+      },
+      {
+        "title": "Router Components and Addressing",
+        "intro": "Input/Output Ports, Switching Fabric และ IPv4 CIDR ช่วยให้ Packet ถึง Interface เป้าหมาย",
+        "items": [
+          [
+            "Switching Fabric",
+            "ระบบเชื่อมต่อภายใน Router ระหว่าง Input Port และ Output Port",
+            "Bus หรือ Crossbar ใน Router",
+            "Packet ผ่านการ Lookup ที่ Input แล้วต้องข้ามไป Output Port คนละด้าน ส่วนประกอบใดพา Packet ไป?"
+          ],
+          [
+            "Output Buffer",
+            "พื้นที่พัก Packet ที่รอออกลิงก์เมื่ออัตราเข้ามาสูงกว่าความสามารถส่งออก",
+            "คิวพอร์ต WAN ช่วงการจราจรหนาแน่น",
+            "Datagram เข้าพอร์ตขาออกมากกว่าที่สายส่งได้ชั่วคราว จึงต้องเก็บไว้ในส่วนใด?"
+          ],
+          [
+            "CIDR Prefix",
+            "จำนวนบิตต้นของ IP ที่ใช้ระบุส่วนเครือข่ายในรูป /n",
+            "10.0.0.0/24 มี Network Prefix 24 บิต",
+            "ผู้ดูแลเขียน 172.16.0.0/20 และต้องระบุขอบเขตส่วน Network ข้อมูล /20 หมายถึงอะไร?"
+          ],
+          [
+            "Longest Prefix Match",
+            "หลักเลือกเส้นทางที่ตรง Destination IP และมี Prefix ยาวที่สุด",
+            "10.0.1.0/24 ชนะ 10.0.0.0/16 สำหรับ 10.0.1.8",
+            "Router มี Route /16 และ /24 ที่ตรงกับปลายทางพร้อมกัน ควรเลือกกฎ Lookup ใดเพื่อส่งต่อ?"
+          ]
+        ]
+      },
+      {
+        "title": "Datagram, NAT and IPv6",
+        "intro": "IP Datagram มี Header เฉพาะ; NAT แปลงที่อยู่ในขอบเครือข่าย ขณะที่ IPv6 ขยายพื้นที่ Address",
+        "items": [
+          [
+            "IPv4 Fragmentation",
+            "การแยก Datagram ให้เล็กพอสำหรับ MTU ของ Link ตามเงื่อนไข IPv4",
+            "ส่ง Datagram 3000 bytes ผ่าน Link MTU 1500",
+            "เราเตอร์พบว่า IPv4 Datagram ใหญ่เกิน MTU และอนุญาตให้แบ่งได้ ควรใช้วิธีใด?"
+          ],
+          [
+            "NAT (Network Address Translation)",
+            "อุปกรณ์แปล IP Address และอาจแปล Port ระหว่างวงภายในกับเครือข่ายนอก",
+            "หลายเครื่อง LAN แชร์ Public IPv4 เดียว",
+            "คอมพิวเตอร์ 20 เครื่องใช้ Private IP แต่เข้าภายนอกผ่าน Public IPv4 เดียว ควรใช้เทคนิคใด?"
+          ],
+          [
+            "IPv6 Address",
+            "ที่อยู่ IP รุ่น 6 ขนาด 128 บิต",
+            "2001:db8::1",
+            "องค์กรต้องมี Address Space มากกว่า IPv4 และกำหนด IP แบบ 128 บิตให้ Interface ควรใช้ที่อยู่ประเภทใด?"
+          ],
+          [
+            "SDN (Software-Defined Networking)",
+            "แนวคิดแยกส่วนควบคุมจากส่วนส่งต่อเพื่อบริหารนโยบายเครือข่ายได้ยืดหยุ่น",
+            "Controller กำหนด Flow Entries ให้ Switch",
+            "ศูนย์ข้อมูลอยากปรับนโยบายการส่งต่อจาก Controller กลางแทนตั้งค่าแยกทุกอุปกรณ์ แนวคิดใดเหมาะ?"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "week": 10,
+    "title": "IPv4 Subnetting, IP Forwarding and IPv6",
+    "description": "ฝึกคำนวณ Subnet, Network/Broadcast, Host bits, Forwarding และ IPv6",
+    "source": "writtenWeek10_secพฤหัสเช้าบ่าย.pdf · บันทึก Week 10 (ภาพลายมือ), ร่วมกับ Week 9 Network Layer",
+    "groups": [
+      {
+        "title": "Subnet Calculation",
+        "intro": "เมื่อแบ่ง Network เดิมต้องคำนวณ Prefix/Mask และจำนวน Host ที่ใช้ได้ โดยระวังข้อยกเว้นพิเศษของ /31 และ /32",
+        "items": [
+          [
+            "Subnet Mask",
+            "บิต 1 ระบุส่วน Network และบิต 0 ระบุส่วน Host ใน IPv4",
+            "/26 = 255.255.255.192",
+            "ทีมแยกวง 192.168.1.0/26 และต้องเขียนรูป decimal dotted mask ควรใช้แนวคิดใด?"
+          ],
+          [
+            "Subnetting",
+            "การแบ่ง IP Network เดิมเป็นหลาย Network ย่อยโดยเพิ่ม Prefix Length",
+            "แบ่ง 10.0.1.0/24 ออกเป็นสี่วง /26",
+            "มีวง 10.0.1.0/24 และต้องจัดเป็น 4 เครือข่ายแยกกันโดยยืม Host bits วิธีนี้คืออะไร?"
+          ],
+          [
+            "Network Address",
+            "ที่อยู่แรกระบุเครือข่ายย่อย เมื่อ Host bits เป็น 0 ทั้งหมด",
+            "192.168.1.128/25 มี Network Address .128",
+            "IP 192.168.1.140/26 ต้องหาค่าที่เป็นจุดเริ่มของ Subnet เดียวกัน ต้องหาชนิด Address ใด?"
+          ],
+          [
+            "Broadcast Address",
+            "ที่อยู่สำหรับสื่อสารถึงทุก Host ใน IPv4 Subnet เมื่อ Host bits เป็น 1 ทั้งหมด",
+            "192.168.1.0/24 broadcast 192.168.1.255",
+            "ให้วง IPv4 /25 และต้องคำนวณที่อยู่สุดท้ายของวงเพื่อส่งถึงทุก Host ควรหาค่าใด?"
+          ]
+        ]
+      },
+      {
+        "title": "Prefix, Host and Forwarding",
+        "intro": "แยกจำนวนเครือข่ายจากจำนวน Host และใช้ Forwarding Table เพื่อเลือก Interface ที่ถูกต้อง",
+        "items": [
+          [
+            "Prefix Length",
+            "จำนวนบิตที่สงวนเป็นส่วน Network ใน IP Address",
+            "/27 หมายถึง 27 Network Bits",
+            "ใน 192.168.10.0/27 ช่างต้องการทราบว่าเหลือ Host bits กี่บิต ต้องเริ่มจากค่าใด?"
+          ],
+          [
+            "Usable Host Addresses",
+            "จำนวน Address ที่จัดให้ Host ได้ใน IPv4 Subnet ทั่วไป สูตร 2^(32-prefix)-2",
+            "/27 ใช้งานได้ 30 Host Addresses",
+            "ทีมใช้ /27 สำหรับ LAN ปกติที่ต้องไม่นับ Network/Broadcast ค่าที่ต้องคำนวณคืออะไร?"
+          ],
+          [
+            "Forwarding Table",
+            "ตาราง Prefix–Next Hop–Interface สำหรับส่งต่อ Datagram",
+            "192.168.20.0/24 ส่งทาง eth2",
+            "Router ต้องมีข้อมูลว่า Destination Prefix หนึ่งควรออก Interface ใด ควรตรวจโครงสร้างข้อมูลใด?"
+          ],
+          [
+            "Default Route",
+            "Route ใช้เมื่อไม่มี Prefix ที่เฉพาะเจาะจงตรงกับปลายทาง",
+            "0.0.0.0/0 ชี้ไป ISP",
+            "Router ไม่พบ Route ที่ตรงกับ IP ปลายทางเฉพาะจึงต้องส่งต่อไป ISP ตามเส้นทางสำรอง ควรใช้ Route แบบใด?"
+          ]
+        ]
+      },
+      {
+        "title": "IPv6 in Practice",
+        "intro": "IPv6 มี Address ยาว 128 บิต ใช้ Prefix และย่อเลขศูนย์ตามกฎ ไม่ใช่แค่เพิ่ม Octet IPv4",
+        "items": [
+          [
+            "IPv6 Compression",
+            "การย่อ Address โดยตัดศูนย์นำหน้าในกลุ่มและใช้ :: แทนกลุ่มศูนย์ต่อเนื่องครั้งเดียว",
+            "2001:db8:0:0:0:0:0:1 → 2001:db8::1",
+            "ต้องเขียน IPv6 ให้สั้นลงโดยใช้ :: แทนกลุ่มเลข 0 ต่อเนื่องตามกฎเดียวครั้ง ควรใช้เทคนิคใด?"
+          ],
+          [
+            "IPv6 Link-local Address",
+            "ที่อยู่สำหรับสื่อสารใน Link เดียว มี Prefix FE80::/10",
+            "เพื่อนบ้านสื่อสารกันโดยใช้ fe80::...",
+            "Interface IPv6 ยังไม่มี Global Address แต่ต้องสื่อสารกับอุปกรณ์บน Link เดียว ควรใช้ Address ประเภทใด?"
+          ],
+          [
+            "IPv6 Unicast",
+            "การส่งข้อมูล IPv6 ไปยัง Interface ปลายทางเดียว",
+            "ส่ง Packet ไป 2001:db8::10",
+            "Router ส่งข้อมูลจากผู้ส่งรายหนึ่งไปยัง Interface IPv6 ที่ระบุหนึ่งตำแหน่ง ลักษณะการส่งใดเหมาะที่สุด?"
+          ],
+          [
+            "Hop Limit",
+            "ค่าจำนวน Hop สูงสุดใน IPv6 Header ที่ลดลงเมื่อผ่าน Router",
+            "Packet มี Hop Limit 3 แล้วผ่าน Router สองตัวเหลือ 1",
+            "ต้องป้องกัน IPv6 Packet วิ่งวนไม่สิ้นสุด จึงใส่ตัวนับลดทุกครั้งที่ผ่าน Router ฟิลด์นี้คืออะไร?"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "week": 11,
+    "title": "Link Layer Part 1: MAC and ARP",
+    "description": "Encapsulation, MAC Address, Ethernet, Unicast/Broadcast และ ARP",
+    "source": "Week-11 Link Layer part 1 handout.pdf",
+    "groups": [
+      {
+        "title": "Link Layer and Frame",
+        "intro": "Layer 2 ส่ง Frame ข้าม Link ทีละ Hop โดย IP ปลายทางคงเดิม แต่ MAC ที่ใช้ข้าม Link เปลี่ยนได้",
+        "items": [
+          [
+            "Data Link Layer",
+            "ชั้นสื่อสาร Frame ข้ามลิงก์ระหว่างอุปกรณ์ที่เชื่อมต่อกันโดยตรง",
+            "Ethernet ส่งจาก PC ไป Switch",
+            "เมื่อ Router ส่ง Datagram ผ่าน Ethernet Link ต่อไป ต้องใช้ชั้นใดห่อ Datagram เป็น Frame?"
+          ],
+          [
+            "Ethernet Frame",
+            "หน่วยข้อมูล Layer 2 ที่มี Source/Destination MAC และ FCS",
+            "Destination MAC เป็นค่าของ Gateway",
+            "ก่อนส่ง IP Packet ผ่าน Ethernet NIC ต้องจัดส่วนหัว MAC และส่วนท้ายตรวจสอบให้อยู่ในหน่วยใด?"
+          ],
+          [
+            "MAC Address",
+            "ที่อยู่ Layer 2 ใช้ระบุอุปกรณ์/Interface ภายในลิงก์หรือ LAN",
+            "00:1A:2B:3C:4D:5E",
+            "Laptop ส่ง Frame ถึง Default Gateway ใน LAN โดยใช้ที่อยู่ 48 บิตของ NIC ที่ Layer 2 ควรใช้ข้อมูลใด?"
+          ],
+          [
+            "IP Address",
+            "ที่อยู่ Layer 3 ใช้ระบุ Interface และส่งข้อมูลข้ามเครือข่าย",
+            "192.168.10.9",
+            "เมื่อ Router ส่ง Frame ข้ามหลาย Link แล้ว MAC Header เปลี่ยน แต่ที่อยู่ปลายทาง Layer 3 ยังระบุ Host เดิม สิ่งนั้นคืออะไร?"
+          ]
+        ]
+      },
+      {
+        "title": "Unicast, Broadcast and ARP",
+        "intro": "MAC แต่ละชนิดมีขอบเขตการรับที่ต่างกัน และ ARP ช่วยหา MAC จาก IPv4 บน LAN",
+        "items": [
+          [
+            "Unicast Frame",
+            "Frame ที่ระบุ MAC ปลายทางแบบตัวเดียว",
+            "ส่ง Frame ไป MAC ของเครื่อง B",
+            "PC ต้องส่งข้อมูล Layer 2 ให้ NIC ที่ระบุเครื่องเดียว ไม่ใช่ทุกเครื่องในวง ควรใช้ Frame ชนิดใด?"
+          ],
+          [
+            "Broadcast Frame",
+            "Frame ที่ใช้ Destination MAC FF:FF:FF:FF:FF:FF ถึงทุกเครื่องใน Broadcast Domain",
+            "ARP Request แพร่ถึงทุก Host ใน VLAN",
+            "PC ยังไม่ทราบ MAC ของ Gateway จึงส่ง Frame ให้ทุกเครื่องใน LAN รับพร้อมกัน ต้องใช้ Frame แบบใด?"
+          ],
+          [
+            "ARP (Address Resolution Protocol)",
+            "โปรโตคอลค้นหา MAC Address ที่เกี่ยวข้องกับ IPv4 Address บน Link",
+            "ARP หา MAC ของ 192.168.1.1",
+            "คอมพิวเตอร์ทราบ IPv4 ของ Gateway แต่ไม่ทราบ MAC สำหรับส่ง Frame ขั้นต่อไปต้องใช้โปรโตคอลใด?"
+          ],
+          [
+            "ARP Cache",
+            "ตารางที่เก็บผลจับคู่ IPv4 กับ MAC ที่เคยเรียนรู้เพื่อลดการถามซ้ำ",
+            "arp -a แสดง MAC ของ Gateway",
+            "Host เคยถาม MAC ของ IP ใน LAN แล้วและต้องการนำค่ากลับมาใช้ทันที ควรค้นจากโครงสร้างใด?"
+          ]
+        ]
+      },
+      {
+        "title": "Across Networks",
+        "intro": "เมื่อส่งไปต่าง Subnet ต้องใช้ Next-hop MAC ของ Gateway ไม่ใช่ MAC ปลายทางต่างเครือข่าย",
+        "items": [
+          [
+            "Default Gateway",
+            "Router/Interface ที่ Host ส่ง Packet ไปเมื่อ Destination อยู่ต่าง Subnet",
+            "PC ส่ง Frame ถึง MAC Router โดย IP ปลายทางยังเป็น Server",
+            "PC จะเปิดเว็บเซิร์ฟเวอร์ที่อยู่อีกเครือข่าย แต่ MAC ของ Server ไม่อยู่ใน LAN สิ่งใดควรเป็น Next Hop?"
+          ],
+          [
+            "Next-hop MAC",
+            "ที่อยู่ Layer 2 ของอุปกรณ์ถัดไปใน Link ปัจจุบัน",
+            "MAC ของ Router ฝั่งออกจากเครือข่าย",
+            "ระหว่างส่ง IP ถึงปลายทางนอก LAN ควรใส่ MAC ใครใน Ethernet Header ของ Link แรก?"
+          ],
+          [
+            "Encapsulation",
+            "การห่อข้อมูลชั้นบนด้วย Header/Trailer ของแต่ละชั้น",
+            "IP Datagram ถูกห่อด้วย Ethernet Header และ FCS",
+            "ก่อนส่งบนสาย LAN NIC เพิ่ม MAC Header รอบ Datagram กระบวนการนี้คืออะไร?"
+          ],
+          [
+            "Multicast MAC",
+            "MAC Address ของกลุ่มผู้รับที่เข้าร่วมกลุ่มหนึ่ง",
+            "01:00:5E:... สำหรับ IPv4 Multicast Mapping",
+            "ระบบส่ง Ethernet Frame ให้เฉพาะหลายอุปกรณ์ที่เข้าร่วมกลุ่ม ไม่ใช่ทั้งหมด ควรใช้ Address ชนิดใด?"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "week": 12,
+    "title": "Link Layer Part 2: Framing and Error Detection",
+    "description": "Byte/Bit Stuffing, Parity, Checksum และ CRC พร้อมโจทย์คำนวณ",
+    "source": "Week-12 Link Layer part 2 handout.pdf",
+    "groups": [
+      {
+        "title": "Framing Mechanisms",
+        "intro": "การส่งบิตต่อเนื่องต้องมีขอบเขต Frame และหลีกเลี่ยงรูปแบบ Flag ที่ซ้ำกับข้อมูล",
+        "items": [
+          [
+            "Framing",
+            "การกำหนดจุดเริ่มและสิ้นสุดของ Frame จาก Bit Stream",
+            "อ่าน Preamble เพื่อหาจุดเริ่ม Ethernet Frame",
+            "ผู้รับเห็นบิตไหลต่อเนื่องและต้องแยกว่าข้อมูลชุดหนึ่งเริ่ม/จบตรงไหน ควรใช้กระบวนการใด?"
+          ],
+          [
+            "Byte Stuffing",
+            "การแทรก Escape Byte เมื่อ Payload มีค่า Byte ตรงกับ Flag ที่ใช้แบ่ง Frame",
+            "PPP Escape ค่า 0x7E เป็น 0x7D 0x5E",
+            "ข้อมูลที่จะส่งมีค่า 0x7E ซึ่งชนกับ Flag ของ PPP จึงต้องแทรก Byte พิเศษเพื่อไม่ให้ผู้รับเข้าใจผิด วิธีนี้คืออะไร?"
+          ],
+          [
+            "Bit Stuffing",
+            "การเพิ่มบิตตามกฎเมื่อเจอ Pattern ที่คล้าย Flag ใน Payload",
+            "แทรก 0 หลังเจอ 1 ต่อเนื่องห้าตัว",
+            "Link ใช้ Flag 01111110 แต่ Payload มีเลข 1 ติดกัน 5 ตัว จึงแทรก 0 เพื่อไม่ให้เหมือน Flag ต้องใช้เทคนิคใด?"
+          ],
+          [
+            "Preamble",
+            "บิตรูปแบบต้น Frame สำหรับช่วย Sync สัญญาณ/เตรียมการรับ",
+            "Ethernet Preamble ก่อน SFD",
+            "Receiver ต้องปรับจังหวะรับบิตก่อนอ่าน Ethernet Frame จริง ควรอาศัยส่วนใดที่มาก่อน SFD?"
+          ]
+        ]
+      },
+      {
+        "title": "Parity and Checksum",
+        "intro": "Parity และ Internet Checksum ใช้ตรวจ error โดยมีข้อจำกัดต่างกัน",
+        "items": [
+          [
+            "Even Parity",
+            "บิตตรวจที่ทำให้จำนวนบิต 1 ทั้งหมดเป็นจำนวนคู่",
+            "ข้อมูล 1011 มี 1 สามตัวจึงเพิ่ม Parity=1",
+            "Sender ส่ง 1011 ซึ่งมีบิต 1 จำนวน 3 บิต และต้องส่งแบบ Even Parity ควรเลือกกฎตรวจใด?"
+          ],
+          [
+            "Two-dimensional Parity",
+            "การใส่ Parity ทั้งแถวและคอลัมน์เพื่อช่วยชี้ตำแหน่งบิตผิด",
+            "หนึ่งบิตกลับค่าทำให้ Row และ Column Parity ผิดพร้อมกัน",
+            "ตารางบิตรับมาแล้วพบแถว 2 และคอลัมน์ 3 ผิดเพียงจุดเดียว จึงหาตำแหน่งบิตผิดด้วยวิธีใด?"
+          ],
+          [
+            "Internet Checksum",
+            "การบวกคำข้อมูลแบบ One's Complement แล้วกลับบิตเพื่อใช้ตรวจข้อผิดพลาด",
+            "ตรวจ TCP/UDP Header และ Payload ตามกฎ Checksum",
+            "ระบบรวมคำข้อมูล 16 บิตแล้วทำ One's Complement เพื่อสร้างค่าตรวจสอบ ใช้วิธีใด?"
+          ],
+          [
+            "Error Detection",
+            "การพิจารณาว่าข้อมูลที่รับอาจผิดพลาด โดยไม่จำเป็นต้องแก้บิตเอง",
+            "Frame มี CRC ไม่ตรงจึงถูก Drop",
+            "Ethernet NIC ตรวจพบว่า Frame เสียหายแล้วทิ้ง ไม่ได้คำนวณแก้ค่าบิตให้ถูก หน้าที่นี้คืออะไร?"
+          ]
+        ]
+      },
+      {
+        "title": "CRC and Reliability",
+        "intro": "CRC ตรวจข้อผิดพลาดด้วยการหารพหุนามทวิภาค; Link ต่างชนิดตอบสนองต่อ Frame Error ไม่เหมือนกัน",
+        "items": [
+          [
+            "CRC (Cyclic Redundancy Check)",
+            "วิธีตรวจข้อผิดพลาดโดยหารบิตด้วย Generator Polynomial แบบ XOR",
+            "หาร Data Bits แล้วแนบ Remainder ที่ท้าย Frame",
+            "Ethernet ต้องสร้างค่าตรวจจับ Burst Error ที่ท้าย Frame ด้วยการหารแบบ XOR ควรใช้วิธีใด?"
+          ],
+          [
+            "Generator Polynomial",
+            "พหุนาม/รูปแบบบิตที่ใช้เป็นตัวหารสำหรับการคำนวณ CRC",
+            "ใช้ G=1011 เพื่อสร้าง CRC",
+            "แบบฝึกหัดกำหนด G=1011 แล้วให้หาร Dataword เพื่อหาระเบียนเศษ ค่าของ G มีบทบาทใด?"
+          ],
+          [
+            "CRC Remainder",
+            "เศษจากการหาร modulo-2 ใช้แนบข้อมูลและตรวจภายหลัง",
+            "หารแบบ XOR แล้วได้เศษ 011",
+            "Sender คำนวณ XOR Division แล้วได้บิตเศษที่ต้องใส่ท้าย Dataword ควรเรียกค่านี้ว่าอะไร?"
+          ],
+          [
+            "Burst Error",
+            "ความผิดพลาดที่กระทบช่วงของบิตหลายตำแหน่งติดต่อกัน",
+            "สัญญาณรบกวนทำให้บิตใน Frame ช่วงหนึ่งผิดหลายตัว",
+            "สัญญาณรบกวนช่วงสั้นทำให้กลุ่มบิตต่อเนื่องหลายตำแหน่งผิดไปพร้อมกัน ควรจัดเป็นความผิดพลาดชนิดใด?"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "week": 13,
+    "title": "Link Layer Part 3: Multiple Access and Switching",
+    "description": "ALOHA, CSMA/CD, Ethernet Switching, VLAN และ Wi-Fi",
+    "source": "Week-13 Link Layer part 3 handout.pdf",
+    "groups": [
+      {
+        "title": "Multiple Access Protocols",
+        "intro": "หลาย Station ใช้ Channel เดียว ต้องจัดสรรเวลาและลดการ Collision ตามชนิดสื่อ",
+        "items": [
+          [
+            "ALOHA",
+            "วิธีส่งข้อมูลลง Shared Channel เมื่อมีข้อมูล โดย Collision ทำให้ต้องส่งซ้ำ",
+            "Pure ALOHA ส่งได้ทันทีโดยไม่ตรวจช่องก่อน",
+            "หลายสถานีใช้ช่องวิทยุเดียวกันและส่งทันทีเมื่อมีข้อมูลแม้อาจชนกัน ใช้แนวคิดโปรโตคอลใด?"
+          ],
+          [
+            "CSMA (Carrier Sense Multiple Access)",
+            "กลไกฟังสื่อว่ามีผู้อื่นกำลังส่งหรือไม่ก่อนส่งข้อมูล",
+            "Host รอเมื่อสื่อไม่ว่าง",
+            "เครื่องปลายทางตรวจ Shared Medium ก่อนเริ่มส่งเพื่อลดโอกาสชนกัน ควรใช้หลักการใด?"
+          ],
+          [
+            "CSMA/CD",
+            "ฟังสื่อและตรวจพบ Collision ระหว่างส่งใน Shared Ethernet แบบ Half Duplex",
+            "Hub Ethernet เก่าตรวจชนแล้วหยุดส่ง",
+            "เครือข่าย Ethernet ผ่าน Hub ต้องหยุดเมื่อพบ Collision แล้วสุ่มรอส่งใหม่ ควรใช้กลไกใด?"
+          ],
+          [
+            "Binary Exponential Backoff",
+            "การสุ่มช่วงรอเพิ่มตามจำนวน Collision เพื่อไม่ให้ผู้ส่งชนซ้ำทันที",
+            "Collision ครั้งถัดไปเลือกจากหน้าต่างเวลาที่โตขึ้น",
+            "สองเครื่องชนกันซ้ำและต้องสุ่มหน่วงเวลาโดยขยายช่วงสุ่มเมื่อชนบ่อย ควรใช้อัลกอริทึมใด?"
+          ]
+        ]
+      },
+      {
+        "title": "Ethernet Switches and Domains",
+        "intro": "Switch เรียนรู้ Source MAC แล้วส่งไป Destination Port, ลด Collision Domains และกำหนด Broadcast Domains ด้วย VLAN",
+        "items": [
+          [
+            "MAC Learning",
+            "สวิตช์บันทึก Source MAC และ Input Port ลงตารางเมื่อรับ Frame",
+            "เรียนรู้ว่า A อยู่ port 2",
+            "Switch รับ Frame จาก Host A ทาง port 2 แล้วเพิ่มรายการ A→2 ในตารางเอง กลไกนี้คืออะไร?"
+          ],
+          [
+            "Unknown Unicast Flooding",
+            "สวิตช์กระจาย Frame ไปพอร์ตอื่นใน VLAN เมื่อไม่รู้พอร์ตของ MAC ปลายทาง",
+            "ยังไม่เคยเรียนรู้ MAC B",
+            "Switch รับ Frame ถึง MAC ที่ไม่มีในตารางและส่งออกพอร์ตอื่นใน VLAN ยกเว้นพอร์ตขาเข้า พฤติกรรมนี้คืออะไร?"
+          ],
+          [
+            "Collision Domain",
+            "ขอบเขตที่อุปกรณ์บนสื่อร่วมกันอาจเกิด Collision",
+            "แต่ละพอร์ต Switch แบบ Full Duplex แยก Collision Domain",
+            "ผู้ออกแบบต้องนับขอบเขตที่การส่งสองเครื่องอาจชนกันบน Shared Medium หน่วยพื้นที่นั้นคืออะไร?"
+          ],
+          [
+            "VLAN (Virtual LAN)",
+            "การแบ่งกลุ่มเครือข่าย Layer 2 เชิงตรรกะให้แยก Broadcast Domains",
+            "VLAN10 ฝ่ายบุคคล VLAN20 ฝ่ายบัญชี",
+            "สวิตช์เดียวให้สองแผนกไม่รับ Broadcast ของกันและกันโดยตั้ง VLAN ควรใช้คุณสมบัติใด?"
+          ]
+        ]
+      },
+      {
+        "title": "Wi-Fi and Access Control",
+        "intro": "Wireless ไม่สามารถตรวจ Collision ระหว่างส่งได้เหมือน Ethernet แบบสาย จึงเน้นหลีกเลี่ยงการชน",
+        "items": [
+          [
+            "CSMA/CA",
+            "การฟังสื่อและใช้กลไกหลีกเลี่ยง Collision ใน Wi-Fi",
+            "Wi-Fi ใช้สุ่ม Backoff ก่อนส่ง Frame",
+            "หลายโทรศัพท์ใช้ AP เดียวกัน จึงต้องหลีกเลี่ยงการชนแทนการตรวจจับขณะส่ง ควรใช้โปรโตคอลใด?"
+          ],
+          [
+            "Hidden Terminal Problem",
+            "สองสถานีไม่ слышถึงกันแต่ส่งชนกันที่ตัวรับร่วม",
+            "A และ C อยู่คนละมุม แต่ต่างส่งให้ AP B",
+            "โทรศัพท์ A และ C ฟังกันไม่ถึง แต่ทั้งคู่ส่งถึง AP เดียวกันและอาจชน สถานการณ์นี้เรียกว่าอะไร?"
+          ],
+          [
+            "RTS/CTS",
+            "กลไกขอส่งและอนุญาตส่งก่อนส่งข้อมูล ช่วยลดปัญหา Hidden Terminals บางกรณี",
+            "Station ส่ง RTS แล้ว AP ตอบ CTS",
+            "AP ต้องช่วยประกาศสิทธิ์ใช้ช่องทางก่อนส่ง Data ขนาดใหญ่เพื่อลด Hidden Terminal ควรใช้กลไกใด?"
+          ],
+          [
+            "802.11 Wi-Fi",
+            "กลุ่มมาตรฐาน Wireless LAN สำหรับการสื่อสารผ่านคลื่นวิทยุ",
+            "โน้ตบุ๊กเชื่อม Access Point ด้วย Wi-Fi",
+            "บริษัทติดตั้ง Access Point เพื่อให้ Notebook ติดต่อเครือข่ายผ่าน Wireless LAN ตามมาตรฐานใด?"
+          ]
+        ]
+      }
+    ]
+  }
+]);
