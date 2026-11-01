@@ -19,7 +19,7 @@ export function createNetworkChapters(raw) {
     const index=flashcards.length+1;
     flashcards.push({id:'net-'+ch.week+'-f'+index,term,meaning,example,
       front:term+' เกี่ยวข้องกับการทำงานเครือข่ายอย่างไร?',
-      back:meaning+'\\nตัวอย่าง: '+example});
+      back:meaning+'\nตัวอย่าง: '+example});
     const others=terms.map((t,j)=>j).filter(j=>j!==i);
     const start=i%others.length;
     const indices=[i,...[0,1,2].map(n=>others[(start+n)%others.length])];
