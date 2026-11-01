@@ -3,6 +3,7 @@ import { vocabularyHtml } from './english-quiz.js';
 import { slideHintHtml } from './slide-hints.js';
 import { sectionPresentation,highlightStudyTerms,cleanStudyProse } from './summary-format.js';
 import { subjects } from './content.js';
+import { showPhysicalLabs,showPhysicalLab } from './physical-lab-ui.js';
 import { grade, shuffle, readProgress, saveProgress, validBest } from './engine.js';
 const $ = s => document.querySelector(s);
 const main = $('#main');
@@ -27,6 +28,7 @@ function parentHash(){
  if(route.length===6)return '#'+prefix+'/term/'+route[3];
  if(route.length===7)return '#'+subjectPath;
  if(route[7]==='exam')return '#'+subjectPath+'/'+route[6];
+ if(route[6]==='labs')return '#'+subjectPath+'/labs';
  if(route[6]==='chapter'){
   if(route.length>=9 && route[8]!=='summary')return '#'+subjectPath+'/chapter/'+route[7]+'/summary';
   const sub=subjects.find(s=>s.id===route[5]);
@@ -79,16 +81,19 @@ function subjectList(year,term) {
  main.innerHTML=crumbs([[`ปี ${year}`,`/year/${year}`],[`เทอม ${term}`]])+steps(2)+banner(`YEAR ${year} / SEMESTER ${term}`,`วิชาของคุณ <span class="green">ปี ${year} เทอม ${term}</span>`,'เลือกวิชาเพื่อดูบทเรียน สรุป และแบบทดสอบ',`<span class="count-badge">${list.length} วิชา</span>`)+ (list.length?`<div class="subject-grid">${list.map((s,i)=>`<a class="subject-card tone-${i%3}" href="#${base(s,null)}"><div class="subject-top"><span class="subject-symbol">${s.label}</span><span class="pill ${s.chapters.length?'ready':''}">${s.chapters.length?'พร้อมทบทวน':'รอเพิ่มบทเรียน'}</span></div><p class="course-code">${s.code}</p><h2>${s.title}</h2><p>${s.thai}</p><div class="subject-bottom"><span>${s.chapters.length} บทเรียน</span>${icon('arrow')}</div></a>`).join('')}</div>`:empty('เทอมนี้ยังไม่มีวิชา','รายวิชาจะปรากฏที่นี่เมื่อเพิ่มเนื้อหาแล้ว'));
 }
 function chapters(s,selectedExam='final') {
- const mm=['multimedia-technology','database-system-concepts','introduction-to-network-systems'].includes(s.id);
+ const mm=['multimedia-technology','database-system-concepts','introduction-to-network-systems','physical-computing'].includes(s.id);
  const shown=mm?s.chapters.filter(c=>(c.exam||'final')===selectedExam):s.chapters;
  const periodNav=mm?periodNavigation(s,selectedExam):'';
- main.innerHTML=crumbs([[`ปี ${s.year}`,`/year/${s.year}`],[`เทอม ${s.term}`,`/year/${s.year}/term/${s.term}`],[s.title]])+steps(3)+banner(`${s.code} / YEAR ${s.year} / SEMESTER ${s.term}`,s.title,s.thai)+`<p class="intro-note">${s.description}</p>${periodNav}`+(shown.length?`<div class="section-heading"><h2>บทเรียนทั้งหมด</h2><span>${shown.length} CHAPTER</span></div><div class="chapters">${shown.map(c=>{
+ const isPhysical=s.id==='physical-computing';
+ const introCard=isPhysical?'<div class="pc-special-nav"><a href="#'+base(s,s.chapters.find(c=>c.number===0))+'/summary"><span>📖</span><div><strong>Chapter 0 · แนะนำวิชา</strong><small>เป้าหมาย เนื้อหาที่เรียน และเกณฑ์ประเมิน · ไม่รวมในข้อสอบ</small></div><span aria-hidden="true">→</span></a><a href="#'+base(s,null)+'/labs"><span>🧪</span><div><strong>Practical Labs · ลงมือทำ</strong><small>Lab 01, 02, 03, 04, 06, 09, 10, 12–15 พร้อมแหล่งต้นฉบับและ Checklist</small></div><span aria-hidden="true">→</span></a></div>':'';
+
+ main.innerHTML=crumbs([[`ปี ${s.year}`,`/year/${s.year}`],[`เทอม ${s.term}`,`/year/${s.year}/term/${s.term}`],[s.title]])+steps(3)+banner(`${s.code} / YEAR ${s.year} / SEMESTER ${s.term}`,s.title,s.thai)+`<p class="intro-note">${s.description}</p>${introCard}${periodNav}`+(shown.length?`<div class="section-heading"><h2>บทเรียนทั้งหมด</h2><span>${shown.length} CHAPTER</span></div><div class="chapters">${shown.map(c=>{
  const p=chapterState(c),best=validBest(p.best);
  return `<a class="chapter-card" href="#${base(s,c)}/summary"><span class="chapter-number">${String(c.number).padStart(2,'0')}</span><div class="chapter-info"><div class="chapter-meta"><span>CHAPTER ${String(c.number).padStart(2,'0')}</span>${p.read?'<span class="pill ready">อ่านแล้ว</span>':''}</div><h2>${c.title}</h2><p>${c.description}</p><div class="chapter-details"><span>${icon('clock')}${c.minutes} นาที</span><span>${icon('cards')}${c.flashcards.length} แฟลชการ์ด</span><span>${icon('quiz')}${c.questions.length} ข้อ</span></div></div><div class="chapter-trailing">${best!==null?`<small>คะแนนสูงสุด</small><strong>${best}%</strong>`:'<span class="pill ready">พร้อมอ่าน</span>'}${icon('arrow')}</div></a>`;
  }).join('')}</div><p class="muted source-note">สรุปจากเอกสารรายวิชาเพื่อทบทวน ไม่ใช่ข้อสอบจริงของอาจารย์</p>`:(mm&&selectedExam==='midterm'?empty('Midterm · รอเอกสารกลางภาค','เตรียมหน้าไว้แล้ว และจะเพิ่มบทเรียนกับข้อสอบเมื่อได้รับเอกสารรายวิชา'):empty('ยังไม่มีบทเรียนในวิชานี้','เพิ่มเอกสารของวิชานี้ แล้วจะมีสรุปและข้อสอบแยกเป็นรายบท')));
 }
 function readerShell(s,c) {
- const tabs=[['summary','book','สรุปบทเรียน'],['flashcards','cards',`แฟลชการ์ด (${c.flashcards.length})`],['quiz','quiz',`ลองทำข้อสอบ (${c.questions.length})`]];
+ const tabs=c.exam==='overview'?[['summary','book','ภาพรวมรายวิชา']]:[['summary','book','สรุปบทเรียน'],['flashcards','cards',`แฟลชการ์ด (${c.flashcards.length})`],['quiz','quiz',`ลองทำข้อสอบ (${c.questions.length})`]];
  main.innerHTML=crumbs([[`ปี ${s.year}`,`/year/${s.year}`],[`เทอม ${s.term}`,`/year/${s.year}/term/${s.term}`],[s.title,base(s,null)],[`บท ${c.number}`]])+`<section class="reader-heading"><p class="eyebrow">${s.code} · ${s.title} / CHAPTER ${String(c.number).padStart(2,'0')}</p><h1>${c.title}</h1><p class="lead">${c.description}</p><div class="reader-meta"><span>${icon('clock')}อ่านประมาณ ${c.minutes} นาที</span><span>${icon('layers')}${c.sections.length} หัวข้อ</span><span class="pill ready">ระดับมหาวิทยาลัย ปี 2</span></div></section><nav class="tabs" aria-label="รูปแบบการทบทวน">${tabs.map(([id,ic,label])=>`<a href="#${base(s,c)}/${id}" class="${view===id?'active':''}" ${view===id?'aria-current="page"':''}>${icon(ic)}${label}</a>`).join('')}</nav><div id="reader-content"></div><p class="storage-status" id="storage-status" role="status"></p>`;
  if(view==='summary') renderSummary(c);
  if(view==='flashcards') renderFlash(c);
@@ -107,7 +112,7 @@ function renderSummary(c) {
   const formula=sec.formula?`<div class="formula study-formula"><span>สูตรและตัวอย่างคำนวณ</span><pre>${esc(sec.formula)}</pre></div>`:'';
   return `<section class="summary-section study-section" id="section-${esc(sec.number)}"><div class="section-index"><span>หัวข้อ ${String(i+1).padStart(2,'0')} / ${String(sections.length).padStart(2,'0')}</span><small>${esc(sec.pages)}</small></div><h2>${esc(sec.title)}</h2><div class="study-definition"><span class="study-definition-label">ใจความสำคัญ</span><p>${highlightStudyTerms(sec.intro,names,esc)}</p></div>${bulletList}${table}${formula}${key}</section>`;
  }).join('');
- $('#reader-content').innerHTML=`<div class="reading-layout study-reading"><article class="summary">${overview}${articles}<div class="reading-finish"><h3>ทบทวนเนื้อหาครบแล้ว</h3><p>ลองใช้แฟลชการ์ดเพื่อจำศัพท์อังกฤษ หรือทำข้อสอบที่อิงจากเนื้อหาในบทนี้ พร้อมเฉลยและเหตุผล</p><div class="actions"><button class="button primary" id="mark-read">${chapterState(c).read?'✓ อ่านบทนี้แล้ว':'ทำเครื่องหมายว่าอ่านแล้ว'}</button><a class="button secondary" href="#${base()}/quiz">ทำข้อสอบรายบท ${icon('arrow')}</a></div></div><p class="source-note">เอกสารประกอบบทเรียน: ${esc(c.source||'ข้อมูลที่ใช้จัดทำสรุปตามรายวิชา')}</p></article><aside class="toc study-toc"><p class="eyebrow">หัวข้อในบทเรียน</p>${sections.map((sec,i)=>`<button data-section="${esc(sec.number)}"><span>${String(i+1).padStart(2,'0')}</span>${esc(sec.title)}</button>`).join('')}<div class="toc-note">เลือกหัวข้อเพื่ออ่านสรุปและทบทวนศัพท์สำคัญ</div></aside></div>`;
+ $('#reader-content').innerHTML=`<div class="reading-layout study-reading"><article class="summary">${overview}${articles}<div class="reading-finish"><h3>ทบทวนเนื้อหาครบแล้ว</h3><p>ลองใช้แฟลชการ์ดเพื่อจำศัพท์อังกฤษ หรือทำข้อสอบที่อิงจากเนื้อหาในบทนี้ พร้อมเฉลยและเหตุผล</p><div class="actions"><button class="button primary" id="mark-read">${chapterState(c).read?'✓ อ่านบทนี้แล้ว':'ทำเครื่องหมายว่าอ่านแล้ว'}</button>${c.exam==='overview'?`<a class="button secondary" href="#${base(activeSubject,null)}/midterm">เริ่มอ่าน Midterm ${icon('arrow')}</a><a class="button secondary" href="#${base(activeSubject,null)}/labs">ดู Lab ${icon('arrow')}</a>`:`<a class="button secondary" href="#${base()}/quiz">ทำข้อสอบรายบท ${icon('arrow')}</a>`}</div></div><p class="source-note">เอกสารประกอบบทเรียน: ${esc(c.source||'ข้อมูลที่ใช้จัดทำสรุปตามรายวิชา')}</p></article><aside class="toc study-toc"><p class="eyebrow">หัวข้อในบทเรียน</p>${sections.map((sec,i)=>`<button data-section="${esc(sec.number)}"><span>${String(i+1).padStart(2,'0')}</span>${esc(sec.title)}</button>`).join('')}<div class="toc-note">เลือกหัวข้อเพื่ออ่านสรุปและทบทวนศัพท์สำคัญ</div></aside></div>`;
  $('#mark-read').onclick=()=>{progress[c.id]={...chapterState(c),read:true};persist();$('#mark-read').textContent='✓ อ่านบทนี้แล้ว';};
  document.querySelectorAll('[data-section],[data-jump]').forEach(button=>button.onclick=e=>{e.preventDefault();const targetId=button.dataset.section||button.dataset.jump;document.getElementById('section-'+targetId)?.scrollIntoView({behavior:'smooth',block:'start'});});
 }
@@ -176,12 +181,14 @@ function navigate() {
   const s=subjects.find(s=>s.id===route[5]&&s.year===y&&s.term===t);
   if(route[4]!=='subject'||!s){notFound();return;}
   activeSubject=s;
-  if(route.length===6)chapters(s);
-   else if(route.length===7 && ['multimedia-technology','database-system-concepts','introduction-to-network-systems'].includes(s.id) && ['midterm','final'].includes(route[6])) chapters(s,route[6]);
-   else if(route.length===8 && ['multimedia-technology','database-system-concepts','introduction-to-network-systems'].includes(s.id) && ['midterm','final'].includes(route[6]) && route[7]==='exam') showExam(s,route[6],main);
+  if(route.length===6)chapters(s,s.id==='physical-computing'?'midterm':'final');
+   else if(s.id==='physical-computing' && route.length===7 && route[6]==='labs')showPhysicalLabs(main);
+   else if(s.id==='physical-computing' && route.length===8 && route[6]==='labs')showPhysicalLab(main,route[7]);
+   else if(route.length===7 && ['multimedia-technology','database-system-concepts','introduction-to-network-systems','physical-computing'].includes(s.id) && ['midterm','final'].includes(route[6])) chapters(s,route[6]);
+   else if(route.length===8 && ['multimedia-technology','database-system-concepts','introduction-to-network-systems','physical-computing'].includes(s.id) && ['midterm','final'].includes(route[6]) && route[7]==='exam') showExam(s,route[6],main);
   else {
    const c=s.chapters.find(c=>c.id===route[7]);
-   if(route[6]!=='chapter'||!c||route.length>9||!['summary','flashcards','quiz'].includes(route[8]||'summary')){notFound();return;}
+   if(route[6]!=='chapter'||!c||route.length>9||!['summary','flashcards','quiz'].includes(route[8]||'summary')||(c.exam==='overview'&&route[8]&&route[8]!=='summary')){notFound();return;}
    activeChapter=c;view=route[8]||'summary';readerShell(s,c);
   }
  }
