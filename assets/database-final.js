@@ -424,7 +424,7 @@ export const databaseFinalChapters = createDatabaseChapters([
       },
       {
         "title": "Recovery and Logging",
-        "intro": "สไลด์ครอบคลุม log file, checkpoint, undo/redo และ recovery หลังความล้มเหลว",
+        "intro": "การกู้คืนฐานข้อมูลหลังระบบขัดข้องใช้ Transaction Log บันทึกการเปลี่ยนแปลง ร่วมกับ Checkpoint และการทำ Undo/Redo เพื่อจัดการธุรกรรมที่สำเร็จหรือยังไม่สำเร็จ",
         "items": [
           [
             "Rollback (Undo)",
@@ -505,7 +505,7 @@ export const databaseFinalChapters = createDatabaseChapters([
       },
       {
         "title": "Properties of a Warehouse",
-        "intro": "คลังข้อมูลมีคุณสมบัติสำคัญสี่ด้านที่สไลด์ระบุชัดเจน",
+        "intro": "Data Warehouse เน้นการวิเคราะห์โดยจัดข้อมูลตามหัวเรื่อง (Subject-oriented) รวมข้อมูลให้สอดคล้องกัน (Integrated) เก็บมิติเวลา (Time-variant) และลดการแก้ไขข้อมูลย้อนหลัง (Non-volatile)",
         "items": [
           [
             "Subject-oriented",
