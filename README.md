@@ -28,7 +28,7 @@
 | 06066000 | [DISCRETE MATHEMATICS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/discrete-mathematics) | รอเพิ่มเนื้อหา |
 | 06016413 | [INTRODUCTION TO NETWORK SYSTEMS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems) | รอเพิ่มเนื้อหา |
 | 06016409 | [PHYSICAL COMPUTING](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing) | รอเพิ่มเนื้อหา |
-| 06016403 | [MULTIMEDIA TECHNOLOGY](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology) | บท 6 พร้อมใช้งาน |
+| 06016403 | [MULTIMEDIA TECHNOLOGY](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology) | Midterm 1–5 / Final 6–12 พร้อมใช้งาน |
 
 > รายวิชาตามรายการที่ผู้ใช้ให้มา วิชาที่ยังไม่มีเอกสารแสดงสถานะรอเพิ่มบทเรียน ไม่ใส่เนื้อหาที่สมมติขึ้น
 
@@ -188,17 +188,26 @@ npm test
 | 11 | Multimedia Networking & Security |
 | 12 | Multimedia Devices |
 
-มีสรุปแต่ละหัวข้อ แฟลชการ์ดพร้อมคำศัพท์และความหมาย และข้อสอบที่อธิบายทุกตัวเลือก
+มีสรุปแต่ละหัวข้อ แฟลชการ์ด **English Term → ความหมายภาษาไทย → ตัวอย่าง** และข้อสอบวิเคราะห์สถานการณ์ที่อธิบายเหตุผลทุกตัวเลือก
 
 [**ทำข้อสอบ Final 60 ข้อ**](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/final/exam)
 </details>
 
-<details><summary><strong>📘 Midterm — รอสไลด์กลางภาค</strong></summary>
+<details open><summary><strong>📘 Midterm — บท 1–5 พร้อมเรียน</strong></summary>
 
-เตรียมหน้า Midterm และชุดข้อสอบ 60 ข้อไว้แล้ว แต่ยังไม่ใส่คำถามก่อนรับเนื้อหากลางภาค
+| บท | เนื้อหา | สรุป | แฟลชการ์ด | ข้อสอบรายบท |
+|---|---|---|---|---|
+| 1 | **Introduction to Multimedia Computing** | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/chapter/chapter-1/summary) | [ศัพท์อังกฤษ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/chapter/chapter-1/flashcards) | [ฝึกทำ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/chapter/chapter-1/quiz) |
+| 2 | **Digital Media Representations** | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/chapter/chapter-2/summary) | [ศัพท์อังกฤษ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/chapter/chapter-2/flashcards) | [ฝึกทำ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/chapter/chapter-2/quiz) |
+| 3 | **Bitmapped Images** | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/chapter/chapter-3/summary) | [ศัพท์อังกฤษ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/chapter/chapter-3/flashcards) | [ฝึกทำ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/chapter/chapter-3/quiz) |
+| 4 | **Color Science** | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/chapter/chapter-4/summary) | [ศัพท์อังกฤษ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/chapter/chapter-4/flashcards) | [ฝึกทำ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/chapter/chapter-4/quiz) |
+| 5 | **Digital Video** | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/chapter/chapter-5/summary) | [ศัพท์อังกฤษ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/chapter/chapter-5/flashcards) | [ฝึกทำ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/chapter/chapter-5/quiz) |
 
-[เปิดหน้า Midterm](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/midterm/exam)
+สรุปแยกหัวข้อ **24 หัวข้อ**, แฟลชการ์ดภาษาอังกฤษ **77 ใบ**, แบบฝึกหัดรายบท **77 ข้อ** และ **ข้อสอบรวม Midterm 60 ข้อ** (บทละ 12 ข้อ) พร้อมเฉลยเหตุผลทุกตัวเลือก
+
+[**ทำข้อสอบ Midterm 60 ข้อ**](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology/midterm/exam)
+
 </details>
 
-> แบบฝึกหัดจัดทำจากสไลด์เพื่อทบทวน ไม่ใช่ข้อสอบจริงของอาจารย์
+> **แนวทางคำศัพท์ทุกวิชา:** เน้น English Technical Terms ในสรุปและแฟลชการ์ด พร้อมแปลไทย ยกตัวอย่าง และให้โจทย์ประยุกต์โดยไม่ถามนิยามตรง ๆ\n>\n> แบบฝึกหัดจัดทำจากสไลด์เพื่อทบทวน ไม่ใช่ข้อสอบจริงของอาจารย์
 <!-- /MULTIMEDIA-FINAL-2026 -->
