@@ -27,7 +27,7 @@
 | 06066300 | [DATABASE SYSTEM CONCEPTS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts) | **Midterm บท 1, 3, 4 / Final บท 7, 9, 15, 20** · พร้อมสรุปและข้อสอบ |
 | 06066000 | [DISCRETE MATHEMATICS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/discrete-mathematics) | รอเพิ่มเนื้อหา |
 | 06016413 | [INTRODUCTION TO NETWORK SYSTEMS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems) | **Midterm ก่อน Week 9 / Final ตั้งแต่ Week 9** · สรุปภาษาไทยพร้อมคำศัพท์อังกฤษและข้อสอบ |
-| 06016409 | [PHYSICAL COMPUTING](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing) | **Chapter 0 แนะนำวิชา · Midterm 1–7 · Final Pointer/Structure/Circuit/MCU/Sensor/IoT · Lab 11 ชุด** |
+| 06016409 | [PHYSICAL COMPUTING](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing) | **Chapter 0 แนะนำวิชา · Midterm บท 1–8 (มีเนื้อหา 1–7) · Final ตั้งแต่บท 9 · Lab 11 ชุด** |
 | 06016403 | [MULTIMEDIA TECHNOLOGY](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology) | Midterm 1–5 / Final 6–12 พร้อมใช้งาน |
 
 > รายวิชาตามรายการที่ผู้ใช้ให้มา วิชาที่ยังไม่มีเอกสารแสดงสถานะรอเพิ่มบทเรียน ไม่ใส่เนื้อหาที่สมมติขึ้น
@@ -36,7 +36,7 @@
 
 > รหัส **06016409** · สรุปภาษาไทย + ศัพท์อังกฤษพร้อมคำแปลและตัวอย่าง · โจทย์สถานการณ์ตามหัวข้อที่มีในเอกสาร ไม่ใช่ข้อสอบจริง
 
-| [📖 Chapter 0: แนะนำรายวิชา](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-0/summary) | [📘 Midterm: Chapter 1–7](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/midterm) | [🟠 Final: จากบทที่ 8 เป็นต้นไป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/final) | [🧪 Lab: ทบทวนและฝึกทำ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/labs) |
+| [📖 Chapter 0: แนะนำรายวิชา](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/chapter/pc-chapter-0/summary) | [📘 Midterm: Chapter 1–8](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/midterm) | [🟠 Final: ตั้งแต่บทที่ 9 เป็นต้นไป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/final) | [🧪 Lab: ทบทวนและฝึกทำ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/labs) |
 |:---:|:---:|:---:|:---:|
 | ขอบเขตวิชา/คะแนน | 7 บท | 6 บทที่มีเอกสาร | 11 Labs |
 
@@ -84,7 +84,7 @@
 
 **คู่มือ Lab บน GitHub ที่ตรวจพบครบ 6 ชุด:** [Lab 03 GDB](https://github.com/TaeTanakrit0089/PhysicalComputing-167/tree/main/labs/labs03-gdb) · [Lab 04 GDB 02](https://github.com/TaeTanakrit0089/PhysicalComputing-167/tree/main/labs/labs04-gdb02) · [Lab 12 Arduino](https://github.com/TaeTanakrit0089/PhysicalComputing-167/tree/main/labs/labs12-IntroToMicrocontroller) · [Lab 13 Analog/PWM](https://github.com/TaeTanakrit0089/PhysicalComputing-167/tree/main/labs/labs13-Digital_Read_and_Analog_Signal) · [Lab 14 Sensors](https://github.com/TaeTanakrit0089/PhysicalComputing-167/tree/main/labs/labs14-Sensor_and_LCD) · [Lab 15 MQTT/IoT](https://github.com/TaeTanakrit0089/PhysicalComputing-167/tree/main/labs/labs15-internet_of_things)
 
-**ขอบเขตตามไฟล์:** Chapter 0 ใช้แนะนำวิชา ไม่เข้าธนาคารข้อสอบ; Chapter 1–7 จัดเป็น Midterm; เอกสารช่วงหลังจัดเป็น Final โดยใช้เลขครั้งตามหน้าปกสไลด์ (Pointer แสดงครั้งที่ 9 แม้ชื่อไฟล์ขึ้นต้น PC69-08) ไม่มีเอกสาร Lecture แยกสำหรับครั้งที่ 8 และ 13 จึงไม่สร้างบทสมมติ ส่วน Lab 13 มีเอกสาร GitHub จึงยังอยู่ในหมวด Lab
+**ขอบเขตการสอบ:** Chapter 0 ใช้แนะนำวิชา ไม่เข้าธนาคารข้อสอบ; Chapter 1–8 เป็น Midterm (ขณะนี้มีสรุปจากไฟล์บท 1–7; บท 8 ยังไม่มีเอกสาร); ตั้งแต่ Chapter 9 เป็น Final โดยใช้เลขครั้งตามหน้าปกสไลด์ (Pointer แสดงครั้งที่ 9 แม้ชื่อไฟล์ขึ้นต้น PC69-08) ไม่มีเอกสาร Lecture แยกสำหรับครั้งที่ 8 และ 13 จึงไม่สร้างบทสมมติ ส่วน Lab 13 มีเอกสาร GitHub จึงยังอยู่ในหมวด Lab
 
 ## INTRODUCTION TO NETWORK SYSTEMS — Midterm & Final
 
