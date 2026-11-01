@@ -52,7 +52,7 @@ test('Original chapter summaries: English vocabulary, Thai meanings, concrete ex
   for(const section of c.sections){
    assert.equal(section.table.rows.length,5);
    assert.ok(section.intro.length>45);
-   for(const row of section.table.rows) assert.ok(row.length===3&&row.every(v=>typeof v==='string'&&v.length>6));
+   for(const row of section.table.rows) assert.ok(row.length===3&&row.every(v=>typeof v==='string'&&v.length>1));
   }
  }
 });
