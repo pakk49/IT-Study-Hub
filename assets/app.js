@@ -1,5 +1,6 @@
 import { showExam } from './exam.js';
 import { vocabularyHtml } from './english-quiz.js';
+import { slideHintHtml } from './slide-hints.js';
 import { subjects } from './content.js';
 import { grade, shuffle, readProgress, saveProgress, validBest } from './engine.js';
 const $ = s => document.querySelector(s);
@@ -14,6 +15,32 @@ let progress = readProgress(storage);
 let route = [], activeSubject, activeChapter, view = 'summary', quiz = null, flash = {index:0, flipped:false, cards:[]};
 const base = (s = activeSubject, c = activeChapter) => `/year/${s.year}/term/${s.term}/subject/${s.id}${c ? `/chapter/${c.id}` : ''}`;
 const href = path => `#${path}`;
+// ปุ่มย้อนกลับตามโครงสร้างเว็บ ป้องกันการย้อนออกนอกไซต์
+function parentHash(){
+ if(!route.length)return null;
+ if(route[0]!=='year')return '#/';
+ const prefix='/year/'+route[1];
+ if(route.length<=2)return '#/';
+ if(route.length===4)return '#'+prefix;
+ const subjectPath=prefix+'/term/'+route[3]+'/subject/'+route[5];
+ if(route.length===6)return '#'+prefix+'/term/'+route[3];
+ if(route.length===7)return '#'+subjectPath;
+ if(route[7]==='exam')return '#'+subjectPath+'/'+route[6];
+ if(route[6]==='chapter'){
+  if(route.length>=9 && route[8]!=='summary')return '#'+subjectPath+'/chapter/'+route[7]+'/summary';
+  const sub=subjects.find(s=>s.id===route[5]);
+  const chapter=sub?.chapters.find(c=>c.id===route[7]);
+  return '#'+subjectPath+'/'+(chapter?.exam||'final');
+ }
+ return '#'+subjectPath;
+}
+function syncBackButton(){
+ const button=$('#nav-back'),parent=parentHash();
+ if(!button)return;
+ button.hidden=!parent;
+ button.onclick=parent?()=>{location.hash=parent;}:null;
+}
+
 const chapterState = c => progress[c.id] || {};
 function persist() {
   if (!saveProgress(storage, progress)) {
@@ -81,7 +108,7 @@ function renderFlash(c) {
  $('#shuffle-cards').onclick=()=>{flash.cards=shuffle(c.flashcards);flash.index=0;flash.flipped=false;renderFlash(c);};
 }
 function startQuiz(c,questions=c.questions,mode='full') {
- quiz={chapter:c.id,questions:shuffle(questions),mode,index:0,selected:null,answers:{},checked:false,finished:false,vocabOpen:false};renderQuiz(c);
+ quiz={chapter:c.id,questions:shuffle(questions),mode,index:0,selected:null,answers:{},checked:false,finished:false,vocabOpen:false,hintOpen:false,drafts:{}};renderQuiz(c);
 }
 function renderQuiz(c) {
  const target=$('#reader-content');
@@ -92,12 +119,16 @@ function renderQuiz(c) {
  }
  if(quiz.finished){renderResult(c);return;}
  const q=quiz.questions[quiz.index],selected=quiz.selected,checked=quiz.checked,ok=selected===q.answer;
- target.innerHTML=`<div class="quiz-work"><div class="quiz-top"><span>${quiz.mode==='wrong'?'ทบทวนข้อที่ผิด':'แบบทดสอบประจำบท'}</span><b>ข้อ ${quiz.index+1} / ${quiz.questions.length}</b></div><div class="progress-track"><div style="width:${quiz.index/quiz.questions.length*100}%"></div></div><div class="question-card"><div class="question-tags"><span class="pill">${q.level}</span><span>${c.sections.find(s=>s.id===q.topic).title}</span></div><h2>${esc(q.prompt)}</h2>${vocabularyHtml(q,esc,checked||quiz.vocabOpen)}<fieldset class="options" ${checked?'disabled':''}><legend class="sr-only">เลือกคำตอบเดียว</legend>${q.options.map((opt,i)=>`<label class="option ${selected===i?'selected':''} ${checked&&i===q.answer?'correct':''} ${checked&&i===selected&&!ok?'incorrect':''}"><input type="radio" name="answer" value="${i}" ${selected===i?'checked':''}><span class="option-letter">${'ABCD'[i]}</span><span>${esc(opt)}</span>${checked&&i===q.answer?'<span class="option-status">✓</span>':checked&&i===selected&&!ok?'<span class="option-status">×</span>':''}</label>`).join('')}</fieldset>${checked?`<section class="feedback ${ok?'good':'bad'}" role="status"><h3>${ok?'✓ ตอบถูกแล้ว':'ยังไม่ถูก มาทำความเข้าใจกัน'}</h3><p><b>คำตอบที่ถูก: ${'ABCD'[q.answer]}. ${esc(q.options[q.answer])}</b></p>${!ok?`<p>คำตอบของคุณ: ${esc(q.reasons[selected])}</p>`:''}<p>เหตุผล: ${esc(q.reasons[q.answer])}</p><details><summary>เหตุผลของทุกตัวเลือก</summary>${q.options.map((opt,i)=>`<p><b>${'ABCD'[i]}. ${esc(opt)}</b><br>${esc(q.reasons[i])}</p>`).join('')}</details><button class="review-link" data-review="${q.topic}">กลับไปอ่าน ${c.sections.find(s=>s.id===q.topic).title} ↗</button></section>`:''}<div class="question-bottom"><span>${checked?'อ่านเหตุผลแล้วค่อยไปต่อได้เลย':'เลือกได้ 1 คำตอบ'}</span><button class="button primary" id="quiz-action" ${!checked&&selected===null?'disabled':''}>${checked?(quiz.index===quiz.questions.length-1?'ดูผลคะแนน':'ข้อถัดไป →'):'ตรวจคำตอบ'}</button></div></div><button class="text-button" id="restart-quiz">เริ่มชุดนี้ใหม่</button></div>`;
+ target.innerHTML=`<div class="quiz-work"><div class="quiz-top"><span>${quiz.mode==='wrong'?'ทบทวนข้อที่ผิด':'แบบทดสอบประจำบท'}</span><b>ข้อ ${quiz.index+1} / ${quiz.questions.length}</b></div><div class="progress-track"><div style="width:${quiz.index/quiz.questions.length*100}%"></div></div><div class="question-card"><div class="question-tags"><span class="pill">${q.level}</span><span>${c.sections.find(s=>s.id===q.topic).title}</span></div><h2>${esc(q.prompt)}</h2><div class="hint-area"><button class="hint-toggle" type="button" id="quiz-hint" aria-expanded="${quiz.hintOpen?'true':'false'}" ${checked?'disabled':''}>💡 ${quiz.hintOpen?'ซ่อน Hint':'Hint · ขอคำใบ้'}</button>${quiz.hintOpen&&!checked?slideHintHtml(q,c,esc):''}</div>${vocabularyHtml(q,esc,checked||quiz.vocabOpen)}<fieldset class="options" ${checked?'disabled':''}><legend class="sr-only">เลือกคำตอบเดียว</legend>${q.options.map((opt,i)=>`<label class="option ${selected===i?'selected':''} ${checked&&i===q.answer?'correct':''} ${checked&&i===selected&&!ok?'incorrect':''}"><input type="radio" name="answer" value="${i}" ${selected===i?'checked':''}><span class="option-letter">${'ABCD'[i]}</span><span>${esc(opt)}</span>${checked&&i===q.answer?'<span class="option-status">✓</span>':checked&&i===selected&&!ok?'<span class="option-status">×</span>':''}</label>`).join('')}</fieldset>${checked?`<section class="feedback ${ok?'good':'bad'}" role="status"><h3>${ok?'✓ ตอบถูกแล้ว':'ยังไม่ถูก มาทำความเข้าใจกัน'}</h3><p><b>คำตอบที่ถูก: ${'ABCD'[q.answer]}. ${esc(q.options[q.answer])}</b></p>${!ok?`<p>คำตอบของคุณ: ${esc(q.reasons[selected])}</p>`:''}<p>เหตุผล: ${esc(q.reasons[q.answer])}</p><details><summary>เหตุผลของทุกตัวเลือก</summary>${q.options.map((opt,i)=>`<p><b>${'ABCD'[i]}. ${esc(opt)}</b><br>${esc(q.reasons[i])}</p>`).join('')}</details><button class="review-link" data-review="${q.topic}">กลับไปอ่าน ${c.sections.find(s=>s.id===q.topic).title} ↗</button></section>`:''}<div class="question-bottom"><button class="button secondary quiz-prev" id="quiz-prev" type="button" ${quiz.index===0?'disabled':''}>← ข้อก่อนหน้า</button><span>${checked?'อ่านเหตุผลแล้วค่อยไปต่อได้เลย':'เลือกได้ 1 คำตอบ'}</span><button class="button primary" id="quiz-action" ${!checked&&selected===null?'disabled':''}>${checked?(quiz.index===quiz.questions.length-1?'ดูผลคะแนน':'ข้อถัดไป →'):'ตรวจคำตอบ'}</button></div></div><button class="text-button" id="restart-quiz">เริ่มชุดนี้ใหม่</button></div>`;
+ const hintButton=$('#quiz-hint');
+ if(hintButton)hintButton.onclick=()=>{quiz.hintOpen=!quiz.hintOpen;renderQuiz(c);$('#quiz-hint')?.focus();};
+ const prevButton=$('#quiz-prev');
+ if(prevButton)prevButton.onclick=()=>{if(quiz.index===0)return;quiz.index--;const previous=quiz.questions[quiz.index];quiz.checked=Object.prototype.hasOwnProperty.call(quiz.answers,previous.id);quiz.selected=quiz.checked?quiz.answers[previous.id]:(quiz.drafts[previous.id]??null);quiz.hintOpen=false;quiz.vocabOpen=false;renderQuiz(c);};
  const vocabDetails=target.querySelector('.quiz-vocabulary');if(vocabDetails&&!checked)vocabDetails.addEventListener('toggle',()=>{quiz.vocabOpen=vocabDetails.open;});
- document.querySelectorAll('input[name="answer"]').forEach(input=>input.onchange=()=>{quiz.selected=Number(input.value);renderQuiz(c);document.querySelector(`input[name="answer"][value="${quiz.selected}"]`)?.focus();});
+ document.querySelectorAll('input[name="answer"]').forEach(input=>input.onchange=()=>{quiz.selected=Number(input.value);quiz.drafts[q.id]=quiz.selected;renderQuiz(c);document.querySelector(`input[name="answer"][value="${quiz.selected}"]`)?.focus();});
  $('#quiz-action').onclick=()=>{
   if(!quiz.checked){if(quiz.selected===null)return;quiz.answers[q.id]=quiz.selected;quiz.checked=true;renderQuiz(c);}
-  else if(quiz.index<quiz.questions.length-1){quiz.index++;quiz.checked=false;quiz.selected=null;quiz.vocabOpen=false;renderQuiz(c);$('.question-card').scrollIntoView({behavior:'smooth',block:'start'});}
+  else if(quiz.index<quiz.questions.length-1){quiz.index++;const next=quiz.questions[quiz.index];quiz.checked=Object.prototype.hasOwnProperty.call(quiz.answers,next.id);quiz.selected=quiz.checked?quiz.answers[next.id]:(quiz.drafts[next.id]??null);quiz.vocabOpen=false;quiz.hintOpen=false;renderQuiz(c);$('.question-card').scrollIntoView({behavior:'smooth',block:'start'});}
   else {quiz.finished=true;const result=grade(quiz.questions,quiz.answers);if(quiz.mode==='full'){const old=validBest(chapterState(c).best)??0;progress[c.id]={...chapterState(c),best:Math.max(old,result.percent),last:result.percent};persist();}renderResult(c);}
  };
  $('#restart-quiz').onclick=()=>startQuiz(c,quiz.questions,quiz.mode);
@@ -117,6 +148,7 @@ function searchResults(query) {
 function navigate() {
  let path;try{path=decodeURIComponent(location.hash.slice(1)||'/');}catch{path='/invalid';}
  route=path.split('/').filter(Boolean);
+ syncBackButton();
  $('#search').value=route[0]==='search'?(route.slice(1).join('/')||''):'';
  activeSubject=null;activeChapter=null;
  const y=Number(route[1]),t=Number(route[3]);
