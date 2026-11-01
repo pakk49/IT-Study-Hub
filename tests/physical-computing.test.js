@@ -5,7 +5,7 @@ import { subjects } from '../assets/content.js';
 import { buildExamBank } from '../assets/exam-bank.js';
 import { physicalLabs } from '../assets/physical-labs.js';
 const physical=subjects.find(s=>s.id==='physical-computing');
-test('Physical Computing Chapter 0 = Overview only; Midterm = 1–7; Final = supplied later slides',()=>{
+test('Physical Computing Chapter 0 = Overview; Midterm scope 1–8; Final begins at 9',()=>{
  assert.ok(physical,'Physical Computing subject must exist');
  assert.equal(physical.code,'06016409');
  assert.equal(physical.chapters.find(c=>c.number===0)?.exam,'overview');
@@ -13,6 +13,8 @@ test('Physical Computing Chapter 0 = Overview only; Midterm = 1–7; Final = sup
  assert.deepEqual(physical.chapters.filter(c=>c.exam==='midterm').map(c=>c.number),[1,2,3,4,5,6,7]);
  assert.deepEqual(physical.chapters.filter(c=>c.exam==='final').map(c=>c.number),[9,10,11,12,14,15]);
  assert.ok(!physical.chapters.some(c=>c.number===8||c.number===13),'Do not fabricate unsupported lecture chapters');
+ assert.ok(physical.chapters.filter(c=>c.exam==='midterm').every(c=>c.number>=1&&c.number<=8),'Midterm must end at Chapter 8');
+ assert.ok(physical.chapters.filter(c=>c.exam==='final').every(c=>c.number>=9),'Final must start at Chapter 9');
 });
 test('Midterm / Final 60 real, distinct chapter-based applied questions each',()=>{
  for(const period of ['midterm','final']){
