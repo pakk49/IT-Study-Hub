@@ -11,13 +11,14 @@ function balanceQuestions(c,count) {
 }
 export function buildExamBank(subject,period) {
   const chapters=(subject.chapters||[]).filter(c=>(c.exam||'final')===period).slice().sort((a,b)=>a.number-b.number);
-  const want=period==='final'?chapters.map(c=>QUOTAS.get(c.number)||0):chapters.map(()=>0);
-  if(period==='midterm'){
+  const multimediaFinal=subject.id==='multimedia-technology' && period==='final';
+  const want=multimediaFinal?chapters.map(c=>QUOTAS.get(c.number)||0):chapters.map(()=>0);
+  if(!multimediaFinal){
     let remaining=EXAM_SIZE;
     while(remaining){let took=false;for(let i=0;i<chapters.length&&remaining;i++)if(want[i]<(chapters[i].questions||[]).length){want[i]++;remaining--;took=true;}if(!took)break;}
   }
   const total=want.reduce((a,b)=>a+b,0);
-  const valid=total===EXAM_SIZE && (period!=='final'||chapters.length===7) && chapters.every((c,i)=>c.questions?.length>=want[i]);
+  const valid=total===EXAM_SIZE && (!multimediaFinal||chapters.length===7) && chapters.every((c,i)=>c.questions?.length>=want[i]);
   if(!valid)return {ready:false,total:EXAM_SIZE,questions:[],chapters};
   const questions=chapters.flatMap((c,i)=>balanceQuestions(c,want[i]).map(q=>({...q,id:c.id+'::'+q.id,chapterId:c.id,chapterNo:c.number,chapterTitle:c.title,sectionTitle:c.sections.find(s=>s.id===q.topic)?.title||'ทบทวน'})));
   if(questions.length!==EXAM_SIZE||new Set(questions.map(q=>q.id)).size!==EXAM_SIZE)throw Error('ข้อสอบรวมไม่ครบ 60 ข้อหรือมี ID ซ้ำ');
