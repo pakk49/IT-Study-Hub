@@ -167,6 +167,11 @@ export const chapter = {
 };
 // แปลงคำถามที่เคยท่องจำศัพท์ให้เป็นโจทย์วิเคราะห์/ประยุกต์ ก่อนส่งเข้าระบบข้อสอบรายบทและข้อสอบรวม
 applyScenarioQuestions([chapter, ...finalChapters]);
+// ใช้สถานการณ์ที่เขียนไว้จากบทเรียนเป็นตัวอย่างประกอบศัพท์อังกฤษในแฟลชการ์ด Final
+for (const c of finalChapters) for(const card of c.flashcards) {
+  const matched=c.questions.find(q=>q.options[q.answer]===card.meaning);
+  if(matched) card.example=matched.prompt;
+}
 // ใช้ English Technical Terms เป็นตัวเลือก และแนบความหมายไทยให้คำตอบและคำหลอก
 prepareEnglishQuizVocabulary([...midtermChapters, chapter, ...finalChapters]);
 export const subjects = [{ id: 'multimedia-technology', code: '06016403', title: 'MULTIMEDIA TECHNOLOGY', thai: 'เทคโนโลยีสื่อประสม', year: 2, term: 1, label: 'MM', description: 'ทำความเข้าใจภาพ กราฟิก และสื่อดิจิทัล ผ่านสรุปที่อ่านง่ายและการลงมือทบทวน', chapters: [...midtermChapters, chapter, ...finalChapters] }];
