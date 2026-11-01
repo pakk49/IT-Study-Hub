@@ -1,6 +1,10 @@
 // คำศัพท์อ้างอิงจากแฟลชการ์ดในสไลด์ Multimedia Technology และบทกราฟิก 6
 // เปลี่ยนตัวเลือกที่เป็นคำอธิบายล้วนให้เป็นศัพท์อังกฤษ โดยไม่แก้เฉลย/คะแนน
 const supplemental = {
+  'chapter-8': [
+    ['Decibel (dB)','สเกลลอการิทึมที่ใช้บอกความต่างระดับความเข้มเสียง; หากความเข้มเพิ่ม 100 เท่า ระดับเพิ่ม 20 dB'],
+    ['Subtractive Synthesis','การสังเคราะห์เสียงที่เริ่มจากสัญญาณต้นทาง แล้วใช้ตัวกรองตัดองค์ประกอบบางย่านออก']
+  ],
   'chapter-6': [
     ['Vector Graphics','ภาพที่กำหนดด้วยรูปทรงและสมการ จึงขยายแล้วขอบยังคม'],
     ['Bitmapped Image','ภาพที่จัดเก็บด้วยพิกเซลเป็นตาราง'],
@@ -36,11 +40,36 @@ const supplemental = {
   ]
 };
 const fallbacks = {
+  'chapter-6::q1':['Vector Graphics'],
+  'chapter-6::q2':['Point'],
+  'chapter-6::q3':['Vector'],
+  'chapter-6::q4':['Rasterization'],
+  'chapter-6::q5':['Bitmapped Image'],
+  'chapter-6::q6':['Linear Bézier'],
+  'chapter-6::q7':['Cubic Bézier'],
+  'chapter-6::q8':['C¹ Continuity'],
+  'chapter-6::q9':['Cubic Bézier'],
+  'chapter-6::q10':['Linear Bézier'],
+  'chapter-6::q11':['Affine Transform'],
+  'chapter-6::q12':['XOR'],
+  'chapter-6::q13':['Difference'],
+  'chapter-6::q14':['Stroke'],
+  'chapter-6::q15':['Perspective Projection'],
+  'chapter-6::q16':['Lathe'],
+  'chapter-6::q17':['Extrusion'],
+  'chapter-6::q18':['Polygon Mesh'],
+  'chapter-6::q19':['Vertex','Edge','Face'],
+  'chapter-6::q20':['Modeling'],
+  'chapter-6::q21':['Perspective Projection'],
+  'chapter-6::q22':['Visibility Check'],
+  'chapter-6::q23':['Specular Reflection'],
+  'chapter-6::q24':['Gouraud Shading','Phong Shading'],
+  'chapter-6::q25':['Specular Reflection'],
   'chapter-7::ch7-q21':['G¹ Continuity','C¹ Continuity'],
   'chapter-7::ch7-q27':['Interpolation'],
   'chapter-7::ch7-q29':['Arc Length Table','Speed Control'],
-  'chapter-8::ch8-q34':['dBFS','Amplitude'],
-  'chapter-8::ch8-q38':['Additive Synthesis','FM Synthesis'],
+  'chapter-8::ch8-q34':['Decibel (dB)'],
+  'chapter-8::ch8-q38':['Subtractive Synthesis','Additive Synthesis'],
   'chapter-12::ch12-q18':['Multimedia Computing Pipeline']
 };
 const norm = value => String(value ?? '').trim().replace(/\s+/g,' ').toLowerCase();
