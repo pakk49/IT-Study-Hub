@@ -1,0 +1,38 @@
+/* Physical Computing: study introduction, linked practical labs and progress */
+.pc-special-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0 22px}
+.pc-special-nav>a{display:flex;align-items:center;gap:14px;border:1px solid #b9d8ee;background:linear-gradient(145deg,#eff8ff,#fff);color:#295b7b;border-radius:12px;padding:16px;text-decoration:none;box-shadow:0 4px 16px #226b9a0b;transition:transform .2s,border-color .2s}
+.pc-special-nav>a:nth-child(2){border-color:#f1d5b5;background:linear-gradient(145deg,#fff5e9,#fff)}
+.pc-special-nav>a:hover{transform:translateY(-2px);border-color:#5c9dca}
+.pc-special-nav>a>span:first-child{font-size:25px}
+.pc-special-nav>a>span:last-child{margin-left:auto;color:#2b77aa;font-size:17px}
+.pc-special-nav strong{display:block;font-size:13px;margin-bottom:4px}
+.pc-special-nav small{display:block;font-size:11px;color:#69869a;line-height:1.65}
+.pc-lab-head{padding:25px 28px;margin:18px 0 24px;border-radius:14px;border:1px solid #bfdcf1;background:linear-gradient(120deg,#edf7ff,#fff 72%);box-shadow:0 8px 22px #2172a310}
+.pc-lab-head .eyebrow{font-size:11px;letter-spacing:1.7px;color:#267aab;font-weight:800}
+.pc-lab-head h1{font-size:27px;color:#204b68;margin:12px 0;line-height:1.4}
+.pc-lab-head>p:not(.eyebrow){font-size:13px;color:#516f85;line-height:1.95}
+.pc-lab-counters,.pc-lab-head-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.pc-lab-counters span{padding:6px 12px;border-radius:7px;background:#fff;border:1px solid #c9e1f1;color:#39799e;font-size:11px;font-weight:700}
+.pc-lab-group{margin:25px 0 30px}
+.pc-lab-group>h2{font-size:18px;color:#235676;margin:0 0 13px}
+.pc-lab-card{display:flex;align-items:center;gap:16px;padding:18px;margin-bottom:10px;background:#fff;border:1px solid #d7e5ef;border-radius:10px;text-decoration:none;color:#365974;transition:box-shadow .2s,border-color .2s}
+.pc-lab-card:hover{border-color:#70afd8;box-shadow:0 5px 22px #1e7eac13}
+.pc-lab-number{font-weight:800;font-size:11px;letter-spacing:.3px;color:#196a9c;white-space:nowrap;background:#e9f5fd;border-radius:7px;padding:9px}
+.pc-lab-group:nth-of-type(3) .pc-lab-number{background:#fff0e0;color:#b26f32}
+.pc-lab-info{display:block;flex:1}
+.pc-lab-info strong{display:block;font-size:14px;color:#25516e;margin-bottom:5px}
+.pc-lab-info small{display:block;font-size:12px;line-height:1.7;color:#667f92}
+.pc-lab-progress{display:inline-block;margin-top:6px;font-size:11px;color:#3a83ae}
+.pc-lab-detail{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);align-items:start;gap:20px;margin-top:24px}
+.pc-lab-exercises,.pc-lab-terms{background:#fff;border:1px solid #dae7f0;border-radius:12px;padding:23px}
+.pc-lab-exercises h2,.pc-lab-terms h2{color:#225375;font-size:18px;margin:0 0 8px}
+.pc-lab-exercises>p{color:#6a8193;font-size:12px;line-height:1.85;margin:0 0 18px}
+.pc-lab-task{display:flex;align-items:flex-start;gap:12px;padding:13px;border:1px solid #e2ebf2;border-radius:8px;margin-bottom:9px;cursor:pointer;font-size:12px;line-height:1.9;color:#385b70}
+.pc-lab-task:hover{background:#f4faff}
+.pc-lab-task input{margin-top:5px;accent-color:#267ba9;width:16px;height:16px;flex-shrink:0}
+.pc-lab-task input:checked+span{color:#7690a1}
+.pc-lab-completion{background:#eaf6fd;border:1px solid #c2e0f1;color:#2773a3;border-radius:8px;font-size:12px;font-weight:700;margin-top:16px;padding:10px 14px}
+.pc-lab-terms .study-table{min-width:0}
+.pc-lab-terms .source-note{font-size:11px;color:#657e8f;overflow-wrap:anywhere;margin-top:15px}
+@media(max-width:900px){.pc-lab-detail{grid-template-columns:1fr}}
+@media(max-width:660px){.pc-special-nav{grid-template-columns:1fr}.pc-lab-head{padding:19px 17px}.pc-lab-head h1{font-size:23px}.pc-lab-card{gap:9px;padding:12px}.pc-lab-number{padding:7px 5px;font-size:10px}.pc-lab-info strong{font-size:12px}.pc-lab-info small{font-size:11px}.pc-lab-exercises,.pc-lab-terms{padding:16px}.pc-lab-head-actions .button{width:100%;text-align:center}}
