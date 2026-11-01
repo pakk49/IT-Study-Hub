@@ -26,11 +26,42 @@
 | 06066304 | [INFORMATION SYSTEM ANALYSIS AND DESIGN](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/information-system-analysis-and-design) | รอเพิ่มเนื้อหา |
 | 06066300 | [DATABASE SYSTEM CONCEPTS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts) | **Midterm บท 1, 3, 4 / Final บท 7, 9, 15, 20** · พร้อมสรุปและข้อสอบ |
 | 06066000 | [DISCRETE MATHEMATICS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/discrete-mathematics) | รอเพิ่มเนื้อหา |
-| 06016413 | [INTRODUCTION TO NETWORK SYSTEMS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems) | รอเพิ่มเนื้อหา |
+| 06016413 | [INTRODUCTION TO NETWORK SYSTEMS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems) | **Midterm ก่อน Week 9 / Final ตั้งแต่ Week 9** · สรุปภาษาไทยพร้อมคำศัพท์อังกฤษและข้อสอบ |
 | 06016409 | [PHYSICAL COMPUTING](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing) | รอเพิ่มเนื้อหา |
 | 06016403 | [MULTIMEDIA TECHNOLOGY](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology) | Midterm 1–5 / Final 6–12 พร้อมใช้งาน |
 
 > รายวิชาตามรายการที่ผู้ใช้ให้มา วิชาที่ยังไม่มีเอกสารแสดงสถานะรอเพิ่มบทเรียน ไม่ใส่เนื้อหาที่สมมติขึ้น
+
+## INTRODUCTION TO NETWORK SYSTEMS — Midterm & Final
+
+**สรุปเป็นภาษาไทย พร้อมรักษาศัพท์เทคนิคภาษาอังกฤษ ความหมายภาษาไทย และตัวอย่างประกอบ** แยกช่วงสอบตามสัปดาห์ของรายวิชา (ไม่ได้ใช้เลข Cisco Module เป็นเลข Week)
+
+| [📘 Midterm: ก่อน Week 9](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/midterm) | [📝 Midterm Exam 60 ข้อ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/midterm/exam) | [🟠 Final: Week 9–13](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/final) | [📝 Final Exam 60 ข้อ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/final/exam) |
+|:---:|:---:|:---:|:---:|
+| Week 1–8 | ข้อสอบวิเคราะห์ | Week 9–13 | ข้อสอบวิเคราะห์ |
+
+<details>
+<summary><b>คลิกเปิดสารบัญและแต่ละบท (Week 1–13)</b></summary>
+
+| ช่วงสอบ | สัปดาห์ | หัวข้อ | สรุป | Flashcards | ฝึกทำ |
+|---|---|---|---|---|---|
+| Midterm | Week 1 | Introduction to Computer Networks | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-1/summary) | [ศัพท์อังกฤษ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-1/flashcards) | [ข้อสอบ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-1/quiz) |
+| Midterm | Week 2 | Network Media and Connectivity | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-2/summary) | [ศัพท์อังกฤษ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-2/flashcards) | [ข้อสอบ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-2/quiz) |
+| Midterm | Week 3 | Communication Principles | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-3/summary) | [ศัพท์อังกฤษ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-3/flashcards) | [ข้อสอบ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-3/quiz) |
+| Midterm | Week 4 | Network Design and Access Layer | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-4/summary) | [ศัพท์อังกฤษ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-4/flashcards) | [ข้อสอบ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-4/quiz) |
+| Midterm | Week 5 | Application Layer and Network Services | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-5/summary) | [ศัพท์อังกฤษ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-5/flashcards) | [ข้อสอบ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-5/quiz) |
+| Midterm | Week 6 | Transport Layer: TCP and UDP | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-6/summary) | [ศัพท์อังกฤษ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-6/flashcards) | [ข้อสอบ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-6/quiz) |
+| Midterm | Week 7 | Principles of Reliable Data Transfer | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-7/summary) | [ศัพท์อังกฤษ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-7/flashcards) | [ข้อสอบ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-7/quiz) |
+| Midterm | Week 8 | TCP Connection, Congestion Control and QUIC | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-8/summary) | [ศัพท์อังกฤษ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-8/flashcards) | [ข้อสอบ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-8/quiz) |
+| Final | Week 9 | Network Layer: The Data Plane | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-9/summary) | [ศัพท์อังกฤษ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-9/flashcards) | [ข้อสอบ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-9/quiz) |
+| Final | Week 10 | IPv4 Subnetting, IP Forwarding and IPv6 | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-10/summary) | [ศัพท์อังกฤษ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-10/flashcards) | [ข้อสอบ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-10/quiz) |
+| Final | Week 11 | Link Layer Part 1: MAC and ARP | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-11/summary) | [ศัพท์อังกฤษ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-11/flashcards) | [ข้อสอบ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-11/quiz) |
+| Final | Week 12 | Link Layer Part 2: Framing and Error Detection | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-12/summary) | [ศัพท์อังกฤษ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-12/flashcards) | [ข้อสอบ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-12/quiz) |
+| Final | Week 13 | Link Layer Part 3: Multiple Access and Switching | [สรุป](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-13/summary) | [ศัพท์อังกฤษ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-13/flashcards) | [ข้อสอบ](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-13/quiz) |
+
+</details>
+
+เอกสารอ้างอิง: สไลด์บทนำและ Application/Transport Layer, Cisco Networking Essentials Modules 4–6, 11–12, บันทึก Week 10 และ handouts Week 11–13 ที่ได้รับจากผู้ใช้ สรุปและโจทย์ฝึกเขียนใหม่เพื่อการทบทวน ไม่ใช่ข้อสอบจริงของอาจารย์
 
 ## DATABASE SYSTEM CONCEPTS — Midterm & Final
 
