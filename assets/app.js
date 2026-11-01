@@ -155,9 +155,9 @@ navigate();
 function periodNavigation(s, selected){
  const base="/year/"+s.year+"/term/"+s.term+"/subject/"+s.id;
  const choices=[
-  {id:"midterm",name:"Midterm · กลางภาค",desc:"รอสไลด์กลางภาค",emoji:"📘"},
+  {id:"midterm",name:"Midterm · กลางภาค",desc:"บท 1–5 พร้อมสรุปศัพท์และข้อสอบ",emoji:"📘"},
   {id:"final",name:"Final · ปลายภาค",desc:"บท 6–12 พร้อมสรุปและข้อสอบ",emoji:"🟠"}
  ];
  return '<div class="period-tiles" aria-label="เลือกช่วงสอบ">'+choices.map(c=>'<a class="period-tile '+(selected===c.id?'active':'')+'" href="#'+base+'/'+c.id+'"><span class="period-emoji">'+c.emoji+'</span><strong>'+c.name+'</strong><small>'+c.desc+'</small></a>').join('')+'</div>'
-  +'<div class="exam-shortcut"><b>ข้อสอบรวม 60 ข้อ</b><div><a href="#'+base+'/midterm/exam">Midterm 60 ข้อ · รอเนื้อหา</a><a href="#'+base+'/final/exam">Final 60 ข้อ · เริ่มฝึก</a></div></div>';
+  +'<div class="exam-shortcut"><b>ข้อสอบรวม 60 ข้อ</b><div><a href="#'+base+'/midterm/exam">Midterm 60 ข้อ · เริ่มฝึก</a><a href="#'+base+'/final/exam">Final 60 ข้อ · เริ่มฝึก</a></div></div>';
 }
