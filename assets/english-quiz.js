@@ -79,7 +79,7 @@ const containsTerm = (text,term) => fold(text).includes(fold(term));
 export function prepareEnglishQuizVocabulary(chapters) {
  for (const chapter of chapters) {
    const entries = [
-     ...chapter.flashcards.filter(f=>f.term&&f.meaning).map(f=>({term:f.term.trim(),meaning:f.meaning.trim()})),
+     ...chapter.flashcards.filter(f=>f.term&&f.meaning).map(f=>({term:f.term.trim(),meaning:f.meaning.trim(),example:f.example||''})),
      ...(supplemental[chapter.id]||[]).map(([term,meaning])=>({term,meaning}))
    ];
    const dict = new Map(entries.map(entry=>[norm(entry.meaning),entry]));
@@ -115,7 +115,7 @@ export function vocabularyHtml(question,escape,checked=false) {
  if (!terms.length) return '';
  return '<details class="quiz-vocabulary"'+(checked?' open':'')+'>'+
    '<summary>English Vocabulary · คำศัพท์ในข้อนี้ ('+terms.length+' คำ)'+(checked?' — ความหมายประกอบเฉลย':' — กดดูความหมาย')+'</summary>'+
-   '<dl>'+terms.map(({term,meaning})=>'<div><dt>'+escape(term)+'</dt><dd>'+escape(meaning)+'</dd></div>').join('')+'</dl>'+
+   '<dl>'+terms.map(({term,meaning,example})=>'<div><dt>'+escape(term)+'</dt><dd>'+escape(meaning)+'</dd>'+(example?'<dd class="vocab-example">ตัวอย่าง: '+escape(example)+'</dd>':'')+'</div>').join('')+'</dl>'+
    (!checked?'<p>เปิดดูศัพท์ก่อนตอบได้หากต้องการฝึกแบบเปิดตำรา หรือค่อยเปิดหลังตรวจคำตอบ</p>':'')+
    '</details>';
 }
