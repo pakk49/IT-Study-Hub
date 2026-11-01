@@ -51,7 +51,7 @@ function subjectList(year,term) {
  main.innerHTML=crumbs([[`ปี ${year}`,`/year/${year}`],[`เทอม ${term}`]])+steps(2)+banner(`YEAR ${year} / SEMESTER ${term}`,`วิชาของคุณ <span class="green">ปี ${year} เทอม ${term}</span>`,'เลือกวิชาเพื่อดูบทเรียน สรุป และแบบทดสอบ',`<span class="count-badge">${list.length} วิชา</span>`)+ (list.length?`<div class="subject-grid">${list.map((s,i)=>`<a class="subject-card tone-${i%3}" href="#${base(s,null)}"><div class="subject-top"><span class="subject-symbol">${s.label}</span><span class="pill ${s.chapters.length?'ready':''}">${s.chapters.length?'พร้อมทบทวน':'รอเพิ่มบทเรียน'}</span></div><p class="course-code">${s.code}</p><h2>${s.title}</h2><p>${s.thai}</p><div class="subject-bottom"><span>${s.chapters.length} บทเรียน</span>${icon('arrow')}</div></a>`).join('')}</div>`:empty('เทอมนี้ยังไม่มีวิชา','รายวิชาจะปรากฏที่นี่เมื่อเพิ่มเนื้อหาแล้ว'));
 }
 function chapters(s,selectedExam='final') {
- const mm=['multimedia-technology','database-system-concepts'].includes(s.id);
+ const mm=['multimedia-technology','database-system-concepts','introduction-to-network-systems'].includes(s.id);
  const shown=mm?s.chapters.filter(c=>(c.exam||'final')===selectedExam):s.chapters;
  const periodNav=mm?periodNavigation(s,selectedExam):'';
  main.innerHTML=crumbs([[`ปี ${s.year}`,`/year/${s.year}`],[`เทอม ${s.term}`,`/year/${s.year}/term/${s.term}`],[s.title]])+steps(3)+banner(`${s.code} / YEAR ${s.year} / SEMESTER ${s.term}`,s.title,s.thai)+`<p class="intro-note">${s.description}</p>${periodNav}`+(shown.length?`<div class="section-heading"><h2>บทเรียนทั้งหมด</h2><span>${shown.length} CHAPTER</span></div><div class="chapters">${shown.map(c=>{
@@ -132,8 +132,8 @@ function navigate() {
   if(route[4]!=='subject'||!s){notFound();return;}
   activeSubject=s;
   if(route.length===6)chapters(s);
-   else if(route.length===7 && ['multimedia-technology','database-system-concepts'].includes(s.id) && ['midterm','final'].includes(route[6])) chapters(s,route[6]);
-   else if(route.length===8 && ['multimedia-technology','database-system-concepts'].includes(s.id) && ['midterm','final'].includes(route[6]) && route[7]==='exam') showExam(s,route[6],main);
+   else if(route.length===7 && ['multimedia-technology','database-system-concepts','introduction-to-network-systems'].includes(s.id) && ['midterm','final'].includes(route[6])) chapters(s,route[6]);
+   else if(route.length===8 && ['multimedia-technology','database-system-concepts','introduction-to-network-systems'].includes(s.id) && ['midterm','final'].includes(route[6]) && route[7]==='exam') showExam(s,route[6],main);
   else {
    const c=s.chapters.find(c=>c.id===route[7]);
    if(route[6]!=='chapter'||!c||route.length>9||!['summary','flashcards','quiz'].includes(route[8]||'summary')){notFound();return;}
