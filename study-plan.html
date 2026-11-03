@@ -52,24 +52,55 @@ h1{font-size:clamp(1.7rem,4vw,2.5rem);margin:8px 0}h2{font-size:1.25rem;margin:0
 .session-controls{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}.session-controls button{font-size:.75rem;padding:4px 10px}.session.active{background:#eef7ff;border-radius:12px;padding-left:9px;padding-right:9px}
 .empty-year{border:1px dashed #c9dcea;border-radius:14px;padding:25px;background:#f8fbff;text-align:center;color:#647e97}
 @media print{.year-picker,.timer-panel,.session-controls{display:none}}
+
+.planner-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.planner-heading h2{margin:0}.planner-heading p{margin:3px 0}
+.action.primary-action{background:#246eae;color:white;border-color:#246eae;font-weight:650}
+.edit-form{background:#f3f9ff;border:1px solid #cfdfef;padding:18px;border-radius:15px;margin:15px 0 20px}
+.edit-form[hidden]{display:none!important}
+.edit-form h3{margin:0 0 13px;font-size:1.05rem}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.form-grid label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;font-weight:700;color:#365d7d}
+.form-grid label.wide{grid-column:1/-1}
+.form-grid input,.form-grid select{width:100%;min-width:0;border:1px solid #c6d9eb;padding:9px 10px;border-radius:9px;background:white;color:#20354b;font:inherit}
+.form-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.exam-period{margin-top:20px}.exam-period h3{color:#1e649e;margin:0 0 11px;font-size:1.07rem}
+.exam-subject{font-weight:700;color:#243d54;margin:4px 0}
+.calendar-subtitle{font-size:1rem;margin:14px 0 8px}
+.subj.Study{background:#e7eff5;color:#38657c}
+@media(max-width:620px){.form-grid{grid-template-columns:1fr}.planner-heading .action{width:100%}}
 </style>
 </head>
 <body>
 <main class="shell">
 <nav class="top"><a class="logo" href="./index.html">it<span>·</span> STUDY HUB</a><a class="navlink" href="./index.html">← กลับคลังวิชา</a></nav>
-<header class="hero"><div class="eyebrow">Final exam · 2026</div><h1>ตารางอ่านช่วงสอบ</h1><p>4–11 พฤศจิกายน 2569 · 4 พ.ย. อ่าน Discrete ก่อน แล้วเก็บ Network Week 9–13 ครบทุกบท เน้นฝึกโจทย์</p><div class="chips"><span class="chip">4 พ.ย. Discrete ก่อน + Network ครบ 5 บท</span><span class="chip">5 พ.ย. สอบ Network แล้วฝึกโจทย์ Discrete</span><span class="chip">บันทึกความคืบหน้าในเครื่องนี้</span></div></header>
+<header class="hero"><div class="eyebrow">Final exam · 2026</div><h1>ตารางอ่านช่วงสอบ</h1><p>จัดตารางสอบและตารางอ่านด้วยตัวเองได้ทุกชั้นปี พร้อมนาฬิกาจับเวลา · ปี 2 มีแผนเริ่มต้น 4–11 พฤศจิกายน 2569</p><div class="chips"><span class="chip">4 พ.ย. Discrete ก่อน + Network ครบ 5 บท</span><span class="chip">5 พ.ย. สอบ Network แล้วฝึกโจทย์ Discrete</span><span class="chip">บันทึกความคืบหน้าในเครื่องนี้</span></div></header>
 <section class="panel" aria-label="เลือกชั้นปี"><h2>ตารางอ่านแยกตามชั้นปี</h2><div id="year-picker" class="year-picker"></div><p id="year-description">ปี 2 · ภาคเรียนที่ 1 · Final 2569</p></section>
 <section class="summary" aria-label="ภาพรวม"><div class="metric"><strong><span id="day-count">8</span></strong><small>วันในแผน</small></div><div class="metric"><strong><span id="exam-count">4</span></strong><small>วิชาที่เหลือสอบ</small></div><div class="metric"><strong id="completed">0/0</strong><small>ช่วงอ่านที่ทำเสร็จ</small><div class="progress"><div id="bar" style="width:0"></div></div></div></section>
 <section class="timer-panel" id="timer-panel" aria-label="นาฬิกานับถอยหลัง"><span class="eyebrow">STUDY TIMER</span><h2 class="timer-title" id="timer-topic">เลือกช่วงอ่านเพื่อเริ่มจับเวลา</h2><p id="timer-state">กดเริ่มอ่านในตารางด้านล่าง · ปรับเวลาและพักได้ตลอด</p><div class="clock" id="timer-clock" role="timer" aria-live="off">00:00:00</div><div class="progress"><div id="timer-progress" style="width:0%;background:#4287c2"></div></div><p id="timer-message" role="status">ยังไม่เริ่ม</p><div class="timer-buttons"><button class="primary" id="timer-play" type="button">▶ เริ่ม / อ่านต่อ</button><button id="timer-pause" type="button">⏸ หยุดชั่วคราว</button><button id="timer-break" type="button">☕ พัก</button><button id="timer-plus5" type="button">+5 นาที</button><button id="timer-plus15" type="button">+15 นาที</button><button id="timer-next" type="button">⇥ เปลี่ยนบท</button><button id="timer-stop" type="button">■ ยุติ</button></div><div class="timer-settings"><label for="timer-minutes">เวลาที่เหลือ</label><input type="number" id="timer-minutes" value="30" min="1" max="600"><span>นาที</span><button id="timer-set" type="button">ตั้งเวลา</button><label for="timer-break-minutes">พัก</label><input type="number" id="timer-break-minutes" value="10" min="1" max="120"><span>นาที</span></div></section>
-<section class="panel"><h2>เลือกวันอ่าน</h2><div id="tabs" class="day-tabs" role="tablist" aria-label="วันที่"></div><div id="detail" aria-live="polite"></div><div class="actions"><button class="action" id="today">กลับไปวันที่ 4 พ.ย.</button><button class="action" id="print">พิมพ์ตาราง</button></div></section>
-<section class="panel" id="exam-panel"><h2>ตารางสอบทั้งหมด · ปี 2 เทอม 1 / 2569</h2><p>แสดงครบทั้ง Midterm และ Final ตามตารางสอบที่ส่งมา รวมวันสอบที่ผ่านไปแล้ว โดยรวมรายการทฤษฎีและปฏิบัติที่สอบวัน เวลา และห้องเดียวกัน</p><div class="exam-periods">
-<section class="exam-period"><h3>Midterm · สิงหาคม 2569</h3><div class="examlist">
-<article class="exam"><b>17 ส.ค. 2569 · 13:30–16:30</b><div class="exam-subject">MULTIMEDIA TECHNOLOGY</div><small>กลุ่ม 2 ทฤษฎี / กลุ่ม 5 ปฏิบัติ</small><small>IT-L207 C5</small></article>
-<article class="exam"><b>18 ส.ค. 2569 · 13:30–16:30</b><div class="exam-subject">DATABASE SYSTEM CONCEPTS</div><small>กลุ่ม 2 ทฤษฎี / กลุ่ม 5 ปฏิบัติ</small><small>IT-Project Base ชั้น 3 F5</small></article>
-<article class="exam"><b>19 ส.ค. 2569 · 09:30–12:30</b><div class="exam-subject">PHYSICAL COMPUTING</div><small>กลุ่ม 2 ทฤษฎี / กลุ่ม 5 ปฏิบัติ</small><small>IT-L207 C4</small></article>
-<article class="exam"><b>20 ส.ค. 2569 · 09:30–12:30</b><div class="exam-subject">INTRODUCTION TO NETWORK SYSTEMS</div><small>กลุ่ม 2 ทฤษฎี</small><small>IT-L207 C4</small></article>
-<article class="exam"><b>21 ส.ค. 2569 · 13:30–16:30</b><div class="exam-subject">DISCRETE MATHEMATICS</div><small>กลุ่ม 2 ทฤษฎี</small><small>IT-Project Base ชั้น 3 F2</small></article>
-</div></section>
+<section class="panel" id="study-section"><div class="planner-heading"><div><h2>ตารางอ่านหนังสือ</h2><p>เพิ่มช่วงอ่าน แก้วันและเวลา เปลี่ยนบท หรือเริ่มจับเวลาได้ทุกชั้นปี</p></div><button class="action primary-action" type="button" id="add-session">+ เพิ่มช่วงอ่าน</button></div>
+<form id="session-form" class="edit-form" hidden>
+<h3 id="session-form-title">เพิ่มช่วงอ่าน</h3><div class="form-grid">
+<label>วันที่อ่าน<input id="session-date" type="date" required></label>
+<label>วิชา<input id="session-subject" type="text" maxlength="100" required placeholder="ชื่อวิชา เช่น Discrete"></label>
+<label>เริ่มอ่าน<input id="session-start" type="time" required></label>
+<label>สิ้นสุด<input id="session-end" type="time" required></label>
+<label class="wide">บท / เนื้อหาที่อ่าน<input id="session-title" type="text" maxlength="200" required placeholder="เช่น Week 10 · Relations"></label>
+<label class="wide">เส้นทางบทเรียนในเว็บ (ไม่บังคับ)<input id="session-url" type="text" maxlength="300" placeholder="/year/2/term/1/subject/..."></label>
+</div><div class="form-actions"><button class="action primary-action" type="submit">บันทึกช่วงอ่าน</button><button class="action" type="button" id="cancel-session">ยกเลิก</button></div>
+</form><h3 class="calendar-subtitle">เลือกวันที่ต้องการอ่าน</h3><div id="tabs" class="day-tabs" role="tablist" aria-label="วันที่"></div><div id="detail" aria-live="polite"></div><div class="actions"><button class="action" id="today">กลับไปวันที่ 4 พ.ย.</button><button class="action" id="print">พิมพ์ตาราง</button></div></section>
+<section class="panel" id="exam-panel"><div class="planner-heading"><div><h2>ตารางสอบปี 2</h2><p>เพิ่มและแก้ไขวันสอบได้เอง โดยไม่กระทบเวลานับถอยหลังหรือช่วงอ่าน</p></div><button type="button" class="action primary-action" id="add-exam">+ เพิ่มวันสอบ</button></div>
+<form id="exam-form" class="edit-form" hidden>
+<h3 id="exam-form-title">เพิ่มวันสอบ</h3><div class="form-grid">
+<label>ช่วงสอบ<select id="exam-period"><option>Final</option><option>Midterm</option><option>อื่น ๆ</option></select></label>
+<label>ชื่อวิชา<input id="exam-subject" type="text" maxlength="100" required placeholder="ชื่อวิชา"></label>
+<label>วันสอบ<input id="exam-date" type="date"></label>
+<label>เริ่มสอบ<input id="exam-start" type="time"></label>
+<label>สิ้นสุด<input id="exam-end" type="time"></label>
+<label>ห้องสอบ<input id="exam-room" type="text" maxlength="120" placeholder="เช่น IT-L207 C4"></label>
+<label class="wide">หมายเหตุ<input id="exam-note" type="text" maxlength="200" placeholder="กลุ่มเรียน / อัตสอบเอง"></label>
+</div><div class="form-actions"><button class="action primary-action" type="submit">บันทึกวันสอบ</button><button class="action" type="button" id="cancel-exam">ยกเลิก</button></div>
+</form><div id="exam-list"></div></section>
 <section class="exam-period"><h3>Final · พฤศจิกายน 2569</h3><div class="examlist">
 <article class="exam"><b>2 พ.ย. 2569 · 09:30–12:30</b><div class="exam-subject">MULTIMEDIA TECHNOLOGY</div><small>กลุ่ม 2 ทฤษฎี / กลุ่ม 5 ปฏิบัติ</small><small>IT-L207 C3</small></article>
 <article class="exam"><b>3 พ.ย. 2569 · 09:30–12:30</b><div class="exam-subject">DATABASE SYSTEM CONCEPTS</div><small>กลุ่ม 2 ทฤษฎี / กลุ่ม 5 ปฏิบัติ</small><small>IT-M04 C5</small></article>
@@ -85,139 +116,6 @@ h1{font-size:clamp(1.7rem,4vw,2.5rem);margin:8px 0}h2{font-size:1.25rem;margin:0
 <script>
 const days=[{"date":"2026-11-04","label":"พ. 4 พ.ย.","focus":"เริ่ม Discrete ฝึกจำโจทย์ก่อน แล้วอ่าน Network ครบ Week 9–13 ทุกบท","entries":[["08:30","09:30","Discrete","Week 8–9 · Number Theory: GCD, Modulo แล้วลองโจทย์จากความจำ","/year/2/term/1/subject/discrete-mathematics/chapter/dm-week-8/summary"],["09:40","10:40","Discrete","Week 10 · Relations: Reflexive, Symmetric, Transitive","/year/2/term/1/subject/discrete-mathematics/chapter/dm-week-10/summary"],["10:50","11:40","Discrete","Week 11–13 · ดูหลักกราฟ Euler / Hamilton และทำโจทย์จำวิธีคิด","/year/2/term/1/subject/discrete-mathematics/chapter/dm-week-11/summary"],["11:40","12:00","Discrete","ปิดสไลด์ทำโจทย์ 3–5 ข้อ และจดข้อที่ยังผิด",""],["13:00","14:10","Network","Week 9 · Network Layer: Data Plane, Forwarding, NAT, IPv6","/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-9/summary"],["14:20","15:40","Network","Week 10 · Subnetting, Network/Broadcast, IP Forwarding","/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-10/summary"],["15:50","17:00","Network","Week 11 · Link Layer: MAC, Ethernet, ARP","/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-11/summary"],["18:00","19:10","Network","Week 12 · Framing, Error Detection, Parity, CRC","/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-12/summary"],["19:20","20:30","Network","Week 13 · Multiple Access, CSMA/CD, Switching, VLAN","/year/2/term/1/subject/introduction-to-network-systems/chapter/net-week-13/summary"],["20:40","21:30","Network","ฝึกโจทย์รวม Week 9–13 และทวนข้อผิดก่อนสอบ","/year/2/term/1/subject/introduction-to-network-systems/final/exam"]]},{"date":"2026-11-05","label":"พฤ. 5 พ.ย.","focus":"สอบ Network → Discrete เน้นจำวิธีทำโจทย์ที่เคยผิด","entries":[["07:00","08:15","Network","ทวน Subnet, ARP, CRC, IPv4/IPv6",""],["09:30","12:30","Exam","สอบ INTRODUCTION TO NETWORK SYSTEMS · IT-L207 C4",""],["13:30","14:30","Discrete","ลองทำโจทย์ Week 8–9 จากความจำ แล้วดูเฉลยจุดที่ผิด","/year/2/term/1/subject/discrete-mathematics/chapter/dm-week-9/summary"],["14:45","15:45","Discrete","โจทย์ Week 10 · Relations: ตรวจ Reflexive, Symmetric, Transitive","/year/2/term/1/subject/discrete-mathematics/chapter/dm-week-10/summary"],["16:00","17:00","Discrete","โจทย์ Week 11–12 · Degree, Paths, Matching, Connectivity","/year/2/term/1/subject/discrete-mathematics/chapter/dm-week-12/summary"],["18:00","19:00","Discrete","โจทย์ Week 13 · Euler / Hamilton วาดกราฟและอธิบายเงื่อนไข","/year/2/term/1/subject/discrete-mathematics/chapter/dm-week-13/summary"],["19:15","20:15","Discrete","ลองทำข้อสอบ Final แบบไม่ดูสรุป แล้วตรวจเฉลย","/year/2/term/1/subject/discrete-mathematics/final/exam"],["20:15","20:45","Discrete","จดโจทย์ที่ยังทำไม่ได้ 5 ข้อไว้ทวนเช้าวันสอบ",""]]},{"date":"2026-11-06","label":"ศ. 6 พ.ย.","focus":"สอบ Discrete Mathematics","entries":[["07:00","08:20","Discrete","ทวนเฉพาะโจทย์ Number Theory / Modulo ที่ทำผิด",""],["08:35","09:55","Discrete","ทวนเฉพาะโจทย์ Relations / Graphs ที่ทำผิด",""],["10:10","11:10","Discrete","ทำโจทย์สั้นจากความจำ ตรวจเฉลย และหยุดอ่านเรื่องใหม่","/year/2/term/1/subject/discrete-mathematics/final/exam"],["13:30","16:30","Exam","สอบ DISCRETE MATHEMATICS · Project Base ชั้น 3 F2",""],["19:00","20:00","ISAD","วางหัวข้อ Final จากสไลด์อาจารย์ / ทวนศัพท์ Design",""]]},{"date":"2026-11-07","label":"ส. 7 พ.ย.","focus":"ISAD เป็นหลัก เริ่ม Physical","entries":[["09:00","10:30","ISAD","Requirements, Use Case, Analysis Model (ทวนพื้นฐาน)",""],["10:45","12:15","ISAD","Class Diagram, Sequence Diagram",""],["13:30","15:00","ISAD","Architecture, Components, Interfaces",""],["15:15","16:15","ISAD","ทำโจทย์วิเคราะห์และวาด Diagram",""],["19:00","20:30","Physical","บท 9 · Pointer Variables","/year/2/term/1/subject/physical-computing/chapter/pc-chapter-9/summary"]]},{"date":"2026-11-08","label":"อา. 8 พ.ย.","focus":"ISAD + Physical","entries":[["09:00","10:30","ISAD","ทบทวน Design และการเชื่อมโยง Class / Subsystem",""],["10:45","12:15","ISAD","ฝึกวาด Sequence / Component Diagram",""],["13:30","15:00","Physical","บท 10 · Structure Variables",""],["15:15","16:45","Physical","บท 11 · Ohm’s Law, KCL, KVL",""],["19:00","20:00","ISAD","ทำแบบฝึกหัดจากสไลด์ Final และจดจุดผิด",""]]},{"date":"2026-11-09","label":"จ. 9 พ.ย.","focus":"เก็บ ISAD ให้ครบก่อนสอบ","entries":[["09:00","10:30","ISAD","ทวนหัวข้อที่ประกาศสอบจากเอกสารอาจารย์",""],["10:45","12:15","ISAD","ฝึกโจทย์ Class / Sequence / Component",""],["13:30","15:00","ISAD","ทำข้อสอบจำลองและแก้ข้อผิด",""],["15:15","16:00","ISAD","ทวนศัพท์และการจัดการกรณีผิดปกติ",""],["19:00","20:30","Physical","บท 12 · Arduino UNO R4 WiFi, GPIO, PWM",""]]},{"date":"2026-11-10","label":"อ. 10 พ.ย.","focus":"สอบ ISAD → อ่าน Physical","entries":[["07:00","08:00","ISAD","ทวน Diagram / Interface / ข้อที่ผิด",""],["09:30","12:30","Exam","สอบ INFORMATION SYSTEM ANALYSIS AND DESIGN · IT-L207 C1",""],["14:00","15:30","Physical","บท 14 · Sensors, Ultrasonic, LCD",""],["15:45","17:15","Physical","บท 15 · IoT, MQTT, QoS, Topic",""],["19:00","20:30","Physical","ฝึกโค้ด C / Sensor / MQTT และโจทย์วงจร",""],["20:30","21:00","Physical","สรุปสูตรและข้อที่ยังผิด",""]]},{"date":"2026-11-11","label":"พ. 11 พ.ย.","focus":"สอบ Physical Computing","entries":[["06:30","07:20","Physical","ทวนบท 9–11 · Pointer, Struct, Circuit",""],["07:20","08:10","Physical","ทวนบท 12, 14–15 · Arduino, Sensors, MQTT",""],["08:10","08:30","Physical","เช็กลิสต์สูตรและคำสั่งสำคัญ",""],["09:30","12:30","Exam","สอบ PHYSICAL COMPUTING · IT-L207 C4",""]]}];
 
-const base='./index.html#';
-const completionKey='it-study-hub-exam-plan-2026-v1';
-const timerKey='it-study-hub-study-timer-v1';
-const timesKey='it-study-hub-custom-times-v1';
-const yearKey='it-study-hub-exam-year-v1';
-const el=id=>document.getElementById(id);
-const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function load(key,fallback){try{return JSON.parse(localStorage.getItem(key))??fallback}catch{return fallback}}
-function store(key,value){try{localStorage.setItem(key,JSON.stringify(value))}catch{}}
-let done=load(completionKey,{}), customTimes=load(timesKey,{});
-let year=Number(load(yearKey,2));if(![1,2,3,4].includes(year))year=2;
-let selected=days[0].date;
-let focus=load(timerKey,{mode:'idle',key:null,left:0,total:0,running:false,deadline:null,previous:null});
-if(!focus||typeof focus!=='object'||!['idle','study','break','done','break-done'].includes(focus.mode))focus={mode:'idle',key:null,left:0,total:0,running:false,deadline:null,previous:null};
-function findItem(k){if(typeof k!=='string')return null;const d=days.find(x=>x.date===k.slice(0,10)),i=Number(k.slice(11));if(!d||!Number.isInteger(i)||i<0||i>=d.entries.length)return null;return {d,i,entry:d.entries[i],key:k}}
-function timeToMinutes(t){if(!/^([01]\d|2[0-3]):[0-5]\d$/.test(t))return NaN;const [h,m]=t.split(':').map(Number);return h*60+m}
-function duration(k){const item=findItem(k);if(!item)return 30;const t=customTimes[k]||item.entry.slice(0,2);const n=timeToMinutes(t[1])-timeToMinutes(t[0]);return Number.isFinite(n)&&n>0?n:30}
-function remaining(){return focus.running&&Number.isFinite(focus.deadline)?Math.max(0,focus.deadline-Date.now()):Math.max(0,focus.left||0)}
-function persistTimer(){store(timerKey,focus)}
-function timeText(ms){const n=Math.ceil(ms/1000);return [Math.floor(n/3600),Math.floor(n%3600/60),n%60].map(x=>String(x).padStart(2,'0')).join(':')}
-function normalize(){
- if(focus.running&&remaining()<=0){focus.running=false;focus.deadline=null;focus.left=0;focus.mode=focus.mode==='break'?'break-done':'done';persistTimer()}
-}
-function setFocus(mode,key,ms,previous=null){focus={mode,key,left:ms,total:ms,running:true,deadline:Date.now()+ms,previous};persistTimer();renderTimer()}
-function startItem(k){const item=findItem(k);if(!item||item.entry[2]==='Exam')return;selected=item.d.date;year=2;store(yearKey,year);setFocus('study',k,duration(k)*60000);render()}
-function pause(){if(!focus.running)return;focus.left=remaining();focus.running=false;focus.deadline=null;persistTimer();renderTimer()}
-function resume(){
- normalize();
- if(focus.mode==='idle'){const d=days.find(x=>x.date===selected),i=d?.entries.findIndex(x=>x[2]!=='Exam');if(i>=0)startItem(selected+'-'+i);return}
- if(focus.mode==='break-done'){restore();return}
- if(focus.mode==='done')return;
- if(!focus.running){focus.deadline=Date.now()+Math.max(0,focus.left);focus.running=true;persistTimer()}renderTimer()
-}
-function extend(n){
- if(focus.mode==='idle')return;
- focus.left=remaining()+n*60000;focus.total=Math.max(focus.total||0,focus.left);
- if(focus.mode==='done')focus.mode='study';
- if(focus.mode==='break-done')focus.mode='break';
- if(focus.running)focus.deadline=Date.now()+focus.left;
- persistTimer();renderTimer()
-}
-function setMinutes(){
- const mins=Number(el('timer-minutes').value);if(!Number.isInteger(mins)||mins<1||mins>600){alert('กรุณากรอก 1–600 นาที');return}
- if(focus.mode==='idle'){const d=days.find(x=>x.date===selected),i=d?.entries.findIndex(x=>x[2]!=='Exam');if(i>=0){startItem(selected+'-'+i);pause()}}
- if(focus.mode==='idle')return;
- focus.left=mins*60000;focus.total=focus.left;
- if(focus.running)focus.deadline=Date.now()+focus.left;
- if(focus.mode==='done')focus.mode='study';
- if(focus.mode==='break-done')focus.mode='break';
- persistTimer();renderTimer()
-}
-function takeBreak(){
- const mins=Number(el('timer-break-minutes').value);
- if(!Number.isInteger(mins)||mins<1||mins>120){alert('กรุณากรอกเวลาพัก 1–120 นาที');return}
- const previous=(focus.mode==='study'||focus.mode==='done')?{key:focus.key,left:remaining(),total:focus.total}:focus.previous;
- setFocus('break',focus.key,mins*60000,previous)
-}
-function restore(){
- const prior=focus.previous;
- if(prior&&findItem(prior.key)){focus={mode:'study',key:prior.key,left:prior.left,total:prior.total,running:false,deadline:null,previous:null}}
- else focus={mode:'idle',key:null,left:0,total:0,running:false,deadline:null,previous:null};
- persistTimer();renderTimer()
-}
-function nextItem(){
- const current=findItem(focus.key);
- let startDay=current?days.indexOf(current.d):Math.max(0,days.findIndex(x=>x.date===selected)),startIndex=current?current.i+1:0;
- for(let j=startDay;j<days.length;j++)for(let i=j===startDay?startIndex:0;i<days[j].entries.length;i++){
- if(days[j].entries[i][2]!=='Exam'){startItem(days[j].date+'-'+i);return}
- }
- alert('ไม่มีบทถัดไปในตาราง')
-}
-function stop(){focus={mode:'idle',key:null,left:0,total:0,running:false,deadline:null,previous:null};persistTimer();renderTimer()}
-function editTime(k){
- const item=findItem(k);if(!item)return;
- const current=customTimes[k]||item.entry.slice(0,2);
- const from=prompt('เวลาเริ่ม (HH:MM)',current[0]);if(from===null)return;
- const to=prompt('เวลาสิ้นสุด (HH:MM)',current[1]);if(to===null)return;
- if(!Number.isFinite(timeToMinutes(from))||!Number.isFinite(timeToMinutes(to))||timeToMinutes(to)<=timeToMinutes(from)){alert('เวลาต้องเป็น HH:MM และเวลาสิ้นสุดต้องมากกว่าเวลาเริ่ม');return}
- customTimes[k]=[from,to];store(timesKey,customTimes);render()
-}
-function renderTimer(){
- normalize();
- const item=findItem(focus.key),isBreak=focus.mode==='break'||focus.mode==='break-done',finished=focus.mode==='done'||focus.mode==='break-done',idle=focus.mode==='idle';
- el('timer-topic').textContent=isBreak?'พักจากการอ่าน':item?item.entry[3]:'เลือกช่วงอ่านเพื่อเริ่มจับเวลา';
- el('timer-state').textContent=isBreak?'เวลาพัก — กลับไปอ่านบทเดิมได้':item?item.d.label+' · '+item.entry[2]:'กดเริ่มอ่านในตารางด้านล่าง';
- el('timer-clock').textContent=timeText(remaining());
- el('timer-clock').className='clock'+(finished?' done':'');
- el('timer-progress').style.width=(focus.total?Math.max(0,Math.min(100,100*(focus.total-remaining())/focus.total)):0)+'%';
- el('timer-message').textContent=finished?(isBreak?'หมดเวลาพักแล้ว กดกลับไปอ่านต่อ':'หมดเวลาแล้ว กด +5 / +15 นาที หรือเปลี่ยนบท'):focus.running?(isBreak?'กำลังนับเวลาพัก':'กำลังนับถอยหลัง'):idle?'ยังไม่เริ่ม':'หยุดชั่วคราว';
- el('timer-play').textContent=isBreak?(finished?'↩ กลับไปอ่านต่อ':'▶ พักต่อ'):finished?'หมดเวลา · ต่อเวลาหรือเปลี่ยนบท':focus.running?'▶ กำลังนับถอยหลัง':'▶ เริ่ม / อ่านต่อ';
- el('timer-play').disabled=focus.running||focus.mode==='done';
- el('timer-pause').disabled=!focus.running;
- el('timer-panel').hidden=year!==2;
-}
-function updateProgress(){
- const all=days.flatMap(d=>d.entries.map((x,i)=>({key:d.date+'-'+i,exam:x[2]==='Exam'}))).filter(x=>!x.exam);
- const n=all.filter(x=>done[x.key]).length;
- el('completed').textContent=year===2?n+'/'+all.length:'0/0';
- el('bar').style.width=(year===2&&all.length?100*n/all.length:0)+'%';
- el('day-count').textContent=year===2?days.length:'0';
- el('exam-count').textContent=year===2?'4':'0'
-}
-function render(){
- el('year-picker').innerHTML=[1,2,3,4].map(y=>'<button type="button" class="year-button '+(year===y?'active':'')+'" data-year="'+y+'">ปี '+y+'</button>').join('');
- document.querySelectorAll('[data-year]').forEach(b=>b.onclick=()=>{year=Number(b.dataset.year);store(yearKey,year);render()});
- el('year-description').textContent=year===2?'ปี 2 · เทอม 1 · Final 2569':'ปี '+year+' · ยังไม่ได้เพิ่มตารางสอบ';
- el('exam-panel').hidden=year!==2;
- el('tabs').innerHTML=year===2?days.map(d=>'<button class="tab" role="tab" type="button" data-day="'+d.date+'" aria-selected="'+(selected===d.date)+'">'+esc(d.label)+'</button>').join(''):'';
- if(year!==2){el('detail').innerHTML='<div class="empty-year"><h2>ยังไม่มีตารางอ่านสำหรับปี '+year+'</h2><p>เตรียมพื้นที่แยกไว้แล้ว เมื่อมีวันสอบและเนื้อหารายวิชา จึงค่อยเพิ่มตารางโดยไม่กระทบชั้นปีอื่น</p></div>'}
- else{
- const d=days.find(x=>x.date===selected)||days[0];
- el('detail').innerHTML='<section class="dayblock"><div class="dayhead"><div><h2>'+esc(d.label)+' 2569</h2><p>'+esc(d.focus)+'</p></div><span class="tag">'+d.entries.filter(x=>x[2]!=='Exam').length+' ช่วงอ่าน</span></div>'+
- d.entries.map((x,i)=>{const k=d.date+'-'+i,exam=x[2]==='Exam',times=customTimes[k]||x.slice(0,2);return '<div class="session '+(focus.key===k?'active':'')+'"><div class="hours">'+esc(times[0])+'<br>– '+esc(times[1])+'</div><div><span class="subj '+esc(x[2])+'">'+esc(exam?'สอบ':x[2])+'</span><strong>'+esc(x[3])+'</strong>'+(x[4]?'<div><a class="task-link" href="'+base+encodeURI(x[4])+'">เปิดบทเรียน ↗</a></div>':'')+(exam?'':'<div class="session-controls"><button class="session-start" data-start="'+k+'">▶ เริ่มอ่าน</button><button class="session-edit" data-edit="'+k+'">✎ แก้เวลา</button></div>')+'</div>'+(exam?'<span class="tag">สอบ</span>':'<input class="check" aria-label="อ่านเสร็จ '+esc(x[3])+'" type="checkbox" data-done="'+k+'" '+(done[k]?'checked':'')+'>')+'</div>'}).join('')+'</section>';
- document.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{selected=b.dataset.day;render()});
- document.querySelectorAll('[data-start]').forEach(b=>b.onclick=()=>startItem(b.dataset.start));
- document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>editTime(b.dataset.edit));
- document.querySelectorAll('[data-done]').forEach(c=>c.onchange=()=>{done[c.dataset.done]=c.checked;store(completionKey,done);updateProgress()});
- }
- updateProgress();renderTimer()
-}
-el('timer-play').onclick=resume;
-el('timer-pause').onclick=pause;
-el('timer-break').onclick=()=>{if(focus.mode==='break'||focus.mode==='break-done')restore();else takeBreak()};
-el('timer-plus5').onclick=()=>extend(5);
-el('timer-plus15').onclick=()=>extend(15);
-el('timer-next').onclick=nextItem;
-el('timer-stop').onclick=stop;
-el('timer-set').onclick=setMinutes;
-el('today').onclick=()=>{year=2;selected=days[0].date;store(yearKey,year);render()};
-el('print').onclick=()=>window.print();
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)renderTimer()});
-setInterval(()=>{if(focus.running||focus.mode==='done'||focus.mode==='break-done')renderTimer()},1000);
-render();
-
 </script>
+<script src="assets/study-planner.js" defer></script>
 </body></html>
