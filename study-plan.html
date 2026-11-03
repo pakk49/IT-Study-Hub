@@ -35,7 +35,7 @@ h1{font-size:clamp(1.7rem,4vw,2.5rem);margin:8px 0}h2{font-size:1.25rem;margin:0
 .actions{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin:10px 0 0}
 .action{font:inherit;font-size:.84rem;cursor:pointer;background:white;color:#27669d;border-radius:9px;padding:7px 13px;border:1px solid #d3e4f3}
 .note{font-size:.87rem;color:#71869b}.examlist{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.exam{border:1px solid #e0eaf4;padding:12px;border-radius:12px}.exam b{display:block;color:#264b70}.exam small{color:#73869b}
+.exam{border:1px solid #e0eaf4;padding:12px;border-radius:12px}.exam b{display:block;color:#264b70}.exam small{display:block;color:#73869b}.exam-subject{font-weight:650;margin:4px 0}.exam-period{margin-top:17px}.exam-period h3{font-size:1rem;color:#215d95;margin:0 0 10px}
 .progress{height:10px;background:#e8eff8;border-radius:20px;overflow:hidden;margin-top:10px}
 .progress>div{height:100%;background:#ed9a4d;transition:width .2s}
 @media(max-width:620px){.summary{grid-template-columns:1fr 1fr}.examlist{grid-template-columns:1fr}.hero{padding:20px}.session{grid-template-columns:80px 1fr auto;gap:8px}.shell{padding:18px 12px 55px}}
@@ -62,11 +62,23 @@ h1{font-size:clamp(1.7rem,4vw,2.5rem);margin:8px 0}h2{font-size:1.25rem;margin:0
 <section class="summary" aria-label="ภาพรวม"><div class="metric"><strong><span id="day-count">8</span></strong><small>วันในแผน</small></div><div class="metric"><strong><span id="exam-count">4</span></strong><small>วิชาที่เหลือสอบ</small></div><div class="metric"><strong id="completed">0/0</strong><small>ช่วงอ่านที่ทำเสร็จ</small><div class="progress"><div id="bar" style="width:0"></div></div></div></section>
 <section class="timer-panel" id="timer-panel" aria-label="นาฬิกานับถอยหลัง"><span class="eyebrow">STUDY TIMER</span><h2 class="timer-title" id="timer-topic">เลือกช่วงอ่านเพื่อเริ่มจับเวลา</h2><p id="timer-state">กดเริ่มอ่านในตารางด้านล่าง · ปรับเวลาและพักได้ตลอด</p><div class="clock" id="timer-clock" role="timer" aria-live="off">00:00:00</div><div class="progress"><div id="timer-progress" style="width:0%;background:#4287c2"></div></div><p id="timer-message" role="status">ยังไม่เริ่ม</p><div class="timer-buttons"><button class="primary" id="timer-play" type="button">▶ เริ่ม / อ่านต่อ</button><button id="timer-pause" type="button">⏸ หยุดชั่วคราว</button><button id="timer-break" type="button">☕ พัก</button><button id="timer-plus5" type="button">+5 นาที</button><button id="timer-plus15" type="button">+15 นาที</button><button id="timer-next" type="button">⇥ เปลี่ยนบท</button><button id="timer-stop" type="button">■ ยุติ</button></div><div class="timer-settings"><label for="timer-minutes">เวลาที่เหลือ</label><input type="number" id="timer-minutes" value="30" min="1" max="600"><span>นาที</span><button id="timer-set" type="button">ตั้งเวลา</button><label for="timer-break-minutes">พัก</label><input type="number" id="timer-break-minutes" value="10" min="1" max="120"><span>นาที</span></div></section>
 <section class="panel"><h2>เลือกวันอ่าน</h2><div id="tabs" class="day-tabs" role="tablist" aria-label="วันที่"></div><div id="detail" aria-live="polite"></div><div class="actions"><button class="action" id="today">กลับไปวันที่ 4 พ.ย.</button><button class="action" id="print">พิมพ์ตาราง</button></div></section>
-<section class="panel" id="exam-panel"><h2>กำหนดการสอบ Final · ปี 2</h2><div class="examlist">
-<div class="exam"><b>5 พ.ย. · 09:30–12:30</b>INTRODUCTION TO NETWORK SYSTEMS<small>IT-L207 C4</small></div>
-<div class="exam"><b>6 พ.ย. · 13:30–16:30</b>DISCRETE MATHEMATICS<small>Project Base ชั้น 3 F2</small></div>
-<div class="exam"><b>10 พ.ย. · 09:30–12:30</b>INFORMATION SYSTEM ANALYSIS AND DESIGN<small>IT-L207 C1</small></div>
-<div class="exam"><b>11 พ.ย. · 09:30–12:30</b>PHYSICAL COMPUTING<small>IT-L207 C4</small></div>
+<section class="panel" id="exam-panel"><h2>ตารางสอบทั้งหมด · ปี 2 เทอม 1 / 2569</h2><p>แสดงครบทั้ง Midterm และ Final ตามตารางสอบที่ส่งมา รวมวันสอบที่ผ่านไปแล้ว โดยรวมรายการทฤษฎีและปฏิบัติที่สอบวัน เวลา และห้องเดียวกัน</p><div class="exam-periods">
+<section class="exam-period"><h3>Midterm · สิงหาคม 2569</h3><div class="examlist">
+<article class="exam"><b>17 ส.ค. 2569 · 13:30–16:30</b><div class="exam-subject">MULTIMEDIA TECHNOLOGY</div><small>กลุ่ม 2 ทฤษฎี / กลุ่ม 5 ปฏิบัติ</small><small>IT-L207 C5</small></article>
+<article class="exam"><b>18 ส.ค. 2569 · 13:30–16:30</b><div class="exam-subject">DATABASE SYSTEM CONCEPTS</div><small>กลุ่ม 2 ทฤษฎี / กลุ่ม 5 ปฏิบัติ</small><small>IT-Project Base ชั้น 3 F5</small></article>
+<article class="exam"><b>19 ส.ค. 2569 · 09:30–12:30</b><div class="exam-subject">PHYSICAL COMPUTING</div><small>กลุ่ม 2 ทฤษฎี / กลุ่ม 5 ปฏิบัติ</small><small>IT-L207 C4</small></article>
+<article class="exam"><b>20 ส.ค. 2569 · 09:30–12:30</b><div class="exam-subject">INTRODUCTION TO NETWORK SYSTEMS</div><small>กลุ่ม 2 ทฤษฎี</small><small>IT-L207 C4</small></article>
+<article class="exam"><b>21 ส.ค. 2569 · 13:30–16:30</b><div class="exam-subject">DISCRETE MATHEMATICS</div><small>กลุ่ม 2 ทฤษฎี</small><small>IT-Project Base ชั้น 3 F2</small></article>
+</div></section>
+<section class="exam-period"><h3>Final · พฤศจิกายน 2569</h3><div class="examlist">
+<article class="exam"><b>2 พ.ย. 2569 · 09:30–12:30</b><div class="exam-subject">MULTIMEDIA TECHNOLOGY</div><small>กลุ่ม 2 ทฤษฎี / กลุ่ม 5 ปฏิบัติ</small><small>IT-L207 C3</small></article>
+<article class="exam"><b>3 พ.ย. 2569 · 09:30–12:30</b><div class="exam-subject">DATABASE SYSTEM CONCEPTS</div><small>กลุ่ม 2 ทฤษฎี / กลุ่ม 5 ปฏิบัติ</small><small>IT-M04 C5</small></article>
+<article class="exam"><b>5 พ.ย. 2569 · 09:30–12:30</b><div class="exam-subject">INTRODUCTION TO NETWORK SYSTEMS</div><small>กลุ่ม 2 ทฤษฎี</small><small>IT-L207 C4</small></article>
+<article class="exam"><b>6 พ.ย. 2569 · 13:30–16:30</b><div class="exam-subject">DISCRETE MATHEMATICS</div><small>กลุ่ม 2 ทฤษฎี</small><small>IT-Project Base ชั้น 3 F2</small></article>
+<article class="exam"><b>10 พ.ย. 2569 · 09:30–12:30</b><div class="exam-subject">INFORMATION SYSTEM ANALYSIS AND DESIGN</div><small>กลุ่ม 2 ทฤษฎี</small><small>IT-L207 C1</small></article>
+<article class="exam"><b>11 พ.ย. 2569 · 09:30–12:30</b><div class="exam-subject">PHYSICAL COMPUTING</div><small>กลุ่ม 2 ทฤษฎี / กลุ่ม 5 ปฏิบัติ</small><small>IT-L207 C4</small></article>
+<article class="exam"><b>อัตสอบเอง 2569 · ไม่ระบุเวลา</b><div class="exam-subject">CODING WITH PYTHON</div><small>กลุ่ม 901 ทฤษฎี</small><small>ไม่ระบุห้อง</small></article>
+</div></section>
 </div></section>
 <p class="note">หมายเหตุ: เวลาที่แบ่งเป็นแผนแนะนำ ไม่ใช่ตารางเรียนบังคับ Discrete ใช้วิธีลองตอบโจทย์โดยไม่ดูเฉลย → ตรวจจุดผิด → กลับมาลองใหม่ ไม่จำเป็นต้องอ่านทุกบทครบก่อนเริ่มทำโจทย์ ควรพัก 10–15 นาทีระหว่างช่วงยาว ๆ เนื้อหา ISAD เป็นหัวข้อทบทวนเบื้องต้น ต้องตรวจขอบเขต Final กับสไลด์ผู้สอนอีกครั้ง · Multimedia และ Database สอบไปแล้ววันที่ 2–3 พ.ย.</p>
 </main>
