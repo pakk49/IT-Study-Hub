@@ -1,4 +1,5 @@
 import { finalChapters } from './final-chapters.js';
+import { discreteFinalChapters } from './discrete-final.js';
 import { applyScenarioQuestions } from './question-scenarios.js';
 import { prepareEnglishQuizVocabulary } from './english-quiz.js';
 import { midtermChapters } from './midterm-chapters.js';
@@ -187,7 +188,7 @@ export const subjects = [{ id: 'multimedia-technology', code: '06016403', title:
 subjects.unshift(
  {id:'information-system-analysis-and-design', code:'06066304', title:'INFORMATION SYSTEM ANALYSIS AND DESIGN', thai:'การวิเคราะห์และออกแบบระบบสารสนเทศ', year:2, term:1, label:'IS', description:'พื้นที่รวบรวมสรุปและแบบทดสอบรายบท', chapters:[]},
  {id:'database-system-concepts', code:'06066300', title:'DATABASE SYSTEM CONCEPTS', thai:'แนวคิดระบบฐานข้อมูล', year:2, term:1, label:'DB', description:'ทบทวน Database ผ่านสรุปศัพท์อังกฤษ ความหมายไทย ตัวอย่าง ERD และข้อสอบวิเคราะห์ Midterm/Final', chapters:[...databaseMidtermChapters,...databaseFinalChapters]},
- {id:'discrete-mathematics', code:'06066000', title:'DISCRETE MATHEMATICS', thai:'คณิตศาสตร์ดิสครีต', year:2, term:1, label:'DM', description:'พื้นที่รวบรวมสรุปและแบบทดสอบรายบท', chapters:[]},
+ {id:'discrete-mathematics', code:'06066000', title:'DISCRETE MATHEMATICS', thai:'คณิตศาสตร์ดิสครีต', year:2, term:1, label:'DM', description:'Final สัปดาห์ 8–13: Number Theory, Relations และ Graphs พร้อมสรุปศัพท์ แฟลชการ์ด ข้อสอบฝึก และลิงก์ PDF ต้นฉบับ', chapters:discreteFinalChapters},
  {id:'introduction-to-network-systems', code:'06016413', title:'INTRODUCTION TO NETWORK SYSTEMS', thai:'ระบบเครือข่ายเบื้องต้น', year:2, term:1, label:'NW', description:'สรุปเครือข่ายเป็นภาษาไทย พร้อมศัพท์อังกฤษ ความหมาย ตัวอย่าง และข้อสอบแยกก่อน Week 9 กับตั้งแต่ Week 9', chapters:[...networkMidtermChapters,...networkFinalChapters]},
  {id:'physical-computing', code:'06016409', title:'PHYSICAL COMPUTING', thai:'การประมวลผลทางกายภาพ', year:2, term:1, label:'PC', description:'พื้นฐานภาษา C วงจร Arduino Sensor และ IoT พร้อมสรุปภาษาไทย ศัพท์เทคนิคอังกฤษ Lab และข้อสอบแยก Midterm / Final', chapters:[physicalOrientation,...physicalMidtermChapters,...physicalFinalChapters]}
 );
