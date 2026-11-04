@@ -311,9 +311,9 @@ function installTooltip(root){
   if(term.contains(event.relatedTarget))return;
   cancel();if(!sticky&&!popup.contains(event.relatedTarget))close();
  });
- let keyboardFocus=false;
+ let keyboardFocus=false,lastPointerType='mouse';
  document.addEventListener('keydown',event=>{if(event.key==='Tab')keyboardFocus=true;});
- root.addEventListener('pointerdown',()=>{keyboardFocus=false;});
+ root.addEventListener('pointerdown',event=>{keyboardFocus=false;lastPointerType=event.pointerType;});
  root.addEventListener('focusin',event=>{
   const term=event.target.closest?.('[data-study-term]');
   if(term&&keyboardFocus)open(term,true);
@@ -322,6 +322,8 @@ function installTooltip(root){
   const term=event.target.closest?.('[data-study-term]');
   if(!term||!root.contains(term)){if(!popup.contains(event.target))close();return;}
   if(term.closest('a[href],button,label,summary,[role="link"]'))return;
+  // เมาส์ใช้ชี้แล้วแสดง ไม่ให้คลิกแล้วปักหมุดค้าง; จอสัมผัสและปากกายังแตะเปิดได้
+  if(lastPointerType!=='touch'&&lastPointerType!=='pen')return;
   event.preventDefault();
   event.stopPropagation();
   if(active===term&&sticky)close();else open(term,true);

@@ -99,6 +99,4 @@
 .study-beginner{border-left:4px solid #71a8d5;background:#f2f8fe;padding:14px 17px;margin:17px 0 18px;border-radius:9px;color:#275371}
 .study-beginner strong{font-size:13px;color:#174d7a}
 .study-beginner p{margin:6px 0 0;font-size:13px;line-height:1.9;color:#385b72}
-.study-term-hint{display:block;font-size:11px;line-height:1.75;color:#637c8f;font-weight:400;margin-top:4px}
-.study-term-hint .pronunciation{display:block;color:#36769f}
-@media(max-width:650px){.study-beginner{padding:12px 13px}.study-term-hint{font-size:11px}}
+@media(max-width:650px){.study-beginner{padding:12px 13px}}
