@@ -26,7 +26,7 @@ const initialExams=[
 ['2026-11-06','13:30','16:30','DISCRETE MATHEMATICS','IT-Project Base ชั้น 3 F2','Final','กลุ่ม 2 ทฤษฎี'],
 ['2026-11-10','09:30','12:30','INFORMATION SYSTEM ANALYSIS AND DESIGN','IT-L207 C1','Final','กลุ่ม 2 ทฤษฎี'],
 ['2026-11-11','09:30','12:30','PHYSICAL COMPUTING','IT-L207 C4','Final','กลุ่ม 2 ทฤษฎี / กลุ่ม 5 ปฏิบัติ'],
-['','', '', 'CODING WITH PYTHON','ไม่ระบุ','Final','กลุ่ม 901 · อัตสอบเอง']
+['','', '', 'CODING WITH PYTHON','ไม่ระบุ','Final','กลุ่ม 901 · สอบด้วยตนเอง']
 ].map((a,i)=>({id:'original-'+i,year:2,date:a[0],start:a[1],end:a[2],subject:a[3],room:a[4],period:a[5],note:a[6]}));
 let customExams=load(K.exams,[]), examEdits=load(K.examEdits,{}),examHidden=load(K.examHidden,{});
 let customSessions=load(K.sessions,[]),sessionEdits=load(K.sessionEdits,{}),sessionHidden=load(K.sessionHidden,{});
@@ -49,6 +49,10 @@ function allStudy(){
   if(times&&!sessionEdits[e.id]?.end)out.end=times[1];
   return out;
  });
+}
+function isCompleted(e){
+ // ค่า false ที่ผู้ใช้เลือกใหม่ต้องมีผล แม้ข้อมูลเดิมจะเคยเป็น true
+ return Object.prototype.hasOwnProperty.call(done,e.id)?Boolean(done[e.id]):Boolean(e.oldKey&&done[e.oldKey]);
 }
 function yearStudy(){return allStudy().filter(e=>e.year===year).sort((a,b)=>a.date.localeCompare(b.date)||a.start.localeCompare(b.start)||a.id.localeCompare(b.id))}
 function allDates(){
@@ -84,23 +88,45 @@ function resumeClock(){
  if(clock.mode==='done'||clock.running)return;
  clock.running=true;clock.deadline=Date.now()+clock.left;persistClock();renderClock()
 }
+// เมื่อเพิ่มเวลาอ่าน ให้เลื่อนช่วงต่อไปในวันเดียวกันตามจำนวนที่เพิ่มด้วย
+function shiftStudySchedule(id,delta){
+ const active=findStudy(id);
+ if(!active||!delta)return true;
+ const later=allStudy().filter(e=>e.id!==id&&e.year===active.year&&e.date===active.date&&minutes(e.start)>=minutes(active.end));
+ const updates=[{item:active,start:minutes(active.start),end:minutes(active.end)+delta},
+ ...later.map(item=>({item,start:minutes(item.start)+delta,end:minutes(item.end)+delta}))];
+ if(updates.some(u=>!Number.isFinite(u.start)||!Number.isFinite(u.end)||u.start<0||u.end>1439||u.end<=u.start)){
+  alert('ขยับเวลาไม่ได้ เพราะจะเลยเที่ยงคืนหรือช่วงเวลาไม่ถูกต้อง กรุณาแก้ตารางด้วยตนเอง');return false;
+ }
+ const format=t=>pad(Math.floor(t/60))+':'+pad(t%60);
+ for(const u of updates){
+  const time={start:format(u.start),end:format(u.end)};
+  if(u.item.id.startsWith('b:'))sessionEdits[u.item.id]={...(sessionEdits[u.item.id]||{}),...time};
+  else customSessions=customSessions.map(e=>e.id===u.item.id?{...e,...time}:e);
+ }
+ save(K.sessionEdits,sessionEdits);save(K.sessions,customSessions);
+ return true;
+}
 function extendClock(n){
  if(clock.mode==='idle')return;
- clock.left=runningLeft()+n*60000;clock.total=Math.max(clock.total,clock.left);
+ if((clock.mode==='study'||clock.mode==='done')&&!shiftStudySchedule(clock.key,n))return;
+ clock.left=runningLeft()+n*60000;clock.total=Math.max(clock.total+n*60000,clock.left);
  if(clock.mode==='done')clock.mode='study';
  if(clock.mode==='break-done')clock.mode='break';
  if(clock.running)clock.deadline=Date.now()+clock.left;
- persistClock();renderClock()
+ persistClock();render()
 }
 function setClock(){
  const n=Number($('timer-minutes').value);
  if(!Number.isInteger(n)||n<1||n>600){alert('ตั้งเวลาระหว่าง 1–600 นาที');return}
  if(clock.mode==='idle'){const first=yearStudy().find(e=>e.date===selected);if(!first){alert('กรุณาเพิ่มช่วงอ่านหรือกดเริ่มอ่านก่อน');return}beginSession(first.id);pauseClock()}
+ const diff=Math.round((n*60000-runningLeft())/60000);
+ if((clock.mode==='study'||clock.mode==='done')&&diff&&!shiftStudySchedule(clock.key,diff))return;
  clock.left=n*60000;clock.total=clock.left;
  if(clock.running)clock.deadline=Date.now()+clock.left;
  if(clock.mode==='done')clock.mode='study';
  if(clock.mode==='break-done')clock.mode='break';
- persistClock();renderClock()
+ persistClock();render()
 }
 function breakClock(){
  if(clock.mode==='break'||clock.mode==='break-done'){restoreStudy();return}
@@ -132,7 +158,7 @@ function renderClock(){
  $('timer-panel').hidden=false;
 }
 function updateProgress(){
- const list=yearStudy(),n=list.filter(e=>done[e.id]||done[e.oldKey]).length;
+ const list=yearStudy(),n=list.filter(isCompleted).length;
  $('day-count').textContent=allDates().length;
  $('exam-count').textContent=yearExams().length;
  $('completed').textContent=n+'/'+list.length;
@@ -160,11 +186,11 @@ function renderSessions(){
  if(!selected){$('detail').innerHTML='<div class="empty-year"><h2>ยังไม่มีตารางอ่านปี '+year+'</h2><p>กด “เพิ่มช่วงอ่าน” เพื่อกำหนดวัน เวลา และบทเรียนเอง</p></div>';return}
  const legacy=baseDays.find(d=>d.date===selected);
  $('detail').innerHTML='<section class="dayblock"><div class="dayhead"><div><h2>'+esc(fmt(selected))+'</h2><p>'+esc(legacy&&year===2?legacy.focus:'ตารางอ่านที่กำหนดเอง')+'</p></div><span class="tag">'+current.length+' ช่วงอ่าน</span></div>'+
- current.map(e=>'<div class="session '+(clock.key===e.id?'active':'')+'"><div class="hours">'+esc(e.start)+'<br>– '+esc(e.end)+'</div><div><span class="subj '+esc(['Network','Discrete','Physical','ISAD'].includes(e.subject)?e.subject:'Study')+'">'+esc(e.subject)+'</span><strong>'+esc(e.title)+'</strong>'+(e.url?'<div><a class="task-link" href="'+base+encodeURI(e.url)+'">เปิดบทเรียน ↗</a></div>':'')+'<div class="session-controls"><button class="session-start" data-read="'+esc(e.id)+'">▶ เริ่มอ่าน</button><button class="session-edit" data-study-edit="'+esc(e.id)+'">✎ แก้ไข</button><button class="session-edit" data-study-delete="'+esc(e.id)+'">ลบ</button></div></div><input class="check" aria-label="อ่านเสร็จ '+esc(e.title)+'" type="checkbox" data-done="'+esc(e.id)+'" '+(done[e.id]||done[e.oldKey]?'checked':'')+'></div>').join('')+'</section>';
+ current.map(e=>'<div class="session '+(clock.key===e.id?'active':'')+'"><div class="hours">'+esc(e.start)+'<br>– '+esc(e.end)+'</div><div><span class="subj '+esc(['Network','Discrete','Physical','ISAD'].includes(e.subject)?e.subject:'Study')+'">'+esc(e.subject)+'</span><strong>'+esc(e.title)+'</strong>'+(e.url?'<div><a class="task-link" href="'+base+encodeURI(e.url)+'">เปิดบทเรียน ↗</a></div>':'')+'<div class="session-controls"><button class="session-start" data-read="'+esc(e.id)+'">▶ เริ่มอ่าน</button><button class="session-edit" data-study-edit="'+esc(e.id)+'">✎ แก้ไข</button><button class="session-edit" data-study-delete="'+esc(e.id)+'">ลบ</button></div></div><input class="check" aria-label="อ่านเสร็จ '+esc(e.title)+'" type="checkbox" data-done="'+esc(e.id)+'" '+(isCompleted(e)?'checked':'')+'></div>').join('')+'</section>';
  document.querySelectorAll('[data-read]').forEach(b=>b.onclick=()=>beginSession(b.dataset.read));
  document.querySelectorAll('[data-study-edit]').forEach(b=>b.onclick=()=>openSession(b.dataset.studyEdit));
  document.querySelectorAll('[data-study-delete]').forEach(b=>b.onclick=()=>removeSession(b.dataset.studyDelete));
- document.querySelectorAll('[data-done]').forEach(c=>c.onchange=()=>{done[c.dataset.done]=c.checked;save(K.done,done);updateProgress()});
+ document.querySelectorAll('[data-done]').forEach(c=>c.onchange=()=>{const e=findStudy(c.dataset.done);done[c.dataset.done]=c.checked;if(e?.oldKey)delete done[e.oldKey];save(K.done,done);updateProgress()});
 }
 function render(){
  $('year-picker').innerHTML=[1,2,3,4].map(y=>'<button class="year-button '+(year===y?'active':'')+'" data-year="'+y+'">ปี '+y+'</button>').join('');
