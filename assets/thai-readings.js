@@ -123,9 +123,12 @@ function installTooltip(root){
   if(term.contains(event.relatedTarget))return;
   cancel();if(!sticky)close();
  });
+ let keyboardFocus=false;
+ document.addEventListener('keydown',event=>{if(event.key==='Tab')keyboardFocus=true;});
+ root.addEventListener('pointerdown',()=>{keyboardFocus=false;});
  root.addEventListener('focusin',event=>{
   const term=event.target.closest?.('[data-study-term]');
-  if(term)open(term,true);
+  if(term&&keyboardFocus)open(term,true);
  });
  root.addEventListener('click',event=>{
   const term=event.target.closest?.('[data-study-term]');
