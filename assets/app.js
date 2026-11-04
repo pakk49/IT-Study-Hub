@@ -202,6 +202,16 @@ $('#search').addEventListener('input',e=>{clearTimeout(searchTimer);const q=e.ta
 $('#search').addEventListener('keydown',e=>{if(e.key==='Enter'){clearTimeout(searchTimer);const q=e.target.value.trim();if(q)location.hash=`/search/${encodeURIComponent(q)}`;}});
 window.addEventListener('keydown',e=>{if(e.key==='/'&&!/INPUT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();$('#search').focus();}});
 document.querySelector('.skip-link').addEventListener('click', e => { e.preventDefault(); main.focus(); main.scrollIntoView(); });
+// ใช้ event delegation กับการ์ดเลือกเทอม เพื่อรองรับการแตะบน Safari/iPad
+main.addEventListener('click',event=>{
+ const card=event.target.closest('a.term-card');
+ if(!card||!main.contains(card))return;
+ event.preventDefault();
+ const target=card.getAttribute('href');
+ if(!target||!/^#\/year\/[1-4]\/term\/[12]$/.test(target))return;
+ if(location.hash===target)navigate();
+ else location.hash=target;
+});
 window.addEventListener('hashchange',navigate);
 navigate();
 
