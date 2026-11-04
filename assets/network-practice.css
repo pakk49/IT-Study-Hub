@@ -31,3 +31,7 @@
 .np-result-grid span{font-size:12px;color:#698399}.np-result-grid strong{font-size:17px;color:#1a5d8b;overflow-wrap:anywhere}
 .np-footer{font-size:12px;color:#73899c;line-height:1.8;margin:16px 0 35px}
 @media(max-width:650px){.np-head{padding:20px 18px}.np-panel{padding:18px 15px}.np-answer-row{flex-direction:column}.np-answer-row input{max-width:none}.np-score{text-align:left}.np-calc-grid,.np-result-grid{grid-template-columns:1fr}.np-mode button{min-width:0}.np-period a{flex:1;text-align:center;padding:9px 7px;font-size:12px}}
+
+.np-subject-shortcut{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:15px;border:1px solid #c6e0f3;border-radius:14px;background:linear-gradient(110deg,#eaf6ff,#fff7ed);padding:19px 23px;margin:20px 0}
+.np-subject-shortcut strong{font-size:16px;color:#205780}
+.np-subject-shortcut p{margin:6px 0 0;font-size:13px;color:#55758d;line-height:1.7}

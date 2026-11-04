@@ -1,5 +1,6 @@
 import { installThaiReadings } from './thai-readings.js';
 import { showExam } from './exam.js';
+import { showNetworkPractice } from './network-practice.js';
 import { vocabularyHtml } from './english-quiz.js';
 import { slideHintHtml } from './slide-hints.js';
 import { sectionPresentation,highlightStudyTerms,cleanStudyProse } from './summary-format.js';
@@ -28,7 +29,7 @@ function parentHash(){
  const subjectPath=prefix+'/term/'+route[3]+'/subject/'+route[5];
  if(route.length===6)return '#'+prefix+'/term/'+route[3];
  if(route.length===7)return '#'+subjectPath;
- if(route[7]==='exam')return '#'+subjectPath+'/'+route[6];
+ if(route[7]==='exam'||route[7]==='network-practice')return '#'+subjectPath+'/'+route[6];
  if(route[6]==='labs')return '#'+subjectPath+'/labs';
  if(route[6]==='chapter'){
   if(route.length>=9 && route[8]!=='summary')return '#'+subjectPath+'/chapter/'+route[7]+'/summary';
@@ -86,9 +87,10 @@ function chapters(s,selectedExam='final') {
  const shown=mm?s.chapters.filter(c=>(c.exam||'final')===selectedExam):s.chapters;
  const periodNav=mm?periodNavigation(s,selectedExam):'';
  const isPhysical=s.id==='physical-computing';
+ const networkPractice=s.id==='introduction-to-network-systems' ? '<section class="np-subject-shortcut"><div><strong>🧮 ฝึกคำนวณ Network</strong><p>สุ่มโจทย์แล้วพิมพ์คำตอบ ตรวจถูก–ผิด พร้อมสูตรและวิธีทำทีละขั้น</p></div><a class="button primary" href="#'+base(s,null)+'/'+selectedExam+'/network-practice">เริ่มฝึกคำนวณ →</a></section>' : '';
  const introCard=isPhysical?'<div class="pc-special-nav"><a href="#'+base(s,s.chapters.find(c=>c.number===0))+'/summary"><span>📖</span><div><strong>Chapter 0 · แนะนำวิชา</strong><small>เป้าหมาย เนื้อหาที่เรียน และเกณฑ์ประเมิน · ไม่รวมในข้อสอบ</small></div><span aria-hidden="true">→</span></a><a href="#'+base(s,null)+'/labs"><span>🧪</span><div><strong>Practical Labs · ลงมือทำ</strong><small>Lab 01, 02, 03, 04, 06, 09, 10, 12–15 พร้อมแหล่งต้นฉบับและ Checklist</small></div><span aria-hidden="true">→</span></a></div>':'';
 
- main.innerHTML=crumbs([[`ปี ${s.year}`,`/year/${s.year}`],[`เทอม ${s.term}`,`/year/${s.year}/term/${s.term}`],[s.title]])+steps(3)+banner(`${s.code} / YEAR ${s.year} / SEMESTER ${s.term}`,s.title,s.thai)+`<p class="intro-note">${s.description}</p>${introCard}${periodNav}`+(shown.length?`<div class="section-heading"><h2>บทเรียนทั้งหมด</h2><span>${shown.length} CHAPTER</span></div><div class="chapters">${shown.map(c=>{
+ main.innerHTML=crumbs([[`ปี ${s.year}`,`/year/${s.year}`],[`เทอม ${s.term}`,`/year/${s.year}/term/${s.term}`],[s.title]])+steps(3)+banner(`${s.code} / YEAR ${s.year} / SEMESTER ${s.term}`,s.title,s.thai)+`<p class="intro-note">${s.description}</p>${introCard}${periodNav}${networkPractice}`+(shown.length?`<div class="section-heading"><h2>บทเรียนทั้งหมด</h2><span>${shown.length} CHAPTER</span></div><div class="chapters">${shown.map(c=>{
  const p=chapterState(c),best=validBest(p.best);
  return `<a class="chapter-card" href="#${base(s,c)}/summary"><span class="chapter-number">${String(c.number).padStart(2,'0')}</span><div class="chapter-info"><div class="chapter-meta"><span>CHAPTER ${String(c.number).padStart(2,'0')}</span>${p.read?'<span class="pill ready">อ่านแล้ว</span>':''}</div><h2>${c.title}</h2><p>${c.description}</p><div class="chapter-details"><span>${icon('clock')}${c.minutes} นาที</span><span>${icon('cards')}${c.flashcards.length} แฟลชการ์ด</span><span>${icon('quiz')}${c.questions.length} ข้อ</span></div></div><div class="chapter-trailing">${best!==null?`<small>คะแนนสูงสุด</small><strong>${best}%</strong>`:'<span class="pill ready">พร้อมอ่าน</span>'}${icon('arrow')}</div></a>`;
  }).join('')}</div><p class="muted source-note">สรุปจากเอกสารรายวิชาเพื่อทบทวน ไม่ใช่ข้อสอบจริงของอาจารย์</p>`:(mm&&selectedExam==='midterm'?empty('Midterm · รอเอกสารกลางภาค','เตรียมหน้าไว้แล้ว และจะเพิ่มบทเรียนกับข้อสอบเมื่อได้รับเอกสารรายวิชา'):empty('ยังไม่มีบทเรียนในวิชานี้','เพิ่มเอกสารของวิชานี้ แล้วจะมีสรุปและข้อสอบแยกเป็นรายบท')));
@@ -185,6 +187,7 @@ function navigate() {
   if(route.length===6)chapters(s,s.id==='physical-computing'?'midterm':'final');
    else if(s.id==='physical-computing' && route.length===7 && route[6]==='labs')showPhysicalLabs(main);
    else if(s.id==='physical-computing' && route.length===8 && route[6]==='labs')showPhysicalLab(main,route[7]);
+   else if(s.id==='introduction-to-network-systems' && route.length===8 && ['midterm','final'].includes(route[6]) && route[7]==='network-practice')showNetworkPractice(main,route[6]);
    else if(route.length===7 && ['multimedia-technology','database-system-concepts','introduction-to-network-systems','physical-computing','discrete-mathematics'].includes(s.id) && ['midterm','final'].includes(route[6])) chapters(s,route[6]);
    else if(route.length===8 && ['multimedia-technology','database-system-concepts','introduction-to-network-systems','physical-computing','discrete-mathematics'].includes(s.id) && ['midterm','final'].includes(route[6]) && route[7]==='exam') showExam(s,route[6],main);
   else {
