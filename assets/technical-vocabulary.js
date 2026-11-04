@@ -59,7 +59,9 @@ export function buildTechnicalVocabulary(subjects,overrides={},labs=[]){
 export function matchTechnicalTerms(dictionary){
  const escape=s=>s.replace(/[-/\\^$*+?.()|[\]{}]/g,'\\$&');
  const words=[...dictionary.keys()].sort((a,b)=>b.length-a.length);
- return words.length?new RegExp(words.map(w=>w.split(/\s+/).map(escape).join('\\s+')).join('|'),'gi'):null;
+ // รองรับรูป Bézier (มี é) และ Bezier ในข้อความ โดยยังอ้างคำแปลเดียวกัน
+ const pattern=w=>w.split(/\s+/).map(part=>escape(part).replace(/bezier/gi,'b[eé]zier')).join('\\s+');
+ return words.length?new RegExp(words.map(pattern).join('|'),'gi'):null;
 }
 export function lookupTechnicalTerm(dictionary,term){
  return dictionary.get(normalizeTechnicalTerm(term))||dictionary.get(fold(term))||null;
