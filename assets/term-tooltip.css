@@ -11,3 +11,6 @@
 #term-popup-pron{color:#1b719e}
 #term-popup-detail{padding-top:10px;border-top:1px solid #e0ecf5}
 @media (hover:none){.study-term{cursor:pointer;border-bottom:1px dashed #4093c3}.study-term-tooltip{font-size:15px}}
+
+/* ข้อความตัวอย่างแยกบรรทัดและห่อคำยาวได้บน iPad */
+#term-popup-detail{white-space:pre-line;overflow-wrap:anywhere}
