@@ -1,0 +1,13 @@
+/* Vocabulary tooltip: hover (mouse), tap (tablet) and keyboard focus */
+.study-term{color:inherit;cursor:help;border-bottom:1px dotted #378ac0;text-decoration:none;text-underline-offset:3px;white-space:normal}
+.study-term:hover,.study-term:focus-visible{color:#126fa9;background:#e8f4ff;border-radius:3px}
+.study-term:focus-visible{outline:2px solid #74afe0;outline-offset:2px}
+.study-term-tooltip{position:fixed;z-index:10000;width:min(360px,calc(100vw - 20px));max-height:min(68vh,480px);overflow-y:auto;background:#fff;border:1px solid #bad8ee;box-shadow:0 12px 42px #133a5a35;border-radius:13px;padding:16px 18px;line-height:1.7;color:#2b485e;font-size:14px;overflow-wrap:anywhere}
+.study-term-tooltip[hidden]{display:none!important}
+.term-popup-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.term-popup-header strong{font-size:17px;color:#155c91}
+.term-popup-close{min-width:35px;min-height:35px;border:0;background:#ecf5fb;color:#1d5b81;border-radius:9px;font-size:24px;cursor:pointer;line-height:1}
+.study-term-tooltip p{margin:9px 0 0;font-size:13px;color:#36576e}
+#term-popup-pron{color:#1b719e}
+#term-popup-detail{padding-top:10px;border-top:1px solid #e0ecf5}
+@media (hover:none){.study-term{cursor:pointer;border-bottom:1px dashed #4093c3}.study-term-tooltip{font-size:15px}}
