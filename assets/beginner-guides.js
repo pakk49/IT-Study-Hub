@@ -162,4 +162,5 @@ Object.assign(beginnerGuides,{
   "Euler Trail และ Euler Circuit": "Euler สนใจเดินให้ครบ 'ทุกเส้น' เพียงครั้งเดียว หากเดินครบและกลับจุดเริ่มได้เรียก Euler Circuit แต่ถ้าไม่ต้องกลับเรียก Euler Trail",
   "เปรียบเทียบ Euler กับ Hamilton": "Euler เน้นผ่านทุกเส้นเชื่อมครั้งเดียว ส่วน Hamilton เน้นผ่านทุกจุดยอดครั้งเดียว ดังนั้นกราฟเดียวกันอาจมีรูปแบบหนึ่งแต่ไม่มีอีกแบบได้"
 });
+Object.assign(beginnerGuides,{"Physical Computing เรียนเกี่ยวกับอะไร?":"ลองนึกภาพไฟหน้าบ้านที่เปิดเองเมื่อมืด: เซนเซอร์ตรวจแสงส่งค่ามาที่บอร์ด บอร์ดประมวลผลตามโปรแกรม แล้วสั่งเปิด LED นี่คือการเชื่อมโปรแกรมกับอุปกรณ์จริง","ภาพรวมเนื้อหา Midterm / Final":"ก่อนสอบกลางภาคจะเรียนวิธีคิดและเขียนภาษา C เช่น if, loop, array และ function ส่วนปลายภาคจะใช้ความรู้เดิมต่อกับวงจร Arduino, Sensor และ MQTT","สัดส่วนการประเมินผล":"ถ้าคิดคะแนนเต็ม 100 คะแนน จากเอกสารมี Lab 10 คะแนน Quiz 20 คะแนน Midterm 30 คะแนน Final 30 คะแนน และ Mini Project 10 คะแนน รวมครบ 100 คะแนน"});
 export function beginnerGuide(title){return beginnerGuides[String(title??'').trim()]||'';}
