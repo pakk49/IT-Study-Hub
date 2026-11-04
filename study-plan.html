@@ -69,6 +69,43 @@ h1{font-size:clamp(1.7rem,4vw,2.5rem);margin:8px 0}h2{font-size:1.25rem;margin:0
 .calendar-subtitle{font-size:1rem;margin:14px 0 8px}
 .subj.Study{background:#e7eff5;color:#38657c}
 @media(max-width:620px){.form-grid{grid-template-columns:1fr}.planner-heading .action{width:100%}}
+
+/* Tablet landscape / portrait usability */
+@media (min-width:621px) and (max-width:1100px){
+ .shell{max-width:100%;padding:22px clamp(18px,3vw,36px) 70px}
+ .summary{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .session{grid-template-columns:95px minmax(0,1fr) auto;gap:12px}
+ .examlist{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .timer-buttons button,.session-start,.session-edit,.tab,.action,.year-button{min-height:44px;padding:10px 14px}
+ .timer-panel,.panel{padding:clamp(16px,2.4vw,26px)}
+ .clock{font-size:clamp(3rem,8vw,5.3rem)}
+}
+@media (max-width:780px){
+ .top{flex-wrap:wrap}
+ .session{grid-template-columns:minmax(80px,0.25fr) minmax(0,1fr);align-items:start}
+ .session-controls{grid-column:2;display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-start}
+ .timer-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .timer-buttons button{min-height:48px;padding:12px 8px}
+ .timer-settings input{min-height:44px;font-size:16px}
+ .timer-settings button{min-height:44px}
+ .day-tabs{scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+ .day-tabs .tab{scroll-snap-align:start;min-height:44px}
+ .form-grid input,.form-grid select{font-size:16px;min-height:44px}
+ .panel,.metric,.session{min-width:0;overflow-wrap:anywhere}
+}
+@media (max-width:420px){
+ .session{grid-template-columns:1fr}
+ .session-controls{grid-column:1}
+ .summary{gap:8px}
+ .metric{padding:11px}
+ .metric strong{font-size:1.35rem}
+ .clock{font-size:clamp(2.4rem,10vw,3.3rem)}
+}
+@media (hover:none) and (pointer:coarse){
+ button,a,input,select{touch-action:manipulation}
+ button{min-height:44px}
+}
+
 </style>
 </head>
 <body>
