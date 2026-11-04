@@ -48,3 +48,6 @@
 .question-bottom .quiz-prev{flex-shrink:0}
 .exam-actions{flex-wrap:wrap;gap:10px}
 @media(max-width:760px){.topbar .nav-back{padding:7px 9px;font-size:11px}.question-bottom>span{order:3;flex-basis:100%;text-align:center}.question-bottom .quiz-prev{order:1}.question-bottom #quiz-action{order:2}.slide-hint{padding:12px 14px}}
+
+/* แสดงคำอ่านก่อนคำแปลทุกศัพท์ที่ใช้ในข้อสอบ */
+.quiz-vocabulary .vocab-pronunciation{font-size:12px;color:#2c709d;margin-top:3px}

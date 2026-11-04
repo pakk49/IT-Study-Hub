@@ -64,3 +64,6 @@ export function matchTechnicalTerms(dictionary){
 export function lookupTechnicalTerm(dictionary,term){
  return dictionary.get(normalizeTechnicalTerm(term))||dictionary.get(fold(term))||null;
 }
+
+// คำอ่านมาตรฐานสำหรับแสดงศัพท์ในข้อสอบ แม้ยังไม่เคยเปิดหน้า tooltip
+export function readTechnicalTerm(term){return pronunciation(term,wordReadings({})).reading||String(term);}
