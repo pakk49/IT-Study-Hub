@@ -1,4 +1,6 @@
 import { subjects } from './content.js';
+import { deepStudySteps } from './deep-study.js';
+import { beginnerGuide } from './beginner-guides.js';
 import { physicalLabs } from './physical-labs.js';
 import { buildTechnicalVocabulary, matchTechnicalTerms, lookupTechnicalTerm } from './technical-vocabulary.js';
 // แสดงคำอ่านและคำแปลเฉพาะศัพท์วิชาการ/ศัพท์เทคนิคในแต่ละวิชา ไม่แปลคำอังกฤษทั่วไป
@@ -209,6 +211,26 @@ export function getStudyTerm(key,subjectId){
  const specific=SUBJECT_VOCABULARY.get(subjectId||locationSubject);
  return (specific&&lookupTechnicalTerm(specific,key))||lookupTechnicalTerm(VOCABULARY,key);
 }
+
+const TERM_CONTEXTS=new Map();
+const termKey=value=>String(value||'').normalize('NFKC').trim().toLowerCase().replace(/\s+/g,' ');
+for(const subject of subjects)for(const chapter of subject.chapters||[])for(const section of chapter.sections||[]){
+ const rows=section.table?.rows||[];
+ for(const row of rows){
+  if(!Array.isArray(row)||!row[0]||!/[a-z]/i.test(String(row[0])))continue;
+  const term=termKey(row[0]),key=subject.id+'::'+term;
+  const steps=deepStudySteps(section.title);
+  // เลือกข้อความที่อธิบายศัพท์นี้จริงก่อน แล้วค่อยใช้ใจความรวมของหัวข้อ
+  const short=term.split('(')[0].trim();
+  const relevant=steps.find(step=>termKey(step).includes(term)||short.length>=4&&termKey(step).includes(short));
+  const note=relevant||beginnerGuide(section.title)||steps[0]||section.intro||'';
+  if(!TERM_CONTEXTS.has(key))TERM_CONTEXTS.set(key,{title:section.title,note});
+ }
+}
+function termContext(term,subjectId){
+ const subject=subjectId||(typeof location!=='undefined'?(location.hash.match(/\/subject\/([^/]+)/)||[])[1]:'');
+ return TERM_CONTEXTS.get(subject+'::'+termKey(term))||null;
+}
 const excluded='script,style,code,pre,kbd,textarea,input,select,option,svg,math,[aria-hidden="true"],[data-no-translate],[data-study-term]';
 function decorateText(node){
  const source=node.nodeValue;
@@ -260,12 +282,15 @@ function installTooltip(root){
  popup.id='study-term-tooltip';
  popup.setAttribute('role','tooltip');
  popup.hidden=true;
- popup.innerHTML='<div class="term-popup-header"><strong id="term-popup-name"></strong><button type="button" class="term-popup-close" aria-label="ปิดคำอธิบาย">×</button></div><p id="term-popup-pron"></p><p id="term-popup-meaning"></p><p id="term-popup-detail"></p>';
+ popup.innerHTML='<div class="term-popup-header"><strong id="term-popup-name"></strong><button type="button" class="term-popup-close" aria-label="ปิดคำอธิบาย">×</button></div><p id="term-popup-pron"></p><div class="term-popup-section"><b>ความหมายและหน้าที่</b><p id="term-popup-meaning"></p></div><div class="term-popup-section" id="term-popup-explain-wrap"><b>ทำความเข้าใจเพิ่ม</b><p id="term-popup-detail"></p></div><div class="term-popup-section" id="term-popup-example-wrap"><b>ตัวอย่างการใช้งาน</b><p id="term-popup-example"></p></div>';
  document.body.append(popup);
  const title=popup.querySelector('#term-popup-name');
  const pron=popup.querySelector('#term-popup-pron');
  const meaning=popup.querySelector('#term-popup-meaning');
  const detail=popup.querySelector('#term-popup-detail');
+ const exampleText=popup.querySelector('#term-popup-example');
+ const explanationWrap=popup.querySelector('#term-popup-explain-wrap');
+ const exampleWrap=popup.querySelector('#term-popup-example-wrap');
  let active=null, timer=null, sticky=false;
  const cancel=()=>{if(timer!==null){clearTimeout(timer);timer=null;}};
  function close(){
@@ -283,10 +308,14 @@ function installTooltip(root){
   pron.textContent=(entry.spelled?'คำอ่าน/การสะกดชื่อศัพท์: ':'คำอ่าน: ')+(entry.reading||entry.label);
   meaning.textContent='คำแปล/ความหมาย: '+entry.meaning;
   const info=COURSE_EXAMPLES.get(key);
-  const explanation=DETAILS[key]||(info?.meaning&&info.meaning!==entry.meaning?info.meaning:entry.meaning);
+  const context=termContext(key);
+  const note=DETAILS[key]||context?.note||'';
+  const explanation=note&&note.trim()!==entry.meaning.trim()?note:'';
   const example=entry.example||info?.example||'';
-  detail.textContent='อธิบายเพิ่มเติม: '+explanation+(example?'\nตัวอย่าง: '+example:'');
-  detail.hidden=!explanation&&!example;
+  detail.textContent=(context?.title?'ในหัวข้อ '+context.title+': ':'')+explanation;
+  explanationWrap.hidden=!explanation;
+  exampleText.textContent=example;
+  exampleWrap.hidden=!example;
   term.setAttribute('aria-describedby',popup.id);
   popup.hidden=false;
   popup.style.left='0px';popup.style.top='0px';

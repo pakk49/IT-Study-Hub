@@ -37,12 +37,12 @@ test('ศัพท์มีเครื่องหมายและอัก�
  assert.equal(readTechnicalTerm('Primary Key'),'ไพรมารี คีย์');
 });
 
-test('ตัวอย่างมีขั้นตอนและคำอ่านอยู่ในรายการข้อสอบ',()=>{
+test('ตัวอย่างและศัพท์ในข้อสอบเปิดคำอ่านเฉพาะตอนชี้หรือแตะ',()=>{
  assert.match(readableExample('Network Address',''),/192\.168\.1\.128/);
  assert.match(readableExample('Atomicity',''),/โอน 100 บาท/);
  assert.match(readableExample('Dereference (*)',''),/\*p=25/);
  const markup=vocabularyHtml({vocabulary:[{term:'Primary Key',meaning:'คีย์หลัก',example:'รหัสนักศึกษาไม่ซ้ำ'}]},String,true);
- assert.match(markup,/คำอ่าน:/);
- assert.match(markup,/ไพรมารี คีย์/);
- assert.match(markup,/รหัสนักศึกษาไม่ซ้ำ/);
+ assert.match(markup,/data-study-term="primary key"/);
+ assert.match(markup,/Primary Key/);
+ assert.doesNotMatch(markup,/คำอ่าน:|ไพรมารี คีย์|รหัสนักศึกษาไม่ซ้ำ/);
 });

@@ -14,3 +14,13 @@
 
 /* ข้อความตัวอย่างแยกบรรทัดและห่อคำยาวได้บน iPad */
 #term-popup-detail{white-space:pre-line;overflow-wrap:anywhere}
+
+/* Hover card: ย้ายความหมายและตัวอย่างทั้งหมดมาไว้ในกล่องนี้เท่านั้น */
+.study-term-tooltip{width:min(430px,calc(100vw - 20px));max-height:min(76vh,620px)}
+.study-term-tooltip .term-popup-section{padding:10px 0;border-top:1px solid #e7eef5}
+.study-term-tooltip .term-popup-section[hidden]{display:none!important}
+.study-term-tooltip .term-popup-section>b{display:block;font-size:12px;color:#145d8e;margin-bottom:3px}
+.study-term-tooltip .term-popup-section p{margin:0;font-size:13px;line-height:1.85;color:#34556d}
+.study-term-tooltip #term-popup-pron{margin:9px 0 12px;font-size:13px;color:#1975a6}
+.study-term-tooltip #term-popup-detail{padding:0;border:0;white-space:pre-line}
+.study-term-tooltip #term-popup-example{white-space:pre-line;color:#355672}

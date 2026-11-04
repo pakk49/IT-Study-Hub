@@ -1,4 +1,3 @@
-import { readTechnicalTerm } from './technical-vocabulary.js';
 // คำศัพท์อ้างอิงจากแฟลชการ์ดในสไลด์ Multimedia Technology และบทกราฟิก 6
 // เปลี่ยนตัวเลือกที่เป็นคำอธิบายล้วนให้เป็นศัพท์อังกฤษ โดยไม่แก้เฉลย/คะแนน
 const supplemental = {
@@ -115,8 +114,8 @@ export function vocabularyHtml(question,escape,checked=false) {
  const terms=question.vocabulary||[];
  if (!terms.length) return '';
  return '<details class="quiz-vocabulary"'+(checked?' open':'')+'>'+
-   '<summary>English Vocabulary · คำศัพท์เฉพาะในข้อนี้ ('+terms.length+' คำ)'+(checked?' — ความหมายประกอบเฉลย':' — กดดูความหมาย')+'</summary>'+
-   '<dl>'+terms.map(({term,meaning,example})=>'<div><dt>'+escape(term)+'</dt><dd class="vocab-pronunciation">คำอ่าน: '+escape(readTechnicalTerm(term))+'</dd><dd>'+escape(meaning)+'</dd>'+(example?'<dd class="vocab-example">ตัวอย่าง: '+escape(example)+'</dd>':'')+'</div>').join('')+'</dl>'+
-   (!checked?'<p>อ่านความหมายพร้อมตัวอย่างก่อนตอบได้ หรือจะลองทำข้อสอบเองก่อนแล้วค่อยเปิดศัพท์ก็ได้</p>':'')+
+   '<summary>English Vocabulary · คำศัพท์เฉพาะในข้อนี้ ('+terms.length+' คำ)'+(checked?' — ชี้คำศัพท์เพื่อดูความหมาย':' — กดดูรายชื่อศัพท์')+'</summary>'+
+   '<dl class="quiz-term-list">'+terms.map(({term})=>'<div><dt class="study-term" data-study-term="'+escape(String(term).toLowerCase().trim().replace(/\\s+/g,' '))+'" tabindex="0" role="button" aria-label="'+escape(term)+' ดูคำอ่านและความหมาย">'+escape(term)+'</dt></div>').join('')+'</dl>'+
+   '<p>ชี้เมาส์บนคำศัพท์เพื่อดูคำอ่าน ความหมาย และตัวอย่าง หรือแตะคำศัพท์บนแท็บเล็ต</p>'+
    '</details>';
 }
