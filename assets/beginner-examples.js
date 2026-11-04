@@ -19,10 +19,10 @@ export function improveChapterExamples(chapters){
   }
   for(const q of chapter.questions||[]){
    for(const w of q.vocabulary||[])w.example=readableExample(w.term,w.example);
-   q.reasons=(q.reasons||[]).map(reason=>{
-    let result=reason;
-    for(const {old,next} of changed.values())if(old&&result.includes(old))result=result.replace(old,next);
-    return result;
+   q.reasons=(q.reasons||[]).map((reason,index)=>{
+    // แก้ตัวอย่างเฉพาะเหตุผลของตัวเลือกที่ใช้ศัพท์นี้จริง ป้องกันแทนข้อความข้ามข้อ
+    const change=changed.get(norm(q.options?.[index]));
+    return change?.old&&reason.includes(change.old)?reason.replace(change.old,change.next):reason;
    });
   }
  }
