@@ -26,6 +26,19 @@
 
 **ข้อควรรู้:** ชุดฝึกเป็นคำถามสำหรับทบทวน ไม่ใช่ข้อสอบจริง และข้อมูลคะแนนหรือความคืบหน้าเก็บในเบราว์เซอร์ของอุปกรณ์ที่ใช้งาน
 
+## 🧮 ฝึกคำนวณ Network — ใส่คำตอบแล้วตรวจได้
+
+[เปิดแบบฝึก **Final: IPv4 Subnetting และ CIDR**](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/final/network-practice) · [เปิดแบบฝึก **Midterm: Delay และ RTT**](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems/midterm/network-practice)
+
+ระบบสุ่มโจทย์แล้วให้พิมพ์คำตอบเอง กด **ตรวจคำตอบ** เพื่อดูถูก–ผิด พร้อมสูตรและวิธีทำทีละขั้น มี **คำใบ้** ให้เลือกเปิดได้ก่อนตอบ และเครื่องคำนวณสำหรับตรวจทานผลลัพธ์
+
+- **Final:** Network Address, Subnet Mask, Broadcast Address, Usable Hosts, คำนวณ Prefix จากจำนวนโฮสต์
+- **Midterm:** Transmission Delay, Propagation Delay, Total Delay (ไม่รวม Processing/Queueing) และ Bandwidth–Delay Product
+- เลือกฝึกเฉพาะหัวข้อหรือสุ่มทุกหัวข้อได้ ทำซ้ำไม่จำกัด และสถิติคะแนนเก็บไว้ในเบราว์เซอร์
+- คำตอบ IP ให้กรอก `192.168.1.128` ส่วนคำตอบตัวเลขให้กรอกเฉพาะค่า ไม่ต้องพิมพ์หน่วย
+
+**ตัวอย่าง:** IP `192.168.1.130/26` จะมี Network Address `192.168.1.128`, Broadcast Address `192.168.1.191` และใช้ได้ 62 โฮสต์สำหรับซับเน็ตทั่วไป ระบบคำนวณอธิบายข้อยกเว้นของ `/31` และ `/32` เพิ่มไว้ด้วย
+
 ## รายวิชา
 
 **ปี 2 · เทอม 1 · ภาคเรียน 1/2026**
