@@ -10,11 +10,14 @@
   <link rel="stylesheet" href="assets/styles.css">
   <link rel="stylesheet" href="assets/exam.css">
   <link rel="stylesheet" href="assets/physical.css">
+  <link rel="stylesheet" href="assets/tablet.css">
   <script type="module" src="assets/app.js"></script>
+  <script type="module" src="assets/tablet-nav.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">ข้ามไปเนื้อหา</a>
-  <aside class="sidebar" aria-label="เมนูหลัก">
+  <button class="tablet-nav-backdrop" id="tablet-nav-backdrop" type="button" aria-label="ปิดเมนู" tabindex="-1"></button>
+  <aside class="sidebar" id="site-sidebar" aria-label="เมนูหลัก">
     <a class="brand" href="#/"><span class="brand-mark">it<span>·</span></span><span>STUDY HUB<small>พื้นที่ทบทวนของเรา</small></span></a>
     <div class="sidebar-label">MY LEARNING SPACE</div>
     <a class="nav-home" href="#/"><span>▦</span> คลังวิชา <span class="nav-dot"></span></a>
@@ -25,7 +28,7 @@
     <a class="repo-link" href="https://github.com/pakk49/IT-Study-Hub" target="_blank" rel="noopener noreferrer">ดูโปรเจกต์บน GitHub <span>↗</span></a>
   </aside>
   <div class="workspace">
-    <header class="topbar"><button class="nav-back" id="nav-back" type="button" hidden aria-label="ย้อนกลับไปหน้าก่อนหน้า">← ย้อนกลับ</button><a class="mobile-brand" href="#/">it· Study Hub</a><span class="topbar-title">YOUR LITTLE CORNER OF KNOWLEDGE</span><label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg><input id="search" type="search" placeholder="ค้นหาวิชาหรือบทเรียน…" aria-label="ค้นหาวิชาหรือบทเรียน" autocomplete="off"><kbd>/</kbd></label><span class="avatar" aria-label="พื้นที่เรียนรู้ IT">IT</span></header>
+    <header class="topbar"><button class="tablet-menu-button" id="tablet-menu-button" type="button" aria-label="เปิดเมนูเลือกวิชา" aria-expanded="false" aria-controls="site-sidebar">☰</button><button class="nav-back" id="nav-back" type="button" hidden aria-label="ย้อนกลับไปหน้าก่อนหน้า">← ย้อนกลับ</button><a class="mobile-brand" href="#/">it· Study Hub</a><span class="topbar-title">YOUR LITTLE CORNER OF KNOWLEDGE</span><label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg><input id="search" type="search" placeholder="ค้นหาวิชาหรือบทเรียน…" aria-label="ค้นหาวิชาหรือบทเรียน" autocomplete="off"><kbd>/</kbd></label><span class="avatar" aria-label="พื้นที่เรียนรู้ IT">IT</span></header>
     <main id="main" tabindex="-1"></main>
     <footer><span>IT STUDY HUB <span class="footer-dot">·</span> อ่านให้เข้าใจ แล้วลองทำด้วยตัวเอง</span><span>Made for curious minds ↗</span></footer>
   </div>
