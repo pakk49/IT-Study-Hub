@@ -1,62 +1,173 @@
 // แสดงคำอ่านและคำแปลเฉพาะศัพท์วิชาการ/ศัพท์เทคนิคในแต่ละวิชา ไม่แปลคำอังกฤษทั่วไป
 // ไม่เปลี่ยนตัวข้อมูลคำถาม/คำตอบ จึงไม่กระทบคะแนนและเฉลย
 const GLOSSARY = {"discrete mathematics":["ดิสครีต แมธเธอแมติกส์","คณิตศาสตร์ไม่ต่อเนื่อง"],"physical computing":["ฟิซิคัล คอมพิวติง","การประมวลผลเชิงกายภาพ"],"computer networks":["คอมพิวเตอร์ เน็ตเวิร์กส์","เครือข่ายคอมพิวเตอร์"],"network systems":["เน็ตเวิร์ก ซิสเท็มส์","ระบบเครือข่าย"],"database system concepts":["เดตาเบส ซิสเท็ม คอนเซปต์ส","แนวคิดระบบฐานข้อมูล"],"database":["เดตาเบส","ฐานข้อมูล"],"multimedia technology":["มัลติมีเดีย เทคโนโลยี","เทคโนโลยีสื่อประสม"],"data structures":["เดตา สตรักเชอร์ส","โครงสร้างข้อมูล"],"algorithms":["อัลกอริทึมส์","ขั้นตอนวิธี"],"number theory":["นัมเบอร์ เธียรี","ทฤษฎีจำนวน"],"greatest common divisor":["เกรเทสต์ คอมมอน ดิไวเซอร์","ตัวหารร่วมมาก"],"euclidean algorithm":["ยูคลิดเดียน อัลกอริทึม","ขั้นตอนวิธียูคลิด"],"euclidean division":["ยูคลิดเดียน ดิวิชัน","การหารแบบยูคลิด"],"modular congruence":["มอดิวลาร์ คองกรูเอินซ์","สมภาคเชิงมอดูลาร์"],"modulo operation":["มอดูโล โอเปอเรชัน","การหารเอาเศษ"],"modular inverse":["มอดิวลาร์ อินเวิร์ส","ตัวผกผันมอดูลาร์"],"linear congruence":["ลิเนียร์ คองกรูเอินซ์","สมการสมภาคเชิงเส้น"],"pairwise relatively prime":["แพร์ไวซ์ เรลละทิฟลี ไพรม์","จำนวนเฉพาะสัมพัทธ์กันทุกคู่"],"relatively prime":["เรลละทิฟลี ไพรม์","จำนวนเฉพาะสัมพัทธ์กัน"],"prime number":["ไพรม์ นัมเบอร์","จำนวนเฉพาะ"],"composite number":["คอมโพสิต นัมเบอร์","จำนวนประกอบ"],"divisibility":["ดิวิซิบิลิตี","การหารลงตัว"],"reflexive relation":["รีเฟล็กซิฟ รีเลชัน","ความสัมพันธ์สะท้อน"],"symmetric relation":["ซิมเมตริก รีเลชัน","ความสัมพันธ์สมมาตร"],"antisymmetric relation":["แอนทิซิมเมตริก รีเลชัน","ความสัมพันธ์ปฏิสมมาตร"],"transitive relation":["แทรนซิทิฟ รีเลชัน","ความสัมพันธ์ถ่ายทอด"],"equivalence relation":["อิควิวาเลนซ์ รีเลชัน","ความสัมพันธ์สมมูล"],"handshaking lemma":["แฮนด์เชกกิง เลมมา","บทตั้งการจับมือ"],"connected component":["คอนเน็กเต็ด คอมโพเนนต์","องค์ประกอบเชื่อมต่อ"],"connected graph":["คอนเน็กเต็ด กราฟ","กราฟเชื่อมต่อ"],"simple graph":["ซิมเพิล กราฟ","กราฟอย่างง่าย"],"directed multigraph":["ไดเร็กเต็ด มัลติกราฟ","กราฟหลายเส้นเชื่อมแบบมีทิศทาง"],"directed acyclic graph":["ไดเร็กเต็ด เอไซคลิก กราฟ","กราฟมีทิศทางที่ไม่มีวงจร"],"euler circuit":["ออยเลอร์ เซอร์กิต","วงรอบออยเลอร์"],"euler trail":["ออยเลอร์ เทรล","ทางเดินออยเลอร์"],"euler path":["ออยเลอร์ พาธ","เส้นทางออยเลอร์"],"hamilton circuit":["แฮมิลตัน เซอร์กิต","วงรอบแฮมิลตัน"],"hamilton path":["แฮมิลตัน พาธ","เส้นทางแฮมิลตัน"],"finite state automata":["ไฟไนต์ สเตต ออโตมาตา","ออโตมาตาสถานะจำกัด"],"minimum spanning tree":["มินิมัม สแปนนิง ทรี","ต้นไม้แผ่ทั่วน้อยที่สุด"],"cut vertex":["คัต เวอร์เท็กซ์","จุดยอดตัด"],"cut edge":["คัต เอดจ์","เส้นเชื่อมตัด"],"closed walk":["โคลสด์ วอล์ก","การเดินแบบปิด"],"simple path":["ซิมเพิล พาธ","เส้นทางอย่างง่าย"],"directed graph":["ไดเร็กเต็ด กราฟ","กราฟมีทิศทาง"],"undirected graph":["อันไดเร็กเต็ด กราฟ","กราฟไม่มีทิศทาง"],"linear congruential generator":["ลิเนียร์ คองกรูเอนเชียล เจเนอเรเตอร์","ตัวสร้างเลขสุ่มเชิงเส้น"],"handshaking":["แฮนด์เชกกิง","การจับมือ"],"information technology":["อินฟอร์เมชัน เทคโนโลยี","เทคโนโลยีสารสนเทศ"],"operating system":["โอเปอเรติง ซิสเท็ม","ระบบปฏิบัติการ"],"internet protocol":["อินเทอร์เน็ต โพรโทคอล","โพรโทคอลอินเทอร์เน็ต"],"transmission control protocol":["ทรานสมิชชัน คอนโทรล โพรโทคอล","โพรโทคอลควบคุมการส่งข้อมูล"],"user datagram protocol":["ยูสเซอร์ เดตาแกรม โพรโทคอล","โพรโทคอลดาตาแกรมผู้ใช้"],"domain name system":["โดเมน เนม ซิสเท็ม","ระบบชื่อโดเมน"],"local area network":["โลคัล แอเรีย เน็ตเวิร์ก","เครือข่ายเฉพาะที่"],"wide area network":["ไวด์ แอเรีย เน็ตเวิร์ก","เครือข่ายบริเวณกว้าง"],"media access control":["มีเดีย แอ็กเซส คอนโทรล","การควบคุมการเข้าถึงสื่อ"],"open systems interconnection":["โอเพน ซิสเท็มส์ อินเทอร์คอนเน็กชัน","แบบจำลองการเชื่อมต่อระบบเปิด"],"entity relationship diagram":["เอนทิตี รีเลชันชิป ไดอะแกรม","แผนภาพความสัมพันธ์ระหว่างเอนทิตี"],"primary key":["ไพรมารี คีย์","คีย์หลัก"],"foreign key":["ฟอริน คีย์","คีย์นอก"],"candidate key":["แคนดิเดต คีย์","คีย์ผู้สมัคร"],"composite key":["คอมโพสิต คีย์","คีย์ประกอบ"],"normalization":["นอร์มัลไลเซชัน","การทำให้เป็นบรรทัดฐาน"],"transaction":["ทรานแซกชัน","รายการธุรกรรม"],"concurrency control":["คอนเคอร์เรนซี คอนโทรล","การควบคุมการทำงานพร้อมกัน"],"deadlock":["เดดล็อก","ภาวะติดตาย"],"rollback":["โรลแบ็ก","ย้อนกลับธุรกรรม"],"commit":["คอมมิต","ยืนยันธุรกรรม"],"structured query language":["สตรักเชิร์ด คิวรี แลงกวิจ","ภาษาสอบถามข้อมูลเชิงโครงสร้าง"],"artificial intelligence":["อาร์ทิฟิเชียล อินเทลลิเจนซ์","ปัญญาประดิษฐ์"],"machine learning":["แมชชีน เลิร์นนิง","การเรียนรู้ของเครื่อง"],"computer graphics":["คอมพิวเตอร์ กราฟิกส์","คอมพิวเตอร์กราฟิก"],"vector graphics":["เวกเตอร์ กราฟิกส์","ภาพกราฟิกเวกเตอร์"],"bitmapped image":["บิตแมปต์ อิมเมจ","ภาพบิตแมป"],"bezier curve":["เบซิเยร์ เคิร์ฟ","เส้นโค้งเบซิเยร์"],"control points":["คอนโทรล พอยต์ส","จุดควบคุม"],"rasterization":["แรสเตอร์ไรเซชัน","การแปลงเป็นพิกเซล"],"rendering":["เรนเดอริง","การสร้างภาพ"],"reflection":["รีเฟล็กชัน","การสะท้อน"],"rotation":["โรเทชัน","การหมุน"],"translation":["ทรานสเลชัน","การเลื่อนตำแหน่ง"],"intersection":["อินเทอร์เซกชัน","ส่วนตัดกัน"],"union":["ยูเนียน","ส่วนรวม"],"difference":["ดิฟเฟอเรนซ์","ผลต่าง"],"surface normal":["เซอร์เฟซ นอร์มัล","เวกเตอร์ตั้งฉากพื้นผิว"],"perspective projection":["เพอร์สเปกทิฟ โพรเจกชัน","การฉายภาพแบบทัศนมิติ"],"polygon mesh":["พอลิกอน เมช","โครงข่ายรูปหลายเหลี่ยม"],"physical layer":["ฟิซิคัล เลเยอร์","ชั้นกายภาพ"],"data link layer":["เดตา ลิงก์ เลเยอร์","ชั้นเชื่อมโยงข้อมูล"],"network layer":["เน็ตเวิร์ก เลเยอร์","ชั้นเครือข่าย"],"transport layer":["ทรานสปอร์ต เลเยอร์","ชั้นขนส่ง"],"application layer":["แอปพลิเคชัน เลเยอร์","ชั้นประยุกต์"],"access point":["แอ็กเซส พอยต์","จุดเชื่อมต่อไร้สาย"],"packet switching":["แพ็กเก็ต สวิตชิง","การสลับส่งแพ็กเก็ต"],"routing table":["เราติง เทเบิล","ตารางกำหนดเส้นทาง"],"reflexive":["รีเฟล็กซิฟ","สะท้อน"],"antisymmetric":["แอนทิซิมเมตริก","ปฏิสมมาตร"],"symmetric":["ซิมเมตริก","สมมาตร"],"transitive":["แทรนซิทิฟ","ถ่ายทอด"],"congruent":["คองกรูเอินต์","สมภาค"],"congruence":["คองกรูเอินซ์","ความสมภาค"],"modulo":["มอดูโล","การหารเอาเศษ"],"mod":["มอด","เศษจากการหาร"],"gcd":["จีซีดี","ตัวหารร่วมมาก"],"lcm":["แอลซีเอ็ม","ตัวคูณร่วมน้อย"],"lcg":["แอลซีจี","ตัวสร้างเลขสุ่มเชิงเส้น"],"dfa":["ดีเอฟเอ","ออโตมาตาจำกัดเชิงกำหนด"],"fsm":["เอฟเอสเอ็ม","เครื่องจักรสถานะจำกัด"],"fsa":["เอฟเอสเอ","ออโตมาตาสถานะจำกัด"],"relations":["รีเลชันส์","ความสัมพันธ์"],"relation":["รีเลชัน","ความสัมพันธ์"],"vertices":["เวอร์ทิซีซ","จุดยอด"],"vertex":["เวอร์เท็กซ์","จุดยอด"],"edges":["เอดจิส","เส้นเชื่อม"],"edge":["เอดจ์","เส้นเชื่อม"],"degree":["ดีกรี","ระดับขั้น"],"graph":["กราฟ","แผนภาพกราฟ"],"graphs":["กราฟส์","กราฟหลายรูป"],"directed":["ไดเร็กเต็ด","มีทิศทาง"],"undirected":["อันไดเร็กเต็ด","ไม่มีทิศทาง"],"multigraph":["มัลติกราฟ","กราฟหลายเส้นเชื่อม"],"pseudograph":["ซูโดกราฟ","กราฟเทียม"],"tree":["ทรี","ต้นไม้"],"loop":["ลูป","เส้นวนกลับ"],"loops":["ลูปส์","เส้นวนกลับ"],"path":["พาธ","เส้นทาง"],"circuit":["เซอร์กิต","วงรอบ"],"cycle":["ไซเคิล","วงจร"],"bridge":["บริดจ์","สะพานกราฟ"],"connected":["คอนเน็กเต็ด","เชื่อมต่อกัน"],"disconnected":["ดิสคอนเน็กเต็ด","ไม่เชื่อมต่อ"],"component":["คอมโพเนนต์","ส่วนประกอบ"],"components":["คอมโพเนนต์ส","ส่วนประกอบ"],"matching":["แมตชิง","การจับคู่"],"euler":["ออยเลอร์","ชื่อออยเลอร์"],"hamilton":["แฮมิลตัน","ชื่อแฮมิลตัน"],"input":["อินพุต","ข้อมูลนำเข้า"],"output":["เอาต์พุต","ข้อมูลส่งออก"],"state":["สเตต","สถานะ"],"states":["สเตตส์","สถานะหลายสถานะ"],"bit":["บิต","หน่วยข้อมูลฐานสอง"],"bits":["บิตส์","หน่วยข้อมูลฐานสอง"],"strings":["สตริงส์","สายอักขระ"],"string":["สตริง","สายอักขระ"],"boolean":["บูลีน","ค่าตรรกะจริงหรือเท็จ"],"algorithm":["อัลกอริทึม","ขั้นตอนวิธี"],"recursive":["รีเคอร์ซิฟ","แบบเรียกซ้ำ"],"function":["ฟังก์ชัน","ฟังก์ชัน"],"array":["อาร์เรย์","ชุดข้อมูลอาร์เรย์"],"stack":["สแตก","กองซ้อน"],"queue":["คิว","แถวคอย"],"hashing":["แฮชชิง","การแฮช"],"sorting":["ซอร์ติง","การเรียงลำดับ"],"searching":["เสิร์ชชิง","การค้นหา"],"pixel":["พิกเซล","จุดภาพ"],"pixels":["พิกเซลส์","จุดภาพ"],"texture":["เท็กซ์เจอร์","พื้นผิว"],"camera":["แคเมอรา","กล้อง"],"shader":["เชเดอร์","ตัวคำนวณแสง"],"material":["มาเทียเรียล","วัสดุ"],"protocol":["โพรโทคอล","กติกาการสื่อสาร"],"packet":["แพ็กเก็ต","หน่วยข้อมูล"],"router":["เราเตอร์","อุปกรณ์กำหนดเส้นทาง"],"switch":["สวิตช์","อุปกรณ์สลับเครือข่าย"],"server":["เซิร์ฟเวอร์","เครื่องให้บริการ"],"client":["ไคลเอนต์","เครื่องลูกข่าย"],"subnet":["ซับเน็ต","เครือข่ายย่อย"],"mask":["แมสก์","หน้ากาก"],"gateway":["เกตเวย์","ประตูเชื่อมเครือข่าย"],"wireless":["ไวร์เลส","ไร้สาย"],"ethernet":["อีเทอร์เน็ต","เครือข่ายอีเทอร์เน็ต"],"bandwidth":["แบนด์วิดท์","ความกว้างแถบสัญญาณ"],"latency":["เลเทนซี","ความหน่วง"],"throughput":["ทรูพุต","อัตราส่งผ่านข้อมูล"],"sensor":["เซนเซอร์","ตัวตรวจจับ"],"sensors":["เซนเซอร์ส","ตัวตรวจจับ"],"temperature":["เทมเพอเรเชอร์","อุณหภูมิ"],"ultrasonic":["อัลตราโซนิก","คลื่นเหนือเสียง"],"potentiometer":["โพเทนชิโอมิเตอร์","ตัวต้านทานปรับค่าได้"],"resistor":["รีซิสเตอร์","ตัวต้านทาน"],"capacitor":["คะแพซิเตอร์","ตัวเก็บประจุ"],"microcontroller":["ไมโครคอนโทรลเลอร์","ตัวควบคุมขนาดเล็ก"],"arduino":["อาร์ดูอิโน","แพลตฟอร์มไมโครคอนโทรลเลอร์"],"mqtt":["เอ็มคิวทีที","โพรโทคอลรับส่งข้อความ"],"publish":["พับลิช","เผยแพร่ข้อมูล"],"subscribe":["ซับสไครบ์","สมัครรับข้อมูล"],"broker":["โบรเกอร์","ตัวกลางรับส่งข้อความ"],"analog":["แอนะล็อก","สัญญาณต่อเนื่อง"],"digital":["ดิจิทัล","สัญญาณดิจิทัล"],"voltage":["โวลเทจ","แรงดันไฟฟ้า"],"resistance":["รีซิสแทนซ์","ความต้านทาน"],"frequency":["ฟรีเควนซี","ความถี่"],"entity":["เอนทิตี","สิ่งที่สนใจเก็บข้อมูล"],"attribute":["แอตทริบิวต์","คุณลักษณะ"],"relationship":["รีเลชันชิป","ความสัมพันธ์"],"query":["คิวรี","คำสั่งสอบถาม"],"schema":["สคีมา","โครงสร้างฐานข้อมูล"],"index":["อินเด็กซ์","ดัชนี"],"join":["จอยน์","การเชื่อมตาราง"],"primary":["ไพรมารี","หลัก"],"foreign":["ฟอริน","ภายนอก"],"constraint":["คอนสเทรนต์","ข้อจำกัด"],"flashcard":["แฟลชการ์ด","บัตรคำ"],"solution":["โซลูชัน","วิธีแก้"]};
+const DETAILS = {
+ "reflexive":"ความสัมพันธ์ R บนเซต A เป็นแบบสะท้อน เมื่อสมาชิกทุกตัว a มีคู่ (a,a) อยู่ใน R",
+ "symmetric":"ถ้า a สัมพันธ์กับ b แล้ว b ต้องสัมพันธ์กลับไปหา a ด้วย เช่น (a,b) และ (b,a)",
+ "antisymmetric":"ถ้า aRb และ bRa เกิดขึ้นพร้อมกัน จะต้องมี a=b ไม่ได้หมายถึงไม่มีคู่ย้อนกลับทุกกรณี",
+ "transitive":"ถ้า aRb และ bRc ต้องอนุมานได้ว่า aRc เช่น ความสัมพันธ์น้อยกว่าหรือเท่ากับ",
+ "euclidean algorithm":"ใช้การหารเอาเศษซ้ำ ๆ เพื่อหาตัวหารร่วมมาก (GCD) จนเศษเป็นศูนย์",
+ "modulo":"การหาค่าเศษเมื่อหารจำนวนเต็มด้วยตัวหารบวก เช่น 17 mod 5 = 2",
+ "gcd":"จำนวนเต็มบวกมากที่สุดที่หารจำนวนที่กำหนดทั้งหมดลงตัว เช่น gcd(12,18)=6",
+ "lcm":"จำนวนเต็มบวกน้อยที่สุดที่เป็นพหุคูณของจำนวนที่กำหนดทั้งหมด เช่น lcm(6,8)=24",
+ "euler circuit":"เส้นทางเดินที่ผ่านทุกเส้นเชื่อมเพียงครั้งเดียวและกลับมาที่จุดเริ่มต้น",
+ "euler path":"เส้นทางเดินที่ผ่านทุกเส้นเชื่อมเพียงครั้งเดียว โดยไม่จำเป็นต้องกลับจุดเริ่มต้น",
+ "hamilton path":"เส้นทางที่ผ่านจุดยอดทุกจุดครั้งเดียว โดยไม่จำเป็นต้องกลับจุดเริ่มต้น",
+ "cut vertex":"จุดยอดที่เมื่อลบจุดนั้นพร้อมเส้นที่ติดอยู่ จำนวนองค์ประกอบเชื่อมต่อจะเพิ่มขึ้น",
+ "cut edge":"เส้นเชื่อมที่เมื่อลบออก จำนวนองค์ประกอบเชื่อมต่อของกราฟจะเพิ่มขึ้น",
+ "primary key":"คอลัมน์หรือกลุ่มคอลัมน์ที่ใช้ระบุแต่ละแถวของตารางอย่างไม่ซ้ำและห้ามเป็น NULL",
+ "foreign key":"คอลัมน์ที่ใช้อ้างอิงคีย์ของข้อมูลในอีกตาราง เพื่อรักษาความถูกต้องของความสัมพันธ์",
+ "normalization":"กระบวนการจัดตารางฐานข้อมูลให้อยู่ในรูปแบบที่ลดความซ้ำซ้อนและปัญหาการแก้ไขข้อมูล",
+ "bandwidth":"ความจุของช่องสื่อสารต่อหน่วยเวลา มักวัดเป็นบิตต่อวินาที (bps) ไม่เท่ากับความเร็วที่รับส่งได้จริงเสมอไป",
+ "latency":"ระยะเวลาหน่วงของการส่งข้อมูลระหว่างต้นทางกับปลายทาง มักวัดเป็นมิลลิวินาที",
+ "protocol":"ชุดกฎและรูปแบบข้อความที่อุปกรณ์ตกลงใช้ในการสื่อสารระหว่างกัน",
+ "mqtt":"โพรโทคอลสื่อสารแบบ publish/subscribe ผ่านตัวกลางที่เรียกว่า broker นิยมใช้กับ IoT",
+ "sensor":"อุปกรณ์ที่ตรวจวัดปริมาณทางกายภาพ เช่น อุณหภูมิ แสง หรือระยะทาง แล้วส่งค่าให้ระบบอ่าน",
+ "rasterization":"กระบวนการแปลงรูปทรงหรือข้อมูลกราฟิกให้เป็นพิกเซลสำหรับแสดงบนหน้าจอ",
+ "rendering":"กระบวนการคำนวณภาพจากโมเดล วัสดุ แสง และกล้อง เพื่อสร้างภาพที่แสดงผลได้"
+};
 const terms=Object.keys(GLOSSARY).sort((a,b)=>b.length-a.length);
 const rx=new RegExp('\\b(?:'+terms.map(t=>t.replace(/ /g,'\\s+')).join('|')+')\\b','gi');
-const selectors='script,style,code,pre,kbd,textarea,input,select,option,svg,math,[aria-hidden="true"],[data-no-translate]';
-function annotateText(node){
+const excluded='script,style,code,pre,kbd,textarea,input,select,option,svg,math,[aria-hidden="true"],[data-no-translate],[data-study-term]';
+function decorateText(node){
  const source=node.nodeValue;
- if(!source || !/[A-Za-z]/.test(source))return;
- // ข้ามข้อความที่เป็นสูตร นิพจน์ URL หรือรหัสตัวแปร
- if(/^\\s*(?:https?:|[A-Za-z0-9_./:#?=&-]+)\\s*$/.test(source)&&/[/:._=]/.test(source))return;
- const changed=source.replace(rx,(match,index,whole)=>{
-  const prev=whole[index-1]||'', next=whole[index+match.length]||'';
-  if(/[\\w./:@#-]/.test(prev)||/[\\w./:@#-]/.test(next))return match;
-  const after=whole.slice(index+match.length);
-  if(/^\\s*\\([^)]*[ก-๙][^)]*\\)/.test(after))return match;
-  const [pron,meaning]=GLOSSARY[match.toLowerCase()];
-  return match+' ('+pron+' = '+meaning+')';
- });
- if(changed!==source)node.nodeValue=changed;
+ if(!source||!/[A-Za-z]/.test(source))return;
+ // ไม่แทรกคำใน URL, ชื่อไฟล์, สมการ หรือ identifier
+ if(/^\s*(?:https?:|[A-Za-z0-9_./:#?=&-]+)\s*$/.test(source)&&/[/:._=]/.test(source))return;
+ rx.lastIndex=0;
+ let match,last=0,fragment=null;
+ while((match=rx.exec(source))){
+  const start=match.index,end=start+match[0].length;
+  const before=source[start-1]||'',after=source[end]||'';
+  if(/[\w./:@#-]/.test(before)||/[\w./:@#-]/.test(after))continue;
+  // ถ้ามีคำอ่าน/ความหมายวงเล็บอยู่แล้ว ไม่ต้องทำคำแปลซ้ำ
+  if(/^\s*\([^)]*[ก-๙][^)]*\)/.test(source.slice(end)))continue;
+  if(!fragment)fragment=document.createDocumentFragment();
+  fragment.append(document.createTextNode(source.slice(last,start)));
+  const span=document.createElement('span');
+  span.className='study-term';
+  span.dataset.studyTerm=match[0].toLowerCase().replace(/\s+/g,' ');
+  span.tabIndex=0;
+  span.setAttribute('role','button');
+  span.setAttribute('aria-label',match[0]+' ดูคำอ่านและความหมาย');
+  span.textContent=match[0];
+  fragment.append(span);
+  last=end;
+ }
+ if(fragment){
+  fragment.append(document.createTextNode(source.slice(last)));
+  node.replaceWith(fragment);
+ }
 }
 function scan(root){
  if(!root)return;
- const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode(n){
-  if(!n.parentElement||n.parentElement.closest(selectors))return NodeFilter.FILTER_REJECT;
-  return NodeFilter.FILTER_ACCEPT;
- }});
- const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
- nodes.forEach(annotateText);
+ const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{
+  acceptNode(n){
+   return n.parentElement&&!n.parentElement.closest(excluded)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;
+  }
+ });
+ const nodes=[];
+ while(walker.nextNode())nodes.push(walker.currentNode);
+ nodes.forEach(decorateText);
+}
+function installTooltip(root){
+ const popup=document.createElement('aside');
+ popup.className='study-term-tooltip';
+ popup.id='study-term-tooltip';
+ popup.setAttribute('role','tooltip');
+ popup.hidden=true;
+ popup.innerHTML='<div class="term-popup-header"><strong id="term-popup-name"></strong><button type="button" class="term-popup-close" aria-label="ปิดคำอธิบาย">×</button></div><p id="term-popup-pron"></p><p id="term-popup-meaning"></p><p id="term-popup-detail"></p>';
+ document.body.append(popup);
+ const title=popup.querySelector('#term-popup-name');
+ const pron=popup.querySelector('#term-popup-pron');
+ const meaning=popup.querySelector('#term-popup-meaning');
+ const detail=popup.querySelector('#term-popup-detail');
+ let active=null, timer=null, sticky=false;
+ const cancel=()=>{if(timer!==null){clearTimeout(timer);timer=null;}};
+ function close(){
+  cancel();if(active)active.removeAttribute('aria-describedby');
+  active=null;sticky=false;popup.hidden=true;
+ }
+ function open(term,locked=false){
+  if(!term||!term.isConnected)return;
+  const key=term.dataset.studyTerm,entry=GLOSSARY[key];
+  if(!entry)return;
+  cancel();
+  if(active&&active!==term)active.removeAttribute('aria-describedby');
+  active=term;sticky=locked;
+  title.textContent=term.textContent;
+  pron.textContent='คำอ่าน: '+entry[0];
+  meaning.textContent='ความหมาย: '+entry[1];
+  detail.textContent='อธิบายเพิ่มเติม: '+(DETAILS[key]||'ในบทเรียนนี้ '+term.textContent+' หมายถึง '+entry[1]+' ใช้เป็นศัพท์เฉพาะในการอธิบายแนวคิดหรือกระบวนการของหัวข้อนี้');
+  term.setAttribute('aria-describedby',popup.id);
+  popup.hidden=false;
+  popup.style.left='0px';popup.style.top='0px';
+  const rect=term.getBoundingClientRect();
+  const bounds=popup.getBoundingClientRect();
+  const left=Math.max(10,Math.min(rect.left,window.innerWidth-bounds.width-10));
+  const top=rect.bottom+bounds.height+10>window.innerHeight&&rect.top>bounds.height+12
+    ?rect.top-bounds.height-8:Math.min(rect.bottom+8,window.innerHeight-bounds.height-10);
+  popup.style.left=left+'px';
+  popup.style.top=Math.max(10,top)+'px';
+ }
+ root.addEventListener('pointerover',event=>{
+  if(event.pointerType==='touch')return;
+  const term=event.target.closest?.('[data-study-term]');
+  if(!term||!root.contains(term))return;
+  cancel();timer=setTimeout(()=>open(term),350);
+ });
+ root.addEventListener('pointerout',event=>{
+  if(event.pointerType==='touch')return;
+  const term=event.target.closest?.('[data-study-term]');
+  if(!term)return;
+  if(term.contains(event.relatedTarget))return;
+  cancel();if(!sticky)close();
+ });
+ root.addEventListener('focusin',event=>{
+  const term=event.target.closest?.('[data-study-term]');
+  if(term)open(term,true);
+ });
+ root.addEventListener('click',event=>{
+  const term=event.target.closest?.('[data-study-term]');
+  if(!term||!root.contains(term)){if(!popup.contains(event.target))close();return;}
+  event.preventDefault();
+  event.stopPropagation();
+  if(active===term&&sticky)close();else open(term,true);
+ });
+ root.addEventListener('keydown',event=>{
+  if(event.key!=='Enter'&&event.key!==' ')return;
+  const term=event.target.closest?.('[data-study-term]');
+  if(!term)return;
+  event.preventDefault();if(active===term&&sticky)close();else open(term,true);
+ });
+ document.addEventListener('pointerdown',event=>{
+  if(!popup.hidden&&!popup.contains(event.target)&&!event.target.closest?.('[data-study-term]'))close();
+ });
+ document.addEventListener('keydown',event=>{if(event.key==='Escape')close();});
+ window.addEventListener('scroll',()=>{if(!popup.hidden)close();},{passive:true});
+ window.addEventListener('resize',close);
+ popup.querySelector('.term-popup-close').addEventListener('click',close);
 }
 export function installThaiReadings(){
- const root=document.querySelector('#main');if(!root)return;
- // First render: annotate once. Later updates: only newly inserted elements.
- // Avoid rescanning the entire study page on each text edit/answer choice.
+ const root=document.querySelector('#main');
+ if(!root)return;
  scan(root);
+ installTooltip(root);
  const observer=new MutationObserver(records=>{
-  const pending=new Set();
-  for(const record of records){
-   for(const added of record.addedNodes){
-    if(added.nodeType===Node.TEXT_NODE){
-     if(added.parentElement && !added.parentElement.closest(selectors))pending.add(added);
-    }else if(added.nodeType===Node.ELEMENT_NODE){
-     pending.add(added);
-    }
-   }
+  const added=new Set();
+  for(const record of records)for(const node of record.addedNodes){
+   if(node.nodeType===Node.TEXT_NODE||node.nodeType===Node.ELEMENT_NODE)added.add(node);
   }
-  if(!pending.size)return;
+  if(!added.size)return;
   observer.disconnect();
   try{
-   for(const node of pending){
-    if(!node.isConnected || !root.contains(node))continue;
-    if(node.nodeType===Node.TEXT_NODE)annotateText(node);
-    else if(!node.matches(selectors)){
-     scan(node);
-    }
+   for(const node of added){
+    if(!node.isConnected||!root.contains(node))continue;
+    if(node.nodeType===Node.TEXT_NODE){
+     if(node.parentElement&&!node.parentElement.closest(excluded))decorateText(node);
+    }else if(!node.matches(excluded))scan(node);
    }
-  }finally{
-   observer.observe(root,{childList:true,subtree:true});
-  }
+  }finally{observer.observe(root,{childList:true,subtree:true});}
  });
  observer.observe(root,{childList:true,subtree:true});
 }
