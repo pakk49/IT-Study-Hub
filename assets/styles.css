@@ -109,3 +109,6 @@
 .study-step-block li:last-child{padding-bottom:0}
 .study-step-block li::marker{font-weight:700;color:#2b7cba}
 @media(max-width:650px){.study-step-block{padding:13px 14px}.study-step-block li{line-height:1.85}}
+
+/* คำอ่านและคำแปลจะอยู่ในกล่องตอนชี้ศัพท์เท่านั้น — ซ่อนมาร์กอัปแบบเก่าจากแคช */
+.study-term-hint{display:none!important}
