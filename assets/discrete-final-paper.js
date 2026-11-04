@@ -8,8 +8,8 @@ export function applyDiscreteFinalPaper(chapters){
   chapter.questions=paper[i].map(([prompt,options,answer,why],j)=>({
    id:`dm-final-paper-${chapter.number}-${j+1}`,topic:sectionIds[j<5?0:1],
    level:j<5?'ตามแนวข้อสอบ Final':'ฝึกประยุกต์',prompt,options,answer,
-   reasons:options.map((option,k)=>k===answer?`ถูกต้อง: ${why}`:`ไม่ถูกต้อง: ${why}`),
-   vocabulary:[],source:'ดัดแปลงจากรูปแบบ discreteFinalExam-1.pdf; ตรวจเฉลยใหม่'
+   reasons:options.map((option,k)=>k===answer?`ถูกต้อง: ${why}`:`ตัวเลือก “${option}” ไม่ตรงกับคำตอบที่ได้ ลองตรวจวิธีคิด: ${why} ดังนั้นต้องเลือก “${options[answer]}”`),
+   vocabulary:chapter.flashcards.filter(card=>[prompt,...options].join(' ').toLowerCase().includes(card.term.toLowerCase())).map(card=>({term:card.term,meaning:card.meaning,example:card.example})),source:'ดัดแปลงจากรูปแบบ discreteFinalExam-1.pdf; ตรวจเฉลยใหม่'
   }));
   chapter.description += ' · ฝึกข้อสอบคำนวณและวิเคราะห์ตามแนว Final PDF';
   chapter.source='แนวข้อสอบ Final: discreteFinalExam-1.pdf (โจทย์ฝึกปรับใหม่ ไม่ใช่ข้อสอบจริงชุดเดิม)';
