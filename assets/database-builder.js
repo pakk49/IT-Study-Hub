@@ -10,13 +10,13 @@ export function createDatabaseChapters(raw) {
     id:topic,title:group.title,pages:group.pages||'',
     intro:group.intro,
     points:group.points||[], // definitions and examples appear once in the vocabulary table
-    table:{headers:['English Term','ความหมายภาษาไทย','ตัวอย่าง'],rows:terms.map(t=>t.slice(0,3))},
+    table:{headers:['ศัพท์เทคนิค (ภาษาอังกฤษ)','ความหมายแบบเข้าใจง่าย','ตัวอย่างการใช้งาน'],rows:terms.map(t=>t.slice(0,3))},
     remember:group.remember||''
    });
    for(let i=0;i<terms.length;i++){
     const [term,meaning,example,prompt]=terms[i];
     const gidx=flashcards.length+1;
-    flashcards.push({id:`db-${ch.number}-f${gidx}`,term,meaning,example,front:`${term} ใช้เมื่อใด?`,back:`${meaning}\nตัวอย่าง: ${example}`});
+    flashcards.push({id:`db-${ch.number}-f${gidx}`,term,meaning,example,front:`${term} คืออะไร และใช้กับงานแบบไหน?`,back:`${meaning}\nตัวอย่าง: ${example}`});
     // Three alternatives from the same topic wherever possible.
     const pool=terms.map((x,j)=>j).filter(j=>j!==i);
     let choices=[i,...pool.slice(0,3)];
@@ -31,8 +31,8 @@ export function createDatabaseChapters(raw) {
     const correct=order.indexOf(i);
     const options=order.map(j=>terms[j][0]);
     const reasons=order.map(j=>j===i
-     ? `ถูกต้อง: ${term} — ${meaning} ตัวอย่างประกอบ: ${example}`
-     : `ไม่ตรงกับสถานการณ์: ${terms[j][0]} ใช้สำหรับ ${terms[j][1]} ขณะที่กรณีนี้ต้องใช้ ${term} (${meaning})`);
+     ? `ถูกต้อง: ${term} หมายถึง ${meaning} เช่น ${example}`
+     : `ยังไม่ใช่: ${terms[j][0]} หมายถึง ${terms[j][1]} แต่โจทย์ต้องการ ${term} ซึ่งหมายถึง ${meaning}`);
     questions.push({id:`db-${ch.number}-q${gidx}`,topic,level:'วิเคราะห์ / ประยุกต์',prompt,options,answer:correct,reasons,
       vocabulary:order.map(j=>({term:terms[j][0],meaning:terms[j][1],example:terms[j][2]}))});
    }

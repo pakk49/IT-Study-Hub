@@ -10,22 +10,22 @@ export function createPhysicalChapters(raw){
    sections.push({
     id:topic,title:group.title,pages:group.pages||'',
     intro:group.intro,points:group.points||[],
-    table:{headers:['English Term','ความหมายภาษาไทย','ตัวอย่าง / การใช้งาน'],rows:terms.map(t=>t.slice(0,3))},
+    table:{headers:['ศัพท์เทคนิค (ภาษาอังกฤษ)','ความหมายแบบเข้าใจง่าย','ตัวอย่างการใช้งาน'],rows:terms.map(t=>t.slice(0,3))},
     remember:group.remember||'',formula:group.formula||''
    });
    for(let i=0;i<terms.length;i++){
     const [term,meaning,example,prompt]=terms[i];
     if(!term||!meaning||!example||!prompt)throw Error('Missing concept for '+ch.number+' '+groupIndex+' '+i);
     const id='pc-'+ch.number+'-q'+(questions.length+1);
-    flashcards.push({id:'pc-'+ch.number+'-f'+(flashcards.length+1),term,meaning,example,front:term+' ใช้งานอย่างไร?',back:meaning+'\nตัวอย่าง: '+example});
+    flashcards.push({id:'pc-'+ch.number+'-f'+(flashcards.length+1),term,meaning,example,front:term+' คืออะไร และนำไปใช้ทำอะไร?',back:meaning+'\nตัวอย่าง: '+example});
     const distractorIndexes=terms.map((_,j)=>j).filter(j=>j!==i);
     const alternatives=[i,...[0,1,2].map(k=>distractorIndexes[(i+k)%distractorIndexes.length])];
     const shift=(i+groupIndex)%4;
     const order=alternatives.slice(shift).concat(alternatives.slice(0,shift));
     const options=order.map(j=>terms[j][0]),answer=order.indexOf(i);
     questions.push({id,topic,level:'วิเคราะห์ / ประยุกต์',prompt,options,answer,
-     reasons:order.map(j=>j===i?'ถูกต้อง: '+term+' — '+meaning+' ตัวอย่าง: '+example:
-      'ตัวเลือกนี้ใช้กับกรณีอื่น: '+terms[j][0]+' — '+terms[j][1]+' แต่โจทย์นี้ต้องใช้ '+term+' เพราะ '+meaning),
+     reasons:order.map(j=>j===i?'ถูกต้อง: '+term+' หมายถึง '+meaning+' ตัวอย่างการใช้: '+example:
+      'ยังไม่ใช่: '+terms[j][0]+' หมายถึง '+terms[j][1]+' ส่วนโจทย์นี้ต้องใช้ '+term+' เพราะ '+meaning),
      vocabulary:order.map(j=>({term:terms[j][0],meaning:terms[j][1],example:terms[j][2]}))
     });
    }

@@ -10,7 +10,7 @@ export function createNetworkChapters(raw) {
     id:topic,title:group.title,pages:group.pages||'',
     intro:group.intro,
     points:group.points||[], // vocabulary and examples stay in the table, not duplicated below
-    table:{headers:['English Term','ความหมายภาษาไทย','ตัวอย่างใช้งาน'],rows:terms.map(t=>t.slice(0,3))},
+    table:{headers:['ศัพท์เทคนิค (ภาษาอังกฤษ)','ความหมายแบบเข้าใจง่าย','ตัวอย่างการใช้งาน'],rows:terms.map(t=>t.slice(0,3))},
     remember:group.remember||''
    });
    for(let i=0;i<terms.length;i++){
@@ -18,7 +18,7 @@ export function createNetworkChapters(raw) {
     if(!term||!meaning||!example||!prompt)throw Error('Incomplete glossary item '+ch.week+': '+i);
     const index=flashcards.length+1;
     flashcards.push({id:'net-'+ch.week+'-f'+index,term,meaning,example,
-      front:term+' เกี่ยวข้องกับการทำงานเครือข่ายอย่างไร?',
+      front:term+' คืออะไร และใช้ในสถานการณ์ใด?',
       back:meaning+'\nตัวอย่าง: '+example});
     const others=terms.map((t,j)=>j).filter(j=>j!==i);
     const start=i%others.length;
@@ -28,8 +28,8 @@ export function createNetworkChapters(raw) {
     questions.push({
       id:'net-'+ch.week+'-q'+index,topic,level:'วิเคราะห์ / ประยุกต์',prompt,
       options:order.map(j=>terms[j][0]),answer,
-      reasons:order.map(j=>j===i?'ถูกต้อง: '+term+' — '+meaning+' ตัวอย่าง: '+example:
-        'ไม่ตรงกับเงื่อนไขในโจทย์: '+terms[j][0]+' คือ '+terms[j][1]+' ส่วนกรณีนี้ต้องใช้ '+term),
+      reasons:order.map(j=>j===i?'ถูกต้อง: '+term+' หมายถึง '+meaning+' ตัวอย่างที่เห็นภาพ: '+example:
+        'ยังไม่ใช่: '+terms[j][0]+' หมายถึง '+terms[j][1]+' แต่โจทย์นี้ตรงกับ '+term+' มากกว่า'),
       vocabulary:order.map(j=>({term:terms[j][0],meaning:terms[j][1],example:terms[j][2]}))
     });
    }
