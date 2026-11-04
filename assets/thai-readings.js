@@ -30,8 +30,33 @@ function scan(root){
 }
 export function installThaiReadings(){
  const root=document.querySelector('#main');if(!root)return;
- let busy=false;
- const observer=new MutationObserver(()=>{if(busy)return;busy=true;try{scan(root)}finally{busy=false}});
+ // First render: annotate once. Later updates: only newly inserted elements.
+ // Avoid rescanning the entire study page on each text edit/answer choice.
  scan(root);
- observer.observe(root,{childList:true,subtree:true,characterData:true});
+ const observer=new MutationObserver(records=>{
+  const pending=new Set();
+  for(const record of records){
+   for(const added of record.addedNodes){
+    if(added.nodeType===Node.TEXT_NODE){
+     if(added.parentElement && !added.parentElement.closest(selectors))pending.add(added);
+    }else if(added.nodeType===Node.ELEMENT_NODE){
+     pending.add(added);
+    }
+   }
+  }
+  if(!pending.size)return;
+  observer.disconnect();
+  try{
+   for(const node of pending){
+    if(!node.isConnected || !root.contains(node))continue;
+    if(node.nodeType===Node.TEXT_NODE)annotateText(node);
+    else if(!node.matches(selectors)){
+     scan(node);
+    }
+   }
+  }finally{
+   observer.observe(root,{childList:true,subtree:true});
+  }
+ });
+ observer.observe(root,{childList:true,subtree:true});
 }
