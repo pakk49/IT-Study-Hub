@@ -1,3 +1,4 @@
+import { beginnerGuide } from './beginner-guides.js';
 // Convert curriculum-specific concepts into review sections, flashcards and applied quizzes.
 // Definitions are grounded in the supplied PDF lecture slides. Scenarios are original practice examples.
 const tidy = value => String(value||'').trim();
@@ -9,14 +10,14 @@ export function createDatabaseChapters(raw) {
    sections.push({
     id:topic,title:group.title,pages:group.pages||'',
     intro:group.intro,
-    points:group.points||[], // definitions and examples appear once in the vocabulary table
+    points:[...(beginnerGuide(group.title)?[beginnerGuide(group.title)]:[]),...(group.points||[])], // definitions and examples appear once in the vocabulary table
     table:{headers:['ศัพท์เทคนิค (ภาษาอังกฤษ)','ความหมายแบบเข้าใจง่าย','ตัวอย่างการใช้งาน'],rows:terms.map(t=>t.slice(0,3))},
     remember:group.remember||''
    });
    for(let i=0;i<terms.length;i++){
     const [term,meaning,example,prompt]=terms[i];
     const gidx=flashcards.length+1;
-    flashcards.push({id:`db-${ch.number}-f${gidx}`,term,meaning,example,front:`${term} คืออะไร และใช้กับงานแบบไหน?`,back:`${meaning}\nตัวอย่าง: ${example}`});
+    flashcards.push({id:`db-${ch.number}-f${gidx}`,term,meaning,example,front:`${term} คืออะไร และใช้กับงานแบบไหน?`,back:`${meaning}\nตัวอย่างจริง: ${example}`});
     // Three alternatives from the same topic wherever possible.
     const pool=terms.map((x,j)=>j).filter(j=>j!==i);
     let choices=[i,...pool.slice(0,3)];

@@ -1,3 +1,4 @@
+import { beginnerGuide } from './beginner-guides.js';
 // PHYSICAL COMPUTING — learning content derived from the user's lecture PDFs.
 // Each four-field item is: technical term, Thai explanation, concrete example, applied question.
 // Applied practice questions are newly written and are not copied exam questions.
@@ -9,7 +10,7 @@ export function createPhysicalChapters(raw){
    if(terms.length<4)throw Error('Need four terms per group in chapter '+ch.number);
    sections.push({
     id:topic,title:group.title,pages:group.pages||'',
-    intro:group.intro,points:group.points||[],
+    intro:group.intro,points:[...(beginnerGuide(group.title)?[beginnerGuide(group.title)]:[]),...(group.points||[])],
     table:{headers:['ศัพท์เทคนิค (ภาษาอังกฤษ)','ความหมายแบบเข้าใจง่าย','ตัวอย่างการใช้งาน'],rows:terms.map(t=>t.slice(0,3))},
     remember:group.remember||'',formula:group.formula||''
    });
@@ -17,7 +18,7 @@ export function createPhysicalChapters(raw){
     const [term,meaning,example,prompt]=terms[i];
     if(!term||!meaning||!example||!prompt)throw Error('Missing concept for '+ch.number+' '+groupIndex+' '+i);
     const id='pc-'+ch.number+'-q'+(questions.length+1);
-    flashcards.push({id:'pc-'+ch.number+'-f'+(flashcards.length+1),term,meaning,example,front:term+' คืออะไร และนำไปใช้ทำอะไร?',back:meaning+'\nตัวอย่าง: '+example});
+    flashcards.push({id:'pc-'+ch.number+'-f'+(flashcards.length+1),term,meaning,example,front:term+' คืออะไร และนำไปใช้ทำอะไร?',back:meaning+'\nตัวอย่างจริง: '+example});
     const distractorIndexes=terms.map((_,j)=>j).filter(j=>j!==i);
     const alternatives=[i,...[0,1,2].map(k=>distractorIndexes[(i+k)%distractorIndexes.length])];
     const shift=(i+groupIndex)%4;

@@ -1,3 +1,4 @@
+import { beginnerGuide } from './beginner-guides.js';
 // Study summaries paraphrased from user-supplied lecture material.
 // Each concept preserves the technical term in English and has Thai meaning, example and applied prompt.
 export function createNetworkChapters(raw) {
@@ -9,7 +10,7 @@ export function createNetworkChapters(raw) {
    sections.push({
     id:topic,title:group.title,pages:group.pages||'',
     intro:group.intro,
-    points:group.points||[], // vocabulary and examples stay in the table, not duplicated below
+    points:[...(beginnerGuide(group.title)?[beginnerGuide(group.title)]:[]),...(group.points||[])], // vocabulary and examples stay in the table, not duplicated below
     table:{headers:['ศัพท์เทคนิค (ภาษาอังกฤษ)','ความหมายแบบเข้าใจง่าย','ตัวอย่างการใช้งาน'],rows:terms.map(t=>t.slice(0,3))},
     remember:group.remember||''
    });
@@ -19,7 +20,7 @@ export function createNetworkChapters(raw) {
     const index=flashcards.length+1;
     flashcards.push({id:'net-'+ch.week+'-f'+index,term,meaning,example,
       front:term+' คืออะไร และใช้ในสถานการณ์ใด?',
-      back:meaning+'\nตัวอย่าง: '+example});
+      back:meaning+'\nตัวอย่างจริง: '+example});
     const others=terms.map((t,j)=>j).filter(j=>j!==i);
     const start=i%others.length;
     const indices=[i,...[0,1,2].map(n=>others[(start+n)%others.length])];
