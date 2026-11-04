@@ -17,6 +17,15 @@
 
 ---
 
+## วิธีใช้ให้เข้าใจง่าย
+
+1. **เริ่มที่สรุปบทเรียน** — อ่านใจความสำคัญก่อน แล้วดูตารางคำศัพท์พร้อมตัวอย่าง ถ้าเจอศัพท์เทคนิคให้ชี้เมาส์ค้างหรือแตะเพื่อดูคำอธิบาย (ศัพท์ทั่วไปที่ไม่ใช่ศัพท์เฉพาะอาจไม่มีคำแปล)
+2. **ฝึกจำด้วยแฟลชการ์ด** — อ่านศัพท์หน้าการ์ด ลองนึกคำตอบเอง แล้วค่อยเปิดดูความหมายและตัวอย่าง
+3. **ทำข้อสอบพร้อมคำใบ้** — อ่านสถานการณ์ เลือกตัวเลือก แล้วกดตรวจคำตอบ ถ้าติดให้เปิดคำใบ้เพื่อดูวิธีคิดก่อน เฉลยบอกเหตุผลหลังตอบ
+4. **กลับไปอ่านข้อที่ผิด** — เมื่อทำจบ เลือกฝึกเฉพาะข้อที่ผิดได้ เพื่อทบทวนเรื่องที่ยังไม่เข้าใจ
+
+**ข้อควรรู้:** ชุดฝึกเป็นคำถามสำหรับทบทวน ไม่ใช่ข้อสอบจริง และข้อมูลคะแนนหรือความคืบหน้าเก็บในเบราว์เซอร์ของอุปกรณ์ที่ใช้งาน
+
 ## รายวิชา
 
 **ปี 2 · เทอม 1 · ภาคเรียน 1/2026**
@@ -25,7 +34,7 @@
 |---|---|---|
 | 06066304 | [INFORMATION SYSTEM ANALYSIS AND DESIGN](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/information-system-analysis-and-design) | รอเพิ่มเนื้อหา |
 | 06066300 | [DATABASE SYSTEM CONCEPTS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts) | **Midterm บท 1, 3, 4 / Final บท 7, 9, 15, 20** · พร้อมสรุปและข้อสอบ |
-| 06066000 | [DISCRETE MATHEMATICS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/discrete-mathematics) | รอเพิ่มเนื้อหา |
+| 06066000 | [DISCRETE MATHEMATICS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/discrete-mathematics) | **Final บท 8–13** · มีสรุป คำศัพท์ และโจทย์ฝึกตามแนว Final PDF · Midterm ยังไม่มีเนื้อหา |
 | 06016413 | [INTRODUCTION TO NETWORK SYSTEMS](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/introduction-to-network-systems) | **Midterm ก่อน Week 9 / Final ตั้งแต่ Week 9** · สรุปภาษาไทยพร้อมคำศัพท์อังกฤษและข้อสอบ |
 | 06016409 | [PHYSICAL COMPUTING](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing) | **Chapter 0 แนะนำวิชา · Midterm บท 1–8 (มีเนื้อหา 1–7) · Final ตั้งแต่บท 9 · Lab 11 ชุด** |
 | 06016403 | [MULTIMEDIA TECHNOLOGY](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/multimedia-technology) | Midterm 1–5 / Final 6–12 พร้อมใช้งาน |

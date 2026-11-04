@@ -220,8 +220,11 @@ function decorateText(node){
   const span=document.createElement('span');
   span.className='study-term';
   span.dataset.studyTerm=match[0].toLowerCase().replace(/\s+/g,' ');
-  span.tabIndex=0;
-  span.setAttribute('role','button');
+  // คำศัพท์ในลิงก์/ปุ่มใช้คีย์บอร์ดกับตัวควบคุมหลัก ไม่สร้างจุดโฟกัสซ้อน
+  if(!node.parentElement.closest('a[href],button,label,summary,[role="link"]')){
+   span.tabIndex=0;
+   span.setAttribute('role','button');
+  }
   span.setAttribute('aria-label',match[0]+' ดูคำอ่านและความหมาย');
   span.textContent=match[0];
   fragment.append(span);
