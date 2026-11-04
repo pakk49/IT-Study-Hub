@@ -1,12 +1,16 @@
 import { NETWORK_CONCEPT_DETAILS } from './concepts-network.js';
 import { DATABASE_CONCEPT_DETAILS } from './concepts-database.js';
 import { PHYSICAL_CONCEPT_DETAILS } from './concepts-physical.js';
+import { DISCRETE_CONCEPT_DETAILS } from './concepts-discrete.js';
+import { MULTIMEDIA_CONCEPT_DETAILS } from './concepts-multimedia.js';
 
 // เลือกคำอธิบายให้ตรงกับบริบทของวิชา ไม่เดาความหมายศัพท์ข้ามวิชา
 const BY_SUBJECT={
  'introduction-to-network-systems':NETWORK_CONCEPT_DETAILS,
  'database-system-concepts':DATABASE_CONCEPT_DETAILS,
- 'physical-computing':PHYSICAL_CONCEPT_DETAILS
+ 'physical-computing':PHYSICAL_CONCEPT_DETAILS,
+ 'discrete-mathematics':DISCRETE_CONCEPT_DETAILS,
+ 'multimedia-technology':MULTIMEDIA_CONCEPT_DETAILS
 };
 const normal=value=>String(value??'').normalize('NFKC').trim().toLowerCase().replace(/\s+/g,' ');
 export function detailedMeaning(term,subjectId){
