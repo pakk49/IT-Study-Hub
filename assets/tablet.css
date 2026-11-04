@@ -52,3 +52,11 @@
  a:focus-visible,button:focus-visible,input:focus-visible{outline-offset:2px}
 }
 @media (prefers-reduced-motion:reduce){.sidebar{transition:none}}
+
+/* Keep cards clickable above noninteractive ornaments on touchscreens */
+.term-grid,.term-card{position:relative;z-index:1}
+.term-card{display:block;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:rgba(38,126,181,.18)}
+.term-card>*{pointer-events:none}
+.term-card:focus-visible{outline:3px solid #327fb9;outline-offset:3px}
+.tablet-nav-backdrop{pointer-events:none}
+body.tablet-nav-open .tablet-nav-backdrop{pointer-events:auto}
