@@ -1,5 +1,6 @@
 import { installThaiReadings,getStudyTerm } from './thai-readings.js';
 import { beginnerGuide } from './beginner-guides.js';
+import { deepStudySteps } from './deep-study.js';
 import { showExam } from './exam.js';
 import { showNetworkPractice } from './network-practice.js';
 import { vocabularyHtml } from './english-quiz.js';
@@ -116,8 +117,10 @@ function renderSummary(c) {
   const guide=beginnerGuide(sec.title) || '';
   const beginner=guide?`<div class="study-beginner"><strong>เห็นภาพก่อนอ่านศัพท์</strong><p>${highlightStudyTerms(guide,names,esc)}</p></div>`
     :sec.glossary&&sec.table?.rows?.length?`<div class="study-beginner"><strong>เริ่มจากตัวอย่างใกล้ตัว</strong><p>ลองดูคำว่า ${esc(String(sec.table.rows[0][0]))}: ${esc(cleanStudyProse(String(sec.table.rows[0][1]||'')))}${sec.table.rows[0][2]?' เช่น '+esc(cleanStudyProse(String(sec.table.rows[0][2]))):''}</p></div>`:'';
+  const steps=deepStudySteps(sec.title);
+  const stepBlock=steps.length?`<div class="study-step-block"><h3>ทำความเข้าใจทีละขั้น</h3><ol>${steps.map(step=>`<li>${highlightStudyTerms(step,names,esc)}</li>`).join('')}</ol></div>`:'';
   const formula=sec.formula?`<div class="formula study-formula"><span>สูตรและตัวอย่างคำนวณ</span><pre>${esc(sec.formula)}</pre></div>`:'';
-  return `<section class="summary-section study-section" id="section-${esc(sec.number)}"><div class="section-index"><span>หัวข้อ ${String(i+1).padStart(2,'0')} / ${String(sections.length).padStart(2,'0')}</span><small>${esc(sec.pages)}</small></div><h2>${esc(sec.title)}</h2><div class="study-definition"><span class="study-definition-label">ใจความสำคัญ</span><p>${highlightStudyTerms(sec.intro,names,esc)}</p></div>${beginner}${bulletList}${table}${formula}${key}</section>`;
+  return `<section class="summary-section study-section" id="section-${esc(sec.number)}"><div class="section-index"><span>หัวข้อ ${String(i+1).padStart(2,'0')} / ${String(sections.length).padStart(2,'0')}</span><small>${esc(sec.pages)}</small></div><h2>${esc(sec.title)}</h2><div class="study-definition"><span class="study-definition-label">ใจความสำคัญ</span><p>${highlightStudyTerms(sec.intro,names,esc)}</p></div>${beginner}${stepBlock}${bulletList}${table}${formula}${key}</section>`;
  }).join('');
  $('#reader-content').innerHTML=`<div class="reading-layout study-reading"><article class="summary">${overview}${articles}<div class="reading-finish"><h3>ทบทวนเนื้อหาครบแล้ว</h3><p>ลองใช้แฟลชการ์ดเพื่อจำศัพท์อังกฤษ หรือทำข้อสอบที่อิงจากเนื้อหาในบทนี้ พร้อมเฉลยและเหตุผล</p><div class="actions"><button class="button primary" id="mark-read">${chapterState(c).read?'✓ อ่านบทนี้แล้ว':'ทำเครื่องหมายว่าอ่านแล้ว'}</button>${c.exam==='overview'?`<a class="button secondary" href="#${base(activeSubject,null)}/midterm">เริ่มอ่าน Midterm ${icon('arrow')}</a><a class="button secondary" href="#${base(activeSubject,null)}/labs">ดู Lab ${icon('arrow')}</a>`:`<a class="button secondary" href="#${base()}/quiz">ทำข้อสอบรายบท ${icon('arrow')}</a>`}</div></div><p class="source-note">เอกสารประกอบบทเรียน: ${esc(c.source||'ข้อมูลที่ใช้จัดทำสรุปตามรายวิชา')}${c.pdfUrl?` · <a href="${esc(c.pdfUrl)}" target="_blank" rel="noopener noreferrer">เปิด PDF สไลด์ต้นฉบับ ↗</a>`:''}</p></article><aside class="toc study-toc"><p class="eyebrow">หัวข้อในบทเรียน</p>${sections.map((sec,i)=>`<button data-section="${esc(sec.number)}"><span>${String(i+1).padStart(2,'0')}</span>${esc(sec.title)}</button>`).join('')}<div class="toc-note">เลือกหัวข้อเพื่ออ่านสรุปและทบทวนศัพท์สำคัญ</div></aside></div>`;
  $('#mark-read').onclick=()=>{progress[c.id]={...chapterState(c),read:true};persist();$('#mark-read').textContent='✓ อ่านบทนี้แล้ว';};

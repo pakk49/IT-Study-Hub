@@ -1,4 +1,3 @@
-import { beginnerGuide } from './beginner-guides.js';
 // Convert curriculum-specific concepts into review sections, flashcards and applied quizzes.
 // Definitions are grounded in the supplied PDF lecture slides. Scenarios are original practice examples.
 const tidy = value => String(value||'').trim();
@@ -10,7 +9,7 @@ export function createDatabaseChapters(raw) {
    sections.push({
     id:topic,title:group.title,pages:group.pages||'',
     intro:group.intro,
-    points:[...(beginnerGuide(group.title)?[beginnerGuide(group.title)]:[]),...(group.points||[])], // definitions and examples appear once in the vocabulary table
+    points:group.points||[], // definitions and examples appear once in the vocabulary table
     table:{headers:['ศัพท์เทคนิค (ภาษาอังกฤษ)','ความหมายแบบเข้าใจง่าย','ตัวอย่างการใช้งาน'],rows:terms.map(t=>t.slice(0,3))},
     remember:group.remember||''
    });

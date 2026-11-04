@@ -100,3 +100,12 @@
 .study-beginner strong{font-size:13px;color:#174d7a}
 .study-beginner p{margin:6px 0 0;font-size:13px;line-height:1.9;color:#385b72}
 @media(max-width:650px){.study-beginner{padding:12px 13px}}
+
+/* อธิบายกลไกและตัวอย่างให้ผู้เรียนที่ไม่มีพื้นฐานอ่านตามได้ */
+.study-step-block{margin:16px 0 20px;border:1px solid #dce8f3;background:#fff;border-radius:11px;padding:15px 18px}
+.study-step-block h3{font-size:15px;margin:0 0 12px;color:#244e70;line-height:1.5}
+.study-step-block ol{margin:0;padding-left:27px;list-style:decimal}
+.study-step-block li{padding:3px 0 9px 4px;line-height:1.95;color:#35485b}
+.study-step-block li:last-child{padding-bottom:0}
+.study-step-block li::marker{font-weight:700;color:#2b7cba}
+@media(max-width:650px){.study-step-block{padding:13px 14px}.study-step-block li{line-height:1.85}}
