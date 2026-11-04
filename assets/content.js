@@ -1,5 +1,6 @@
 import { improveChapterExamples } from './beginner-examples.js';
 import { expandDetailedDefinitions } from './concept-details.js';
+import { completeMultimediaExamples } from './multimedia-flash-examples.js';
 import { finalChapters } from './final-chapters.js';
 import { discreteFinalChapters } from './discrete-final.js';
 import { applyScenarioQuestions } from './question-scenarios.js';
@@ -232,3 +233,5 @@ subjects.unshift(
 improveChapterExamples(subjects.flatMap(subject=>subject.chapters));
 // คำนิยามละเอียดเชื่อมกับบทเรียน ตาราง แฟลชการ์ด และคำอธิบายเฉลย
 expandDetailedDefinitions(subjects);
+// ตัวอย่างจับต้องได้สำหรับทุกแฟลชการ์ด Multimedia Final (บท 7–12)
+completeMultimediaExamples(subjects);
