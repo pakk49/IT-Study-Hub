@@ -32,19 +32,19 @@ function pronunciation(text,words){
 }
 export function buildTechnicalVocabulary(subjects,overrides={},labs=[]){
  const words=wordReadings(overrides),dictionary=new Map();
- const add=(term,meaning,example='')=>{
+ const add=(term,meaning,example='',preferLesson=false)=>{
   const label=String(term||'').trim(),meaningText=String(meaning||'').trim(),key=normalizeTechnicalTerm(label);
   if(!/[a-z]/i.test(label)||!thai(meaningText)||label.length<=1)return;
   const old=dictionary.get(key);
-  if(old){if(!old.example&&example)old.example=String(example).trim();return;}
+  if(old){if(preferLesson&&meaningText)old.meaning=meaningText;if(!old.example&&example)old.example=String(example).trim();return;}
   const manual=Array.isArray(overrides[key])?String(overrides[key][0]||'').trim():'';
   const result=manual?{reading:manual,spelled:false}:pronunciation(label,words);
   dictionary.set(key,{label,reading:result.reading||label,meaning:meaningText,example:String(example||'').trim(),spelled:result.spelled});
  };
  for(const [term,entry] of Object.entries(overrides))if(Array.isArray(entry)&&entry[1])add(term,entry[1]);
  for(const subject of subjects||[])for(const chapter of subject.chapters||[]){
-  for(const term of chapter.flashcards||[])add(term.term,term.meaning,term.example);
-  for(const q of chapter.questions||[])for(const term of q.vocabulary||[])add(term.term,term.meaning,term.example);
+  for(const term of chapter.flashcards||[])add(term.term,term.meaning,term.example,true);
+  for(const q of chapter.questions||[])for(const term of q.vocabulary||[])add(term.term,term.meaning,term.example,false);
   for(const sec of chapter.sections||[]){
    const tab=sec.table,header=String(tab?.headers?.[0]||'');
    if(!/ศัพท์|english term|technical term|term|เทคนิค|องค์ประกอบ/i.test(header))continue;

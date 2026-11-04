@@ -202,7 +202,13 @@ const DETAILS = {
  "rendering":"กระบวนการคำนวณภาพจากโมเดล วัสดุ แสง และกล้อง เพื่อสร้างภาพที่แสดงผลได้"
 };
 const VOCABULARY=buildTechnicalVocabulary(subjects,GLOSSARY,physicalLabs);
+const SUBJECT_VOCABULARY=new Map(subjects.map(s=>[s.id,buildTechnicalVocabulary([s],GLOSSARY,s.id==='physical-computing'?physicalLabs:[])]));
 const rx=matchTechnicalTerms(VOCABULARY);
+export function getStudyTerm(key,subjectId){
+ const locationSubject=typeof location!=='undefined'?(location.hash.match(/\/subject\/([^/]+)/)||[])[1]:'';
+ const specific=SUBJECT_VOCABULARY.get(subjectId||locationSubject);
+ return (specific&&lookupTechnicalTerm(specific,key))||lookupTechnicalTerm(VOCABULARY,key);
+}
 const excluded='script,style,code,pre,kbd,textarea,input,select,option,svg,math,[aria-hidden="true"],[data-no-translate],[data-study-term]';
 function decorateText(node){
  const source=node.nodeValue;
@@ -268,7 +274,7 @@ function installTooltip(root){
  }
  function open(term,locked=false){
   if(!term||!term.isConnected)return;
-  const key=term.dataset.studyTerm,entry=lookupTechnicalTerm(VOCABULARY,key);
+  const key=term.dataset.studyTerm,entry=getStudyTerm(key);
   if(!entry)return;
   cancel();
   if(active&&active!==term)active.removeAttribute('aria-describedby');
