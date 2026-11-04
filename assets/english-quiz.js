@@ -89,8 +89,8 @@ export function prepareEnglishQuizVocabulary(chapters) {
      if (matched.length===4 && matched.every(Boolean)) {
        q.options=matched.map(entry=>entry.term);
        q.reasons=matched.map((entry,i)=>i===q.answer
-         ? 'ถูกต้อง: '+entry.term+' คือ '+entry.meaning+' จึงสอดคล้องกับสถานการณ์ในโจทย์'
-         : 'ยังไม่ตรง: '+entry.term+' คือ '+entry.meaning+' ซึ่งเป็นหลักการอีกอย่างหนึ่งที่ไม่ใช่กรณีนี้');
+         ? 'ถูกต้อง: '+entry.term+' หมายถึง '+entry.meaning+' จึงตรงกับเงื่อนไขในโจทย์'
+         : 'ยังไม่ใช่: '+entry.term+' หมายถึง '+entry.meaning+' แต่เป็นคนละแนวคิดกับเหตุการณ์ในโจทย์');
        q.level='วิเคราะห์ / ประยุกต์';
      }
      // เก็บศัพท์ตามที่ปรากฏจริงในคำถามและตัวเลือก เพื่อให้เรียนศัพท์ระหว่างทำโจทย์ได้
@@ -114,8 +114,8 @@ export function vocabularyHtml(question,escape,checked=false) {
  const terms=question.vocabulary||[];
  if (!terms.length) return '';
  return '<details class="quiz-vocabulary"'+(checked?' open':'')+'>'+
-   '<summary>English Vocabulary · คำศัพท์ในข้อนี้ ('+terms.length+' คำ)'+(checked?' — ความหมายประกอบเฉลย':' — กดดูความหมาย')+'</summary>'+
+   '<summary>English Vocabulary · คำศัพท์เฉพาะในข้อนี้ ('+terms.length+' คำ)'+(checked?' — ความหมายประกอบเฉลย':' — กดดูความหมาย')+'</summary>'+
    '<dl>'+terms.map(({term,meaning,example})=>'<div><dt>'+escape(term)+'</dt><dd>'+escape(meaning)+'</dd>'+(example?'<dd class="vocab-example">ตัวอย่าง: '+escape(example)+'</dd>':'')+'</div>').join('')+'</dl>'+
-   (!checked?'<p>เปิดดูศัพท์ก่อนตอบได้หากต้องการฝึกแบบเปิดตำรา หรือค่อยเปิดหลังตรวจคำตอบ</p>':'')+
+   (!checked?'<p>อ่านความหมายพร้อมตัวอย่างก่อนตอบได้ หรือจะลองทำข้อสอบเองก่อนแล้วค่อยเปิดศัพท์ก็ได้</p>':'')+
    '</details>';
 }

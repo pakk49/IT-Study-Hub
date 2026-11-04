@@ -1,6 +1,11 @@
 // Formatting only: uses existing lecture-derived material without adding facts.
 const escapeRegex = value => String(value).replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
 const cleanup = [
+ [/จำคำอังกฤษให้เชื่อมกับโจทย์สถานการณ์ ไม่ใช่จำแค่คำแปล/g,'อ่านความหมายพร้อมตัวอย่าง แล้วลองอธิบายการใช้ศัพท์นั้นด้วยคำของตัวเอง'],
+ [/ศัพท์สำคัญ:/g,'คำศัพท์ที่ควรรู้:'],
+ [/ตัวอย่างในหัวข้อนี้:/g,'ตัวอย่างให้เห็นภาพ:'],
+ [/จำให้แม่น:/g,'จำง่าย ๆ:'],
+ [/ตามตัวอย่างที่สไลด์ให้ไว้/g,'จากตัวอย่างในบทเรียน'],
  [/สไลด์เริ่มจากการใช้ข้อมูลดิบสร้างสารสนเทศเพื่อประกอบการตัดสินใจ และอธิบาย Database\/DBMS/g, 'ข้อมูลดิบ (Data) สามารถประมวลผลเป็นสารสนเทศ (Information) เพื่อใช้ตัดสินใจ โดย Database ใช้จัดเก็บข้อมูล ส่วน DBMS ใช้บริหารและควบคุมการใช้งาน'],
  [/จำแนกฐานข้อมูลตามผู้ใช้ ตำแหน่งข้อมูล และวัตถุประสงค์การใช้งานจากตัวอย่างในสไลด์/g,'ฐานข้อมูลแบ่งตามจำนวนผู้ใช้ ตำแหน่งจัดเก็บ และวัตถุประสงค์ในการใช้งาน เช่น ระบบที่รองรับผู้ใช้หลายคนหรือใช้บันทึกธุรกรรมประจำวัน'],
  [/สไลด์อธิบายปัญหาการจัดการข้อมูลด้วยแฟ้มข้อมูลแยกโปรแกรม ได้แก่ ความซ้ำซ้อน ความขึ้นต่อกัน และความผิดปกติ/g,'การจัดเก็บข้อมูลแยกเป็นหลายแฟ้มทำให้ข้อมูลซ้ำ ค่าขัดแย้งกัน และโปรแกรมอาจผูกกับรูปแบบแฟ้มจนแก้ไขยาก'],
@@ -29,14 +34,14 @@ export function cleanStudyProse(value) {
 }
 export function sectionPresentation(section){
  const table=section.table;
- const glossary=Boolean(table && /^(English Term|คำศัพท์|Term|คำศัพท์ \/ องค์ประกอบ)/i.test(String(table.headers?.[0]||'')));
+ const glossary=Boolean(table && /^(English Term|คำศัพท์|ศัพท์เทคนิค|Term)/i.test(String(table.headers?.[0]||'')));
  const rows=table?.rows||[];
  const redundant=glossary&&rows.length>0&&(section.points||[]).length===rows.length &&
    (section.points||[]).every((point,i)=>String(point).startsWith(String(rows[i]?.[0])+' — '));
  const seen=new Set();
  const points=(redundant?[]:section.points||[]).map(cleanStudyProse).filter(text=>{
   const intro=cleanStudyProse(section.intro);
-  if(!text || text===intro || (/^ศัพท์สำคัญ:\s*/.test(text)&&glossary))return false;
+  if(!text || text===intro || (/^(ศัพท์สำคัญ|คำศัพท์ที่ควรรู้):\s*/.test(text)&&glossary))return false;
   if(seen.has(text))return false;
   seen.add(text);
   return true;
