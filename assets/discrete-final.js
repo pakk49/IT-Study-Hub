@@ -1,3 +1,4 @@
+import { applyDiscreteFinalPaper } from './discrete-final-paper.js';
 // Final topics are aligned with the instructor's published 2026 course outline.
 // Study notes and questions below are original practice material, not transcriptions of PDFs.
 const units = [
@@ -225,7 +226,7 @@ const units = [
   ]
 ];
 const base = 'https://github.com/noswolf/DM_IT/blob/main/2026/slides/';
-export const discreteFinalChapters = units.map(([week,title,description,concepts]) => {
+export const discreteFinalChapters = applyDiscreteFinalPaper(units.map(([week,title,description,concepts]) => {
  const sections = [0,1].map(i => {
   const part=concepts.slice(i*3,i===0?3:5);
   return {id:`dm-${week}-s${i+1}`,title:i===0?'หลักการสำคัญ':'ตัวอย่างและการนำไปใช้',intro:i===0?'อ่านนิยามให้เข้าใจก่อน แล้วตรวจตัวอย่างประกอบ':'แยกความหมายของคำที่คล้ายกัน พร้อมลองฝึกจากสถานการณ์',points:part.map(x=>`${x[0]}: ${x[1]} — ${x[2]}`),table:{headers:['ศัพท์ภาษาอังกฤษ','ความหมาย','ตัวอย่าง'],rows:part.map(x=>x.slice(0,3))},remember:'ฝึกอธิบายเหตุผลที่คำตอบถูก และเปรียบเทียบกับคำศัพท์ที่ใกล้เคียง'}; 
@@ -240,4 +241,4 @@ export const discreteFinalChapters = units.map(([week,title,description,concepts
   return {id:`dm-${week}-q${i+1}-${mode+1}`,topic,level:mode?'ประยุกต์':'เข้าใจ',prompt:mode?x[3]:`ข้อใดตรงกับนิยามนี้: ${x[1]}?`,options:indices.map(j=>concepts[j][0]),answer,reasons:indices.map(j=>j===i?`ถูกต้อง: ${x[0]} — ${x[1]} ตัวอย่าง: ${x[2]}`:`ไม่ตรง: ${concepts[j][0]} หมายถึง ${concepts[j][1]} แต่โจทย์ต้องการ ${x[0]}`),vocabulary:indices.map(j=>({term:concepts[j][0],meaning:concepts[j][1],example:concepts[j][2]}))};
  }));
  return {id:`dm-week-${week}`,number:week,exam:'final',title:`Week ${week} · ${title}`,description,minutes:20,pdfUrl:`${base}DM_Week${week}.pdf`,source:`DM_Week${week}.pdf · noswolf/DM_IT · 2026 · สรุปและข้อสอบฝึกเรียบเรียงเพิ่มเติมตามหัวข้อประกาศใน README ไม่ใช่ข้อสอบจริง`,sections,flashcards,questions};
-});
+}));
