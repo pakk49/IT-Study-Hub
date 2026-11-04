@@ -15,7 +15,7 @@ function wordReadings(overrides){
  return words;
 }
 function pronunciation(text,words){
- const pieces=String(text).normalize('NFKC').match(/[A-Za-z]+(?:\d+)?|\d+(?:\.\d+)*|[&#*+]/g)||[];
+ const pieces=String(text).normalize('NFD').replace(/[\u0300-\u036f]/g,'').normalize('NFKC').match(/[A-Za-z]+(?:\d+)?|\d+(?:\.\d+)*|[&#*+]/g)||[];
  let spelled=false;
  const result=pieces.map(part=>{
   const key=part.toLowerCase();
@@ -65,5 +65,38 @@ export function lookupTechnicalTerm(dictionary,term){
  return dictionary.get(normalizeTechnicalTerm(term))||dictionary.get(fold(term))||null;
 }
 
+
+const SPECIAL_WORDS={
+ primary:'ไพรมารี',foreign:'ฟอริน',candidate:'แคนดิเดต',composite:'คอมโพสิต',
+ required:'รีไควร์ด',optional:'ออปชันนัล',bezier:'เบซิเยร์',kirchhoff:'เคียร์ชฮอฟฟ์',
+ hypertext:'ไฮเปอร์เท็กซ์',relational:'รีเลชันนัล',database:'เดตาเบส',
+ diagram:'ไดอะแกรม',frame:'เฟรม',model:'โมเดล',identifier:'ไอเดนติไฟเออร์',
+ normalization:'นอร์มัลไลเซชัน',functional:'ฟังก์ชันนัล',dependency:'ดีเพนเดนซี',
+ structure:'สตรักเชอร์',structural:'สตรักเชอรัล',set:'เซต',sql:'เอสคิวแอล',
+ prime:'ไพรม์',inverse:'อินเวิร์ส',euclidean:'ยูคลิดเดียน',number:'นัมเบอร์',
+ modular:'มอดิวลาร์',congruence:'คองกรูเอินซ์',logic:'ลอจิก',concurrent:'คอนเคอร์เรนต์',
+ transaction:'ทรานแซกชัน',index:'อินเด็กซ์',schema:'สคีมา',recursive:'รีเคอร์ซิฟ',
+ handshaking:'แฮนด์เชกกิง',hamiltonian:'แฮมิลโทเนียน',eulerian:'ออยเลอเรียน',
+ byte:'ไบต์',bits:'บิตส์',protocol:'โพรโทคอล',gateway:'เกตเวย์',
+ semaphore:'เซมาฟอร์',round:'ราวนด์',trip:'ทริป',sampling:'แซมปลิง',
+ quantization:'ควอนไทเซชัน',lossless:'ลอสเลส',lossy:'ลอสซี',
+ crc:'ซีอาร์ซี',fcs:'เอฟซีเอส',rtt:'อาร์ทีที',rto:'อาร์ทีโอ'
+};
+const SPECIAL_PHRASES={
+ 'primary key':'ไพรมารี คีย์','foreign key':'ฟอริน คีย์',
+ 'candidate key':'แคนดิเดต คีย์','composite key':'คอมโพสิต คีย์',
+ 'bezier curve':'เบซิเยร์ เคิร์ฟ','euclidean algorithm':'ยูคลิดเดียน อัลกอริทึม',
+ 'greatest common divisor':'เกรเทสต์ คอมมอน ดิไวเซอร์',
+ 'functional dependency':'ฟังก์ชันนัล ดีเพนเดนซี',
+ 'data warehouse':'เดตา แวร์เฮาส์','subnet mask':'ซับเน็ต มาสก์',
+ 'transmission delay':'ทรานสมิชชัน ดีเลย์',
+ 'propagation delay':'พรอพาเกชัน ดีเลย์',
+ 'internet of things':'อินเทอร์เน็ต ออฟ ธิงส์',
+ 'graph theory':'กราฟ เธียรี'
+};
+
 // คำอ่านมาตรฐานสำหรับแสดงศัพท์ในข้อสอบ แม้ยังไม่เคยเปิดหน้า tooltip
-export function readTechnicalTerm(term){return pronunciation(term,wordReadings({})).reading||String(term);}
+export function readTechnicalTerm(term){
+ const key=String(term??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+ return SPECIAL_PHRASES[key]||pronunciation(term,{...wordReadings({}),...SPECIAL_WORDS}).reading||String(term);
+}
