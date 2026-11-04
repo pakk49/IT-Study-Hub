@@ -1,4 +1,5 @@
 import { improveChapterExamples } from './beginner-examples.js';
+import { expandDetailedDefinitions } from './concept-details.js';
 import { finalChapters } from './final-chapters.js';
 import { discreteFinalChapters } from './discrete-final.js';
 import { applyScenarioQuestions } from './question-scenarios.js';
@@ -196,3 +197,5 @@ subjects.unshift(
 
 // ปรับตัวอย่างในตาราง แฟลชการ์ด และคำอธิบายเฉลย โดยรักษาคำตอบเดิม
 improveChapterExamples(subjects.flatMap(subject=>subject.chapters));
+// คำนิยามละเอียดเชื่อมกับบทเรียน ตาราง แฟลชการ์ด และคำอธิบายเฉลย
+expandDetailedDefinitions(subjects);
