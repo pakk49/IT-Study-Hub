@@ -1,3 +1,4 @@
+import { installThaiReadings } from './thai-readings.js';
 import { showExam } from './exam.js';
 import { vocabularyHtml } from './english-quiz.js';
 import { slideHintHtml } from './slide-hints.js';
@@ -217,3 +218,6 @@ function periodNavigation(s, selected){
  return '<div class="period-tiles" aria-label="เลือกช่วงสอบ">'+choices.map(c=>'<a class="period-tile '+(selected===c.id?'active':'')+'" href="#'+base+'/'+c.id+'"><span class="period-emoji">'+c.emoji+'</span><strong>'+c.name+'</strong><small>'+c.desc+'</small></a>').join('')+'</div>'
   +'<div class="exam-shortcut"><b>ข้อสอบรวม 60 ข้อ</b><div>'+choices.map(c=>'<a href="#'+base+'/'+c.id+'/exam">'+c.name+' 60 ข้อ · '+(c.ready?'เริ่มฝึก':'รอเนื้อหา')+'</a>').join('')+'</div></div>';
 }
+
+// ครอบคลุมบทเรียน แบบทดสอบ แฟลชการ์ด และข้อสอบรวมทุกวิชา
+installThaiReadings();
