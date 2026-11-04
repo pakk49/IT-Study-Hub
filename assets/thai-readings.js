@@ -331,7 +331,7 @@ function installTooltip(root){
   if(event.pointerType==='touch')return;
   const term=event.target.closest?.('[data-study-term]');
   if(!term||!root.contains(term))return;
-  cancel();timer=setTimeout(()=>open(term),350);
+  cancel();timer=setTimeout(()=>open(term),180);
  });
  root.addEventListener('pointerout',event=>{
   if(event.pointerType==='touch')return;

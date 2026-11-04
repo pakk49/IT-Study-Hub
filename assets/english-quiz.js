@@ -115,7 +115,7 @@ export function vocabularyHtml(question,escape,checked=false) {
  if (!terms.length) return '';
  return '<details class="quiz-vocabulary"'+(checked?' open':'')+'>'+
    '<summary>English Vocabulary · คำศัพท์เฉพาะในข้อนี้ ('+terms.length+' คำ)'+(checked?' — ชี้คำศัพท์เพื่อดูความหมาย':' — กดดูรายชื่อศัพท์')+'</summary>'+
-   '<dl class="quiz-term-list">'+terms.map(({term})=>'<div><dt class="study-term" data-study-term="'+escape(String(term).toLowerCase().trim().replace(/\\s+/g,' '))+'" tabindex="0" role="button" aria-label="'+escape(term)+' ดูคำอ่านและความหมาย">'+escape(term)+'</dt></div>').join('')+'</dl>'+
+   '<dl class="quiz-term-list">'+terms.map(({term})=>'<div><dt class="study-term" data-study-term="'+escape(String(term).toLowerCase().trim().replace(/\s+/g,' '))+'" tabindex="0" role="button" aria-label="'+escape(term)+' ดูคำอ่านและความหมาย">'+escape(term)+'</dt></div>').join('')+'</dl>'+
    '<p>ชี้เมาส์บนคำศัพท์เพื่อดูคำอ่าน ความหมาย และตัวอย่าง หรือแตะคำศัพท์บนแท็บเล็ต</p>'+
    '</details>';
 }
