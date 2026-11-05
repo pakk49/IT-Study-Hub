@@ -29,7 +29,7 @@ export const discretePaperQuestions = [
     "answers": [
       2
     ],
-    "explanation": "12 − 45 ≡ 9 (mod 24) จึงเป็น 09:00"
+    "explanation": "ตามวิธีคิดที่เขียนใน PDF: 12 + 45 = 57, 57 mod 24 = 9 จึงตอบ 09:00"
   },
   {
     "number": 3,
