@@ -1,0 +1,17 @@
+/* Welcome screen shown after Cloudflare Access authenticates the visitor. */
+.access-welcome[hidden]{display:none!important}
+.access-welcome{position:fixed;inset:0;z-index:2000;background:linear-gradient(145deg,#e8f3fc,#f8fbff 60%,#fff1e4);display:grid;place-items:center;padding:20px;font-family:'Manrope','IBM Plex Sans Thai',system-ui,sans-serif;color:#20384f}
+.access-card{width:min(100%,440px);background:#fff;border:1px solid #dbe9f4;border-radius:24px;box-shadow:0 22px 70px #3f71931c;padding:clamp(26px,5vw,43px);text-align:center}
+.access-logo{display:inline-grid;place-items:center;width:72px;height:72px;background:#e0effc;border-radius:19px;color:#215e92;font-weight:800;font-size:29px;letter-spacing:-2px}
+.access-tag{margin:26px 0 9px;font-size:11px;letter-spacing:2px;font-weight:700;color:#6e91ae}
+.access-card h1{margin:0 0 12px;font-size:clamp(25px,5vw,32px);letter-spacing:-.7px}
+.access-desc{color:#647e95;font-size:14px;line-height:1.8;margin:0 0 19px}
+.access-email{background:#f2f8fd;border:1px solid #dbeaf6;border-radius:12px;padding:11px;margin:15px 0 20px;overflow-wrap:anywhere;font-size:13px;color:#32658f}
+.access-primary,.access-secondary{width:100%;border:0;border-radius:12px;min-height:48px;padding:12px 17px;font-weight:700;font-size:14px;cursor:pointer}
+.access-primary{background:#236fa9;color:white}
+.access-primary:hover{background:#195a8d}
+.access-secondary{margin-top:10px;background:#f1f6fa;color:#45667f}
+.access-secondary:hover{background:#e6eff7}
+.access-primary:focus-visible,.access-secondary:focus-visible{outline:3px solid #f3a75a;outline-offset:3px}
+.access-note{margin:19px 0 0;color:#879aaa;font-size:11px}
+body.access-pending{overflow:hidden}
