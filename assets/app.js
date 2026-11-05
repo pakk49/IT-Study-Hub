@@ -4,6 +4,7 @@ import { installThaiReadings,getStudyTerm } from './thai-readings.js';
 import { beginnerGuide } from './beginner-guides.js';
 import { deepStudySteps } from './deep-study.js';
 import { showExam } from './exam.js';
+import { showDiscreteFinalExam } from './discrete-exam-ui.js';
 import { showNetworkPractice } from './network-practice.js';
 import { vocabularyHtml } from './english-quiz.js';
 import { slideHintHtml } from './slide-hints.js';
@@ -202,7 +203,7 @@ function navigate() {
    else if(s.id==='physical-computing' && route.length===8 && route[6]==='labs')showPhysicalLab(main,route[7]);
    else if(s.id==='introduction-to-network-systems' && route.length===8 && ['midterm','final'].includes(route[6]) && route[7]==='network-practice')showNetworkPractice(main,route[6]);
    else if(route.length===7 && ['multimedia-technology','database-system-concepts','introduction-to-network-systems','physical-computing','discrete-mathematics'].includes(s.id) && ['midterm','final'].includes(route[6])) chapters(s,route[6]);
-   else if(route.length===8 && ['multimedia-technology','database-system-concepts','introduction-to-network-systems','physical-computing','discrete-mathematics'].includes(s.id) && ['midterm','final'].includes(route[6]) && route[7]==='exam') showExam(s,route[6],main);
+   else if(route.length===8 && ['multimedia-technology','database-system-concepts','introduction-to-network-systems','physical-computing','discrete-mathematics'].includes(s.id) && ['midterm','final'].includes(route[6]) && route[7]==='exam') { if(s.id==='discrete-mathematics'&&route[6]==='final') showDiscreteFinalExam(s,route[6],main); else showExam(s,route[6],main); }
   else {
    const c=s.chapters.find(c=>c.id===route[7]);
    if(route[6]!=='chapter'||!c||route.length>9||!['summary','flashcards','quiz'].includes(route[8]||'summary')||(c.exam==='overview'&&route[8]&&route[8]!=='summary')){notFound();return;}
@@ -242,7 +243,7 @@ function periodNavigation(s, selected){
    emoji:period==="midterm"?"📘":"🟠",ready:count>=60};
  });
  return '<div class="period-tiles" aria-label="เลือกช่วงสอบ">'+choices.map(c=>'<a class="period-tile '+(selected===c.id?'active':'')+'" href="#'+base+'/'+c.id+'"><span class="period-emoji">'+c.emoji+'</span><strong>'+c.name+'</strong><small>'+c.desc+'</small></a>').join('')+'</div>'
-  +'<div class="exam-shortcut"><b>ข้อสอบรวม 60 ข้อ</b><div>'+choices.map(c=>'<a href="#'+base+'/'+c.id+'/exam">'+c.name+' 60 ข้อ · '+(c.ready?'เริ่มฝึก':'รอเนื้อหา')+'</a>').join('')+'</div></div>';
+   +'<div class="exam-shortcut"><b>'+(s.id==='discrete-mathematics'?'ข้อสอบ Final จาก PDF · 28 ปรนัย + 2 ข้อเขียน':'ข้อสอบรวม 60 ข้อ')+'</b><div>'+choices.map(c=>'<a href="#'+base+'/'+c.id+'/exam">'+c.name+' · '+(s.id==='discrete-mathematics'&&c.id==='final'?'28 ปรนัย + 2 ข้อเขียน':(c.id==='midterm'&&s.id==='discrete-mathematics'?'รอเอกสาร':'60 ข้อ'))+' · '+(s.id==='discrete-mathematics'&&c.id==='final'?'เริ่มฝึก':c.ready?'เริ่มฝึก':'รอเนื้อหา')+'</a>').join('')+'</div></div>';
 }
 
 // ครอบคลุมบทเรียน แบบทดสอบ แฟลชการ์ด และข้อสอบรวมทุกวิชา
