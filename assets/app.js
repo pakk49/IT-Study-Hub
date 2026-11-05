@@ -1,3 +1,4 @@
+import { openDashboard } from './dashboard.js';
 import { physicalFinalGuide } from './physical-final-guide.js';
 import { installThaiReadings,getStudyTerm } from './thai-readings.js';
 import { beginnerGuide } from './beginner-guides.js';
@@ -185,7 +186,8 @@ function navigate() {
  activeSubject=null;activeChapter=null;
  const y=Number(route[1]),t=Number(route[3]);
  $('#year-nav').innerHTML=[1,2,3,4].map(year=>`<a class="${y===year&&route[0]==='year'?'selected':''}" href="#/year/${year}"><span class="nav-year-number">0${year}</span> ชั้นปีที่ ${year}${subjects.some(s=>s.year===year)?'<span class="year-indicator"></span>':''}</a>`).join('');
- if(!route.length)years();
+ if(route[0]==='dashboard'&&route.length===1)openDashboard();
+ else if(!route.length)years();
  else if(route[0]==='search'&&route.length>1)searchResults(route.slice(1).join('/'));
  else if(route[0]!=='year'||![1,2,3,4].includes(y))notFound();
  else if(route.length===2)terms(y);
@@ -207,7 +209,7 @@ function navigate() {
    activeChapter=c;view=route[8]||'summary';readerShell(s,c);
   }
  }
- document.title=activeChapter?`${activeChapter.title} — IT Study Hub`:activeSubject?`${activeSubject.title} — IT Study Hub`:'IT Study Hub — พื้นที่ทบทวนของเรา';
+ document.title=route[0]==='dashboard'?'โปรไฟล์และผลการเรียน — IT Study Hub':activeChapter?`${activeChapter.title} — IT Study Hub`:activeSubject?`${activeSubject.title} — IT Study Hub`:'IT Study Hub — พื้นที่ทบทวนของเรา';
  window.scrollTo({top:0,behavior:'instant'});
 }
 function notFound(){main.innerHTML=empty('ไม่พบหน้าที่ต้องการ','เส้นทางนี้ไม่มีในคลังบทเรียน เลือกวิชาใหม่ได้จากหน้าคลัง');}
