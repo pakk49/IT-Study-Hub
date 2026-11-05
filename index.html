@@ -13,10 +13,14 @@
   <link rel="stylesheet" href="assets/tablet.css">
   <link rel="stylesheet" href="assets/term-tooltip.css?v=20261105-03">
   <link rel="stylesheet" href="assets/network-practice.css">
-  <script type="module" src="assets/app.js?v=20261105-03"></script>
+  <link rel="stylesheet" href="assets/access-welcome.css?v=20261105-04">
+  <link rel="stylesheet" href="assets/dashboard.css?v=20261105-04">
+  <script type="module" src="assets/app.js?v=20261105-04"></script>
   <script type="module" src="assets/tablet-nav.js"></script>
 </head>
 <body>
+  <section id="access-welcome" class="access-welcome" aria-label="เข้าสู่พื้นที่ทบทวน" hidden><div class="access-card"><div class="access-logo">it·</div><p class="access-tag">IT STUDY HUB</p><h1>ยินดีต้อนรับกลับมา</h1><p id="access-description" class="access-desc">กำลังตรวจสอบข้อมูลบัญชีที่ล็อกอินผ่าน Cloudflare Access</p><p id="access-email" class="access-email" hidden></p><button type="button" id="access-enter" class="access-primary">เข้าสู่เว็บทบทวนบทเรียน →</button><button type="button" id="access-logout" class="access-secondary">ออกจากระบบ</button><p class="access-note">การอนุญาตบัญชีควบคุมโดย Cloudflare Access</p></div></section>
+  <script type="module" src="assets/access-welcome.js?v=20261105-04"></script>
   <a class="skip-link" href="#main">ข้ามไปเนื้อหา</a>
   <button class="tablet-nav-backdrop" id="tablet-nav-backdrop" type="button" aria-label="ปิดเมนู" tabindex="-1"></button>
   <aside class="sidebar" id="site-sidebar" aria-label="เมนูหลัก">
@@ -24,13 +28,14 @@
     <div class="sidebar-label">มุมทบทวนบทเรียน</div>
     <a class="nav-home" href="#/"><span>▦</span> คลังวิชา <span class="nav-dot"></span></a>
     <a class="nav-home" href="study-plan.html" aria-label="เปิดตารางอ่านช่วงสอบ Final"><span>▤</span> ตารางอ่านช่วงสอบ <span class="nav-dot"></span></a>
+    <a class="nav-home" href="#/dashboard" aria-label="เปิดโปรไฟล์และรายงานผลการเรียน"><span>◫</span> โปรไฟล์และเกรด <span class="nav-dot"></span></a>
     <div class="sidebar-label years-label">เลือกชั้นปี</div>
     <nav id="year-nav" aria-label="ชั้นปี"></nav>
     
     <a class="repo-link" href="https://github.com/pakk49/IT-Study-Hub" target="_blank" rel="noopener noreferrer">ดูโปรเจกต์บน GitHub <span>↗</span></a>
   </aside>
   <div class="workspace">
-    <header class="topbar"><button class="tablet-menu-button" id="tablet-menu-button" type="button" aria-label="เปิดเมนูเลือกวิชา" aria-expanded="false" aria-controls="site-sidebar">☰</button><button class="nav-back" id="nav-back" type="button" hidden aria-label="ย้อนกลับไปหน้าก่อนหน้า">← ย้อนกลับ</button><a class="mobile-brand" href="#/">it· Study Hub</a><span class="topbar-title">สรุปวิชาและข้อสอบฝึกในที่เดียว</span><label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg><input id="search" type="search" placeholder="ค้นหาวิชาหรือบทเรียน…" aria-label="ค้นหาวิชาหรือบทเรียน" autocomplete="off"><kbd>/</kbd></label><span class="avatar" aria-label="พื้นที่เรียนรู้ IT">IT</span></header>
+    <header class="topbar"><button class="tablet-menu-button" id="tablet-menu-button" type="button" aria-label="เปิดเมนูเลือกวิชา" aria-expanded="false" aria-controls="site-sidebar">☰</button><button class="nav-back" id="nav-back" type="button" hidden aria-label="ย้อนกลับไปหน้าก่อนหน้า">← ย้อนกลับ</button><a class="mobile-brand" href="#/">it· Study Hub</a><span class="topbar-title">สรุปวิชาและข้อสอบฝึกในที่เดียว</span><label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg><input id="search" type="search" placeholder="ค้นหาวิชาหรือบทเรียน…" aria-label="ค้นหาวิชาหรือบทเรียน" autocomplete="off"><kbd>/</kbd></label><a href="#/dashboard" class="avatar" aria-label="โปรไฟล์และผลการเรียน">IT</a></header>
     <main id="main" tabindex="-1"></main>
     <footer><span>IT STUDY HUB <span class="footer-dot">·</span> อ่านให้เข้าใจ แล้วลองทำด้วยตัวเอง</span><span>ฝึกทำข้อสอบ เพื่อเข้าใจมากกว่าท่องจำ</span></footer>
   </div>
