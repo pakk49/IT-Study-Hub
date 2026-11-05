@@ -49,7 +49,7 @@ export function sectionPresentation(section){
  let remember=cleanStudyProse(section.remember);
  if(/^(จำคำศัพท์กลุ่ม|ให้เข้าใจการนำศัพท์แต่ละคำไปใช้)/.test(remember))remember='';
  remember=remember.replace(/^(จำตรงนี้ให้แม่น|จำให้แม่น|จำ)\s*[:：]\s*/,'');
- return {title:section.title,number:section.id,intro:cleanStudyProse(section.intro),points,table,glossary,remember,formula:section.formula||'',pages:section.pages||''};
+ return {title:section.title,number:section.id,intro:cleanStudyProse(section.intro),points,table,glossary,remember,formula:section.formula||'',pages:section.pages||'',workedExample:section.workedExample||[]};
 }
 export function highlightStudyTerms(value,terms,escape) {
  const input=cleanStudyProse(value);

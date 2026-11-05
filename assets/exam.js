@@ -11,10 +11,11 @@ const randomized=function randomized(items) {
 };
 export function showExam(subject,period,root) {
  const bank=buildExamBank(subject,period);
- const label=period==="midterm"?"Midterm":"Final";
+ const label=period==="midterm"?"กลางภาค (Midterm)":"ปลายภาค (Final)";
+ const physicalNotice=subject.id==='physical-computing'&&period==='final'?'<p class="deadline-note">นี่คือชุดฝึกหลายบทรวม 60 ข้อ ส่วนสอบจริงแบ่งเป็นเขียนโค้ด 15 คะแนน, Arduino 40 ข้อ 10 คะแนน และตั้งสมการไฟฟ้า 1 ข้อ 5 คะแนน</p>':'';
  const path='#/year/'+subject.year+'/term/'+subject.term+'/subject/'+subject.id+'/'+period;
  const prefix='<nav class="breadcrumbs"><a href="#/">คลังวิชา</a> / <a href="#/year/'+subject.year+'/term/'+subject.term+'/subject/'+subject.id+'">'+htmlSafe(subject.title)+'</a> / '+label+'</nav>';
- root.innerHTML=prefix+'<div class="exam-hub"><header class="exam-heading"><span>'+htmlSafe(subject.title)+' · '+label.toUpperCase()+'</span><h1>ข้อสอบ '+label+' 60 ข้อ</h1><p>ฝึกอ่านโจทย์สถานการณ์และศัพท์เทคนิค มีคำแปล คำใบ้ และเหตุผลประกอบทุกข้อ ชุดนี้เป็นแบบฝึกหัด ไม่ใช่ข้อสอบจริง</p></header><div id="exam-stage" aria-live="polite"></div></div>';
+ root.innerHTML=prefix+physicalNotice+'<div class="exam-hub"><header class="exam-heading"><span>'+htmlSafe(subject.title)+' · '+label.toUpperCase()+'</span><h1>ข้อสอบ '+label+' 60 ข้อ</h1><p>ฝึกอ่านโจทย์สถานการณ์และศัพท์เทคนิค มีคำแปล คำใบ้ และเหตุผลประกอบทุกข้อ ชุดนี้เป็นแบบฝึกหัด ไม่ใช่ข้อสอบจริง</p></header><div id="exam-stage" aria-live="polite"></div></div>';
  const target=root.querySelector("#exam-stage");
  if(!bank.ready){
   target.innerHTML='<div class="exam-panel exam-pending"><h2>📚 รอเนื้อหา '+label+'</h2><p>เตรียมระบบไว้สำหรับข้อสอบ 60 ข้อแล้ว แต่ยังไม่มีสไลด์'+(period==="midterm"?"กลางภาค":"หรือข้อสอบจากบท 6–12 ที่ครบถ้วน")+' จึงยังไม่เปิดให้ทำชุดสอบ เพื่อป้องกันคำถามที่ไม่ตรงกับเนื้อหาจริง</p><a class="button secondary" href="'+path+'">กลับไปหน้าบทเรียน</a></div>';

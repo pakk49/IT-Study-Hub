@@ -112,3 +112,19 @@
 
 /* คำอ่านและคำแปลจะอยู่ในกล่องตอนชี้ศัพท์เท่านั้น — ซ่อนมาร์กอัปแบบเก่าจากแคช */
 .study-term-hint{display:none!important}
+
+/* Step-by-step explanations stay readable on phones and tablets. */
+.worked-example{margin:1.1rem 0;padding:1rem 1.15rem;background:#eff6ff;border-left:4px solid #347cb8;border-radius:8px;color:#20364d}
+.worked-example h3{font-size:1rem;margin:0 0 .65rem}
+.worked-example ol{margin:0;padding-left:1.5rem}
+.worked-example li{padding:.3rem 0 .3rem .2rem;line-height:1.85;overflow-wrap:anywhere}
+.feedback p,.exam-explanation p,.flash-card strong,.flash-example,.vocab-example{white-space:pre-line;overflow-wrap:anywhere}
+.study-definition p,.study-table td,.study-points li{line-height:1.85}
+
+.physical-final-guide{padding:1.4rem;margin:1.4rem 0;border:1px solid #b8d3ec;border-radius:14px;background:#f6faff;line-height:1.85;min-width:0}
+.physical-final-guide h2{font-size:1.35rem}.physical-final-guide h3{margin-top:1.2rem}.physical-final-guide li{margin:.45rem 0}
+.physical-final-guide details{margin-top:1rem;padding:1rem;background:#fff;border:1px solid #d8e5f1;border-radius:9px}.physical-final-guide summary{cursor:pointer;font-weight:700}
+.deadline-note{padding:.8rem 1rem;background:#fff2e7;border-left:4px solid #eb8b36;border-radius:6px;line-height:1.8}
+.practice-code{overflow:auto;padding:1rem;background:#152c41;color:#edf6ff;border-radius:8px;font-size:.9rem;line-height:1.6;white-space:pre}
+
+.extra-study{margin:1rem 0;padding:.85rem;border:1px solid #dbe6f0;border-radius:8px}.extra-study summary{cursor:pointer;color:#245983;font-weight:600}

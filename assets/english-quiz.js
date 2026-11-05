@@ -83,8 +83,9 @@ export function prepareEnglishQuizVocabulary(chapters) {
      ...(supplemental[chapter.id]||[]).map(([term,meaning])=>({term,meaning}))
    ];
    const dict = new Map(entries.map(entry=>[norm(entry.meaning),entry]));
+   const byTerm = new Map(entries.map(entry=>[norm(entry.term),entry]));
    for (const q of chapter.questions) {
-     const matched = q.options.map(option=>dict.get(norm(option)));
+     const matched = q.options.map(option=>byTerm.get(norm(option))||dict.get(norm(option)));
      // โจทย์วิเคราะห์เดิมจากคำอธิบายศัพท์ 4 ตัวเลือก เปลี่ยนมาเป็นชื่อศัพท์อังกฤษทั้งหมด
      if (matched.length===4 && matched.every(Boolean)) {
        q.options=matched.map(entry=>entry.term);
@@ -114,7 +115,7 @@ export function vocabularyHtml(question,escape,checked=false) {
  const terms=question.vocabulary||[];
  if (!terms.length) return '';
  return '<details class="quiz-vocabulary"'+(checked?' open':'')+'>'+
-   '<summary>English Vocabulary · คำศัพท์เฉพาะในข้อนี้ ('+terms.length+' คำ)'+(checked?' — ชี้คำศัพท์เพื่อดูความหมาย':' — กดดูรายชื่อศัพท์')+'</summary>'+
+   '<summary>คำศัพท์ในข้อนี้ (English Vocabulary) ('+terms.length+' คำ)'+(checked?' — ชี้คำศัพท์เพื่อดูความหมาย':' — กดดูรายชื่อศัพท์')+'</summary>'+
    '<dl class="quiz-term-list">'+terms.map(({term})=>'<div><dt class="study-term" data-study-term="'+escape(String(term).toLowerCase().trim().replace(/\s+/g,' '))+'" tabindex="0" role="button" aria-label="'+escape(term)+' ดูคำอ่านและความหมาย">'+escape(term)+'</dt></div>').join('')+'</dl>'+
    '<p>ชี้เมาส์บนคำศัพท์เพื่อดูคำอ่าน ความหมาย และตัวอย่าง หรือแตะคำศัพท์บนแท็บเล็ต</p>'+
    '</details>';

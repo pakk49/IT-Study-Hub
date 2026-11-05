@@ -1,3 +1,5 @@
+import { applyReadingNotes } from './reading-notes.js';
+import { clarifyLearningContent } from './learning-language.js';
 import { improveChapterExamples } from './beginner-examples.js';
 import { expandDetailedDefinitions } from './concept-details.js';
 import { completeMultimediaExamples } from './multimedia-flash-examples.js';
@@ -228,6 +230,9 @@ subjects.unshift(
  {id:'introduction-to-network-systems', code:'06016413', title:'INTRODUCTION TO NETWORK SYSTEMS', thai:'ระบบเครือข่ายเบื้องต้น', year:2, term:1, label:'NW', description:'สรุปเครือข่ายเป็นภาษาไทย พร้อมศัพท์อังกฤษ ความหมาย ตัวอย่าง และข้อสอบแยกก่อน Week 9 กับตั้งแต่ Week 9', chapters:[...networkMidtermChapters,...networkFinalChapters]},
  {id:'physical-computing', code:'06016409', title:'PHYSICAL COMPUTING', thai:'การประมวลผลทางกายภาพ', year:2, term:1, label:'PC', description:'พื้นฐานภาษา C วงจร Arduino Sensor และ IoT พร้อมสรุปภาษาไทย ศัพท์เทคนิคอังกฤษ Lab และข้อสอบแยก Midterm / Final', chapters:[physicalOrientation,...physicalMidtermChapters,...physicalFinalChapters]}
 );
+
+applyReadingNotes(subjects);
+clarifyLearningContent(subjects);
 
 // ปรับตัวอย่างในตาราง แฟลชการ์ด และคำอธิบายเฉลย โดยรักษาคำตอบเดิม
 improveChapterExamples(subjects.flatMap(subject=>subject.chapters));
