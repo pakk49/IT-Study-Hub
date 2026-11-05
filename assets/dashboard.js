@@ -74,7 +74,7 @@ function render() {
   $('#dash-scores').innerHTML=vals.map(v=>{const p=currentPercent(v.c);return `<div class="graph-line"><span>${esc(v.s.thai)}</span><div class="graph-track"><i style="width:${p===null?0:Math.min(100,p)}%"></i></div><b>${p===null?'—':fmt(p)+'%'}</b></div>`;}).join('');
   $('#dash-gpa').innerHTML=`<div class="dashboard-stats"><div><span>GPA (เกรดจริง)</span><strong>${gpa===null?'—':gpa.toFixed(2)}</strong></div><div><span>GPS</span><strong>${gps.toFixed(2)}</strong></div><div><span>หน่วยกิตที่คำนวณ</span><strong>${totalCredits}</strong></div></div>`;
   const warnings=vals.filter(v=>{const p=currentPercent(v.c);return p!==null&&p<60&&(!v.c.actual||v.c.actual==='I');});
-  $('#dash-risk').innerHTML=warnings.length?'':'<p class="dashboard-safe">ยังไม่มีวิชาที่ถูกจัดเป็นกลุ่มต้องติดตามจากข้อมูลที่กรอก</p>';
+  // Removed redundant risk placeholder:'<p class="dashboard-safe">ยังไม่มีวิชาที่ถูกจัดเป็นกลุ่มต้องติดตามจากข้อมูลที่กรอก</p>';
   $('#dash-risk').innerHTML=warnings.length?warnings.map(v=>{const p=currentPercent(v.c);return `<article class="dashboard-warning"><strong>${esc(v.s.thai)} — ${fmt(p)}%</strong><p>${p<50?'คะแนนที่ตรวจแล้วต่ำกว่า 50%':'คะแนนที่ตรวจแล้วต่ำกว่า 60%'} ควรคำนวณคะแนนที่ยังเหลือและตรวจเงื่อนไขวิชาก่อนพิจารณาถอน</p></article>`;}).join(''):'<p class="dashboard-safe">ยังไม่มีวิชาที่ถูกจัดเป็นกลุ่มต้องติดตามจากข้อมูลที่กรอก</p>';
   $('#dash-name').value=state.name||'';
 }
@@ -83,6 +83,12 @@ export function openDashboard() {
  if(!main)return;
  main.innerHTML=html;
  render();
+ if (location.hostname.endsWith('.workers.dev')) {
+   fetch('/cdn-cgi/access/get-identity',{credentials:'same-origin',cache:'no-store'})
+     .then(r=>r.ok?r.json():null)
+     .then(identity=>{const node=main.querySelector('#dash-identity');if(node&&identity?.email)node.textContent='บัญชีที่เข้าสู่ระบบ: '+identity.email;})
+     .catch(()=>{});
+ }
  main.querySelector('#dash-name').addEventListener('change',event=>{state.name=event.target.value.trim();save(KEY,state);});
  main.querySelector('#dash-courses').addEventListener('change',event=>{
    const row=event.target.closest('[data-course]'),field=event.target.dataset.key;
