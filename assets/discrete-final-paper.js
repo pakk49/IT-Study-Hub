@@ -19,6 +19,7 @@ const diagramDescriptions={
 };
 function chapterChoice(question){
  const labels=question.options.map((option,index)=>String.fromCharCode(97+index)+'. '+option);
+ const basePrompt=question.prompt+(question.diagram?' | '+(diagramDescriptions[question.number]||'กราฟประกอบตามเอกสาร'):'');
  const correct=question.answers.slice().sort((a,b)=>a-b).map(i=>String.fromCharCode(97+i)).join(', ');
  // โหมดฝึกรายบทเลือกหนึ่ง "ชุดคำตอบ" ได้ แต่โหมด Final แท้ให้เลือกหลาย checkbox
  if(question.answers.length>1 || question.options.length>4){
@@ -27,9 +28,9 @@ function chapterChoice(question){
   const options=[correct,...wrong.slice(0,3)];
   const shift=question.number%4;
   const rotated=options.slice(shift).concat(options.slice(0,shift));
-  return {prompt:question.prompt+' | คำตอบหลายข้อ เลือกชุดอักษรที่ถูกต้อง: '+labels.join(' / '),options:rotated,answer:rotated.indexOf(correct)};
+  return {prompt:basePrompt+' | คำตอบหลายข้อ เลือกชุดอักษรที่ถูกต้อง: '+labels.join(' / '),options:rotated,answer:rotated.indexOf(correct)};
  }
- return {prompt:question.prompt+(question.diagram?' | '+(diagramDescriptions[question.number]||'') :''),options:question.options.slice(),answer:question.answers[0]};
+ return {prompt:basePrompt,options:question.options.slice(),answer:question.answers[0]};
 }
 export function applyDiscreteFinalPaper(chapters){
  chapters.forEach((chapter,index)=>{
