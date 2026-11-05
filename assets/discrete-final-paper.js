@@ -1,4 +1,4 @@
-// ชุดฝึกรายบทใช้คำถามจาก PDF ชุดเดียวกับข้อสอบ Final ฉบับเต็ม
+// ชุดฝึกรายบทใช้โจทย์จาก PDF ที่ตรงกับบทเรียน และโจทย์ที่แทนจากสไลด์ Week 8–13
 // ข้อที่ต้องเลือกหลายคำตอบ แปลงเป็นตัวเลือก "ชุดคำตอบ" เฉพาะโหมดรายบท (ข้อสอบเต็มใช้ checkbox ตามต้นฉบับ)
 import { discretePaperQuestions } from './discrete-final-source.js';
 
@@ -40,13 +40,13 @@ export function applyDiscreteFinalPaper(chapters){
    const q=discretePaperQuestions.find(x=>x.number===num);
    if(!q)return null;
    const adapted=chapterChoice(q);
-   const why='เฉลยตามวงและลายมือใน PDF หน้า '+q.page+': '+q.explanation+(q.sourceWarning?' หมายเหตุ: '+q.sourceWarning:'');
-   return {id:'dm-pdf-'+num,topic:sectionIds[j%sectionIds.length],level:'ตามข้อสอบ Final PDF',
+   const why='อ้างอิง '+(q.sourceLabel||('ข้อสอบ PDF หน้า '+q.page))+': '+q.explanation+(q.sourceWarning?' หมายเหตุ: '+q.sourceWarning:'');
+   return {id:'dm-pdf-'+num,topic:sectionIds[j%sectionIds.length],level:q.sourceLabel?'ฝึกจากสไลด์':'ข้อสอบตาม PDF',
     prompt:adapted.prompt,options:adapted.options,answer:adapted.answer,
     reasons:adapted.options.map((option,i)=>i===adapted.answer?'ถูกต้อง: '+why:'ตัวเลือกนี้ไม่ตรงกับเฉลยที่บันทึกไว้: '+why),
-    vocabulary:[],source:'discreteFinalExam-1.pdf หน้า '+q.page};
+    vocabulary:[],source:q.sourceLabel||('discreteFinalExam-1.pdf หน้า '+q.page)};
   }).filter(Boolean);
-  chapter.source='โจทย์ฝึกรายบทดึงจาก discreteFinalExam-1.pdf; ข้อสอบ Final ฉบับเต็ม 28 ปรนัยและ 2 ข้อเขียน';
+  chapter.source='ข้อสอบฝึกเรียงตามบท: คงข้อที่อยู่ในสไลด์จาก discreteFinalExam-1.pdf และแทนข้อที่ไม่มีสอนด้วยโจทย์จาก DM_Week8–13.pdf';
  });
  return chapters;
 }
