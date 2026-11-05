@@ -35,9 +35,10 @@ test('Unicast Broadcast และ Multicast มีคำอธิบายถู
 test('แก้ความหมายแล้วไม่เปลี่ยนตัวเลือกและเฉลย',()=>{
  let count=0;
  for(const subject of subjects)for(const chapter of subject.chapters)for(const question of chapter.questions){
-  assert.equal(question.options.length,4,question.id);
-  assert.ok(question.answer>=0&&question.answer<4,question.id);
-  assert.equal(question.reasons.length,4,question.id);
+  const expectedOptions=question.id==='dm-pdf-21'?2:4; // PDF ข้อ 21 มีเพียง 2 ตัวเลือก
+  assert.equal(question.options.length,expectedOptions,question.id);
+  assert.ok(question.answer>=0&&question.answer<expectedOptions,question.id);
+  assert.equal(question.reasons.length,expectedOptions,question.id);
   assert.ok(question.reasons.every(Boolean),question.id);
   count++;
  }
