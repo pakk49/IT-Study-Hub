@@ -30,7 +30,14 @@ export function showExam(subject,period,root) {
   state={questions:randomized(items),mode,index:0,selected:null,checked:false,answers:{},finished:false,vocabOpen:false,hintOpen:false,drafts:{}};
   render();
  }
- function renderHome(){\n  const best=savedBest();\n  const countText=isPhysicalFinal?'ข้อเลือกตอบ Arduino 45 ข้อ':'คำถาม 60 ข้อ';\n  const startText=isPhysicalFinal?'เริ่มฝึก Arduino 45 ข้อ':'เริ่มทำข้อสอบ 60 ข้อ';\n  target.innerHTML='<div class="exam-panel exam-welcome"><h2>พร้อมทดสอบความเข้าใจ '+label+'</h2><p>'+countText+' จากบท '+bank.chapters.map(c=>c.number).join(", ")+' · 4 ตัวเลือก · สุ่มคำถาม · เฉลยและเหตุผลทันทีหลังตอบ</p><div class="exam-counts"><span><b>'+totalQuestions+'</b> ข้อ</span><span><b>'+bank.chapters.length+'</b> บท</span><span><b>'+(best===null?"—":best+"%")+'</b> คะแนนสูงสุด</span></div><button class="button primary" id="exam-start">'+startText+'</button></div>';\n  target.querySelector("#exam-start").onclick=()=>start();\n }\n function renderResult(){
+ function renderHome(){
+  const best=savedBest();
+  const countText=isPhysicalFinal?'ข้อเลือกตอบ Arduino 45 ข้อ':'คำถาม 60 ข้อ';
+  const startText=isPhysicalFinal?'เริ่มฝึก Arduino 45 ข้อ':'เริ่มทำข้อสอบ 60 ข้อ';
+  target.innerHTML='<div class="exam-panel exam-welcome"><h2>พร้อมทดสอบความเข้าใจ '+label+'</h2><p>'+countText+' จากบท '+bank.chapters.map(c=>c.number).join(", ")+' · 4 ตัวเลือก · สุ่มคำถาม · เฉลยและเหตุผลทันทีหลังตอบ</p><div class="exam-counts"><span><b>'+totalQuestions+'</b> ข้อ</span><span><b>'+bank.chapters.length+'</b> บท</span><span><b>'+(best===null?"—":best+"%")+'</b> คะแนนสูงสุด</span></div><button class="button primary" id="exam-start">'+startText+'</button></div>';
+  target.querySelector("#exam-start").onclick=()=>start();
+ }
+ function renderResult(){
   const wrong=state.questions.filter(q=>state.answers[q.id]!==q.answer),correct=state.questions.length-wrong.length;
   const percent=Math.round(correct/state.questions.length*100);
   if(state.mode==="full"&&!state.saved){persist(percent);state.saved=true;}
