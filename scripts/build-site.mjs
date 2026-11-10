@@ -9,6 +9,7 @@ const pages = [
   'study-plan.html',
   'c-checker.html',
   'physical-code-practice.html',
+  'physical-vehicle-exam.html',
   '.nojekyll',
 ];
 
