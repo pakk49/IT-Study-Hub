@@ -11,7 +11,7 @@
 [![Year](https://img.shields.io/badge/ชั้นปี-2-ffd7ad?style=for-the-badge&labelColor=90bce0)](https://pakk49.github.io/IT-Study-Hub/#/year/2)
 [![Semester](https://img.shields.io/badge/เทอม-1-ffd7ad?style=for-the-badge&labelColor=90bce0)](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1)
 
-[หน้าแรก](https://pakk49.github.io/IT-Study-Hub/) · [ตรวจไฟล์ C (.c)](https://pakk49.github.io/IT-Study-Hub/c-checker.html) · [Physical Computing](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing) · [Physical Labs](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/labs) · [Database Midterm](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/midterm) · [Database Final](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/final) · [รายวิชา](#รายวิชา) · [เริ่มอ่าน](#เริ่มอ่าน) · [วิธีใช้งาน](#วิธีใช้งาน) · [เพิ่มเนื้อหา](#เพิ่มเนื้อหา) · [ตั้งค่าเว็บ](#ตั้งค่าเว็บ)
+[หน้าแรก](https://pakk49.github.io/IT-Study-Hub/) · [ตรวจไฟล์ C (.c)](https://pakk49.github.io/IT-Study-Hub/c-checker.html) · [ฝึกโค้ด PHYCOM แบบมี main ให้](https://pakk49.github.io/IT-Study-Hub/physical-code-practice.html) · [Physical Computing](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing) · [Physical Labs](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/labs) · [Database Midterm](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/midterm) · [Database Final](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/final) · [รายวิชา](#รายวิชา) · [เริ่มอ่าน](#เริ่มอ่าน) · [วิธีใช้งาน](#วิธีใช้งาน) · [เพิ่มเนื้อหา](#เพิ่มเนื้อหา) · [ตั้งค่าเว็บ](#ตั้งค่าเว็บ)
 
 </div>
 
@@ -63,6 +63,9 @@
 > รายวิชาตามรายการที่ผู้ใช้ให้มา วิชาที่ยังไม่มีเอกสารแสดงสถานะรอเพิ่มบทเรียน ไม่ใส่เนื้อหาที่สมมติขึ้น
 
 ## PHYSICAL COMPUTING — Lecture, Midterm, Final & Lab
+
+[ฝึก eJudge ภาษา C แบบมี `int main()` กำหนดให้](https://pakk49.github.io/IT-Study-Hub/physical-code-practice.html) · [ตรวจไฟล์ .c](https://pakk49.github.io/IT-Study-Hub/c-checker.html) — สร้าง Node, Insert Last และ Traverse by Index; เป็นตัวอย่างฝึกไม่ใช่โค้ดสอบจริง
+
 
 > รหัส **06016409** · สรุปภาษาไทย + ศัพท์อังกฤษพร้อมคำแปลและตัวอย่าง · โจทย์สถานการณ์ตามหัวข้อที่มีในเอกสาร ไม่ใช่ข้อสอบจริง
 
