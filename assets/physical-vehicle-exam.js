@@ -59,11 +59,7 @@ function showTask(index) {
   $('vh-hints').innerHTML=t.hints.map(h=>'<li>'+esc(h)+'</li>').join('');
   $('vh-stdout').value=fromStorage(outputKey(t.id));
   $('vh-cmd').textContent='gcc -std=c11 -Wall -Wextra -pedantic '+fileName()+' -o vehicle_'+t.id+'.exe\n.\\vehicle_'+t.id+'.exe';
-  $('vh-cmd').replaceChildren(document.createElement('code'),document.createElement('button'));
-  $('vh-cmd').querySelector('code').textContent='gcc -std=c11 -Wall -Wextra -pedantic '+fileName()+' -o vehicle_'+t.id+'.exe\n.\\vehicle_'+t.id+'.exe';
-  const cmdButton=$('vh-cmd').querySelector('button');
-  cmdButton.type='button';cmdButton.textContent='คัดลอกคำสั่ง';
-  cmdButton.onclick=()=>copyText($('vh-cmd').querySelector('code').textContent);
+  $('vh-copy-cmd').onclick=()=>copyText($('vh-cmd').textContent);
   $('vh-report').hidden=true;
   $('vh-output-result').textContent='';
   $('vh-output-result').className='';
