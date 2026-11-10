@@ -11,7 +11,7 @@
 [![Year](https://img.shields.io/badge/ชั้นปี-2-ffd7ad?style=for-the-badge&labelColor=90bce0)](https://pakk49.github.io/IT-Study-Hub/#/year/2)
 [![Semester](https://img.shields.io/badge/เทอม-1-ffd7ad?style=for-the-badge&labelColor=90bce0)](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1)
 
-[หน้าแรก](https://pakk49.github.io/IT-Study-Hub/) · [Physical Computing](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing) · [Physical Labs](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/labs) · [Database Midterm](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/midterm) · [Database Final](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/final) · [รายวิชา](#รายวิชา) · [เริ่มอ่าน](#เริ่มอ่าน) · [วิธีใช้งาน](#วิธีใช้งาน) · [เพิ่มเนื้อหา](#เพิ่มเนื้อหา) · [ตั้งค่าเว็บ](#ตั้งค่าเว็บ)
+[หน้าแรก](https://pakk49.github.io/IT-Study-Hub/) · [ตรวจไฟล์ C (.c)](https://pakk49.github.io/IT-Study-Hub/c-checker.html) · [Physical Computing](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing) · [Physical Labs](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/physical-computing/labs) · [Database Midterm](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/midterm) · [Database Final](https://pakk49.github.io/IT-Study-Hub/#/year/2/term/1/subject/database-system-concepts/final) · [รายวิชา](#รายวิชา) · [เริ่มอ่าน](#เริ่มอ่าน) · [วิธีใช้งาน](#วิธีใช้งาน) · [เพิ่มเนื้อหา](#เพิ่มเนื้อหา) · [ตั้งค่าเว็บ](#ตั้งค่าเว็บ)
 
 </div>
 
