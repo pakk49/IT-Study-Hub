@@ -32,7 +32,7 @@ function makeExtraArduinoQuestions(chapters){
   const chapterFor=id=>id.startsWith("p15")?15:(id.startsWith("p14")?14:12);
   return extraArduinoQuestions.map(([id,prompt,options,answer,reason])=>{
     const chapterNo=chapterFor(id),chapter=byNo.get(chapterNo);
-    return {id,topic:"pc-"+chapterNo+"-exam",level:"ทฤษฎี Arduino",prompt,options,answer,
+    return {id,topic:chapter.sections[0].id,level:"ทฤษฎี Arduino",prompt,options,answer,
       reasons:options.map((_,i)=>i===answer?"ถูกต้อง: "+reason:"ยังไม่ใช่: ตัวเลือกนี้ไม่ใช่หลักการที่โจทย์ถาม — "+reason),
       vocabulary:[],chapterId:chapter.id,chapterNo,chapterTitle:chapter.title,sectionTitle:"ทฤษฎี Arduino"};
   });
