@@ -58,14 +58,14 @@ int main(void) {
 }`;
 export function physicalFinalGuide(){
  return `<section class="physical-final-guide" aria-labelledby="pc-final-scope"><p class="eyebrow">ประกาศขอบเขตสอบที่ได้รับ</p><h2 id="pc-final-scope">Final Physical Computing · พุธ 11 พฤศจิกายน 2569</h2>
- <p>ข้อสอบรวม <b>30 คะแนน</b> แบ่งเป็นสามส่วน เตรียมแต่ละส่วนตามรูปแบบด้านล่าง</p>
+ <p>ข้อสอบรวม <b>30 คะแนน</b> แบ่งเป็นสามส่วน เตรียมแต่ละส่วนตามรูปแบบด้านล่าง</p><p><b>อัปเดตรูปแบบส่วนโค้ด:</b> โจทย์มี <code>int main()</code> กำหนดให้แล้ว ให้เขียนเฉพาะฟังก์ชันที่โจทย์เรียก โดยตรวจพารามิเตอร์ ชนิดคืนค่า และผลลัพธ์จาก main ที่ให้มา</p>
  <div class="table-scroll"><table class="study-table"><thead><tr><th>ส่วนสอบ</th><th>คะแนนและจำนวนข้อ</th><th>สิ่งที่ต้องเตรียม</th></tr></thead><tbody>
- <tr><td>เขียนโค้ดบน &lt;e&gt;Judge</td><td><b>15 คะแนน</b> · เลือกทำหลายข้อให้ครบคะแนน</td><td>Linked List: เพิ่มข้อมูลท้ายลิสต์ (Insert Last) และเข้าถึงตามตำแหน่ง (Traverse by Index) รวมถึง Struct และ Pointer</td></tr>
+ <tr><td>เขียนโค้ดบน &lt;e&gt;Judge</td><td><b>15 คะแนน</b> · เลือกทำหลายข้อให้ครบคะแนน</td><td>Linked List: เพิ่มข้อมูลท้ายลิสต์ (Insert Last) และเข้าถึงตามตำแหน่ง (Traverse by Index) รวมถึง Struct และ Pointer · <b>มี int main() กำหนดให้</b> เติมฟังก์ชันที่โจทย์ต้องการ</td></tr>
  <tr><td>ข้อเลือกตอบบน Onlearn</td><td><b>10 คะแนน · 45 ข้อ</b></td><td>ทฤษฎีเกี่ยวกับ Arduino</td></tr>
  <tr><td>ไฟฟ้าบนกระดาษ</td><td><b>5 คะแนน · 1 ข้อ</b></td><td>ตั้งสมการจากวงจรที่ได้รับ <b>ไม่ต้องแก้สมการหาคำตอบ</b> วงจรสอบจริงต่างจากรูปตัวอย่างในประกาศ</td></tr>
  </tbody></table></div>
  <p class="deadline-note"><b>กำหนดส่งแล็บ &lt;e&gt;Judge:</b> อังคาร 10 พฤศจิกายน 2569 เวลา <b>23:59 น.</b> ตามเวลาประเทศไทย</p>
- <h3>เริ่มทบทวนตามนี้</h3><ol>
+ <div class="actions"><a class="button primary" href="physical-code-practice.html">💻 ฝึกข้อเขียน C แบบมี main() ให้แล้ว</a><a class="button secondary" href="c-checker.html">อัปโหลดไฟล์ .c เพื่อตรวจโค้ด</a></div><h3>เริ่มทบทวนตามนี้</h3><ol>
  <li><b>ฝึกโค้ดก่อน:</b> วาดลิสต์และตามค่า <code>head</code>, <code>current</code>, <code>next</code> ให้ได้ ฝึกทั้งลิสต์ว่าง หนึ่งโหนด และหลายโหนด</li>
  <li><b>ทบทวน Arduino:</b> อ่านการเริ่มโปรแกรม การตั้งค่าขา การรับและส่งสัญญาณ เซนเซอร์ และการเชื่อมต่อที่มีในบทเรียน ใช้เอกสารอาจารย์เป็นขอบเขตรายละเอียดย่อย</li>
  <li><b>ฝึกตั้งสมการ:</b> เลือก Ground กำหนดแรงดันที่จุดต่อและทิศกระแส แล้วใช้กฎของโอห์มร่วมกับ KCL หรือ KVL ให้ตรงวงจร</li>
@@ -85,7 +85,7 @@ export function physicalFinalGuide(){
  <h3 id="exam-practice-title">แนวฝึกให้ตรงกับขอบเขตข้อสอบ</h3>
  <p>เนื้อหาส่วนนี้ยึดตามประกาศสอบในภาพ แบ่งเป็น 3 ส่วน รวม 30 คะแนน รายละเอียดรูปแบบย่อยของโจทย์ eJudge ให้ยึดตามโจทย์จริงในระบบ</p>
  <details><summary>ส่วนที่ 1 — eJudge: Linked List, Struct และ Pointer (15 คะแนน)</summary>
- <p>ข้อสอบเป็นแบบเลือกทำหลายข้อให้ได้คะแนนรวม 15 คะแนน หัวข้อที่ประกาศคือ Linked List: Insert Last และ Traverse by Index รวมถึง Struct และ Pointer</p>
+ <p>ข้อสอบเป็นแบบเลือกทำหลายข้อให้ได้คะแนนรวม 15 คะแนน หัวข้อที่ประกาศคือ Linked List: Insert Last และ Traverse by Index รวมถึง Struct และ Pointer <b>มี int main() ให้แล้ว</b> จึงฝึกเขียนฟังก์ชันให้ตรงกับ main โดยไม่ต้องสร้าง main ใหม่</p>
  <h4>โจทย์ฝึก A: สร้าง DataNode</h4>
  <p>ประกาศ <code>DataNode</code> ให้เก็บข้อความผ่าน <code>char *data</code> และ pointer ไปโหนดถัดไปผ่าน <code>struct DataNode *next</code> เขียนฟังก์ชัน <code>createDataNode(char *data)</code> ให้จองโหนดและสำเนาข้อความ กำหนด <code>next = NULL</code> จากนั้นพิมพ์ข้อมูลและค่าของ <code>next</code> ด้วย <code>%p</code> ระวังข้อความตัวอย่างอาจมีช่องว่าง และคืนหน่วยความจำที่จองเมื่อใช้เสร็จ</p>
  <h4>โจทย์ฝึก B: Insert Last และ Traverse by Index</h4>
