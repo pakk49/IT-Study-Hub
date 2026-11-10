@@ -62,3 +62,16 @@
 .exam-format details{margin-top:12px;padding:12px 14px;border:1px solid #e4eaf0;border-radius:9px;background:#fff}
 .exam-format details p{font-size:13px;line-height:1.7}
 @media(max-width:760px){.exam-format-grid{grid-template-columns:1fr}}
+
+/* เลือกทำข้อสอบรวม / รายบท / รายหัวข้อ ตามลำดับอิสระ */
+.exam-select-home{margin-bottom:18px}
+.exam-part-section{margin:22px 0 28px}
+.exam-part-section h2{color:#205c84;font-size:19px;margin:0 0 6px}
+.exam-part-section>p{font-size:12px;color:#658298;margin:0 0 14px}
+.exam-part-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:11px}
+.exam-part-card{display:flex;flex-direction:column;text-align:left;align-items:flex-start;gap:6px;border:1px solid #bcd8e9;border-radius:11px;background:linear-gradient(140deg,#f0f8ff,#fff);padding:16px;color:#295a79;text-decoration:none;cursor:pointer;font:inherit;line-height:1.6;min-width:0;transition:border-color .15s,box-shadow .15s}
+.exam-part-card:hover,.exam-part-card:focus-visible{border-color:#4b9ccf;box-shadow:0 5px 18px #2275ac16;outline-offset:2px}
+.exam-part-card strong{font-size:14px;color:#195b88;overflow-wrap:anywhere}
+.exam-part-card span{font-size:12px;font-weight:700;color:#b26b2f}
+.exam-part-card small{font-size:11px;color:#68869a}
+@media(max-width:600px){.exam-part-grid{grid-template-columns:1fr}.exam-part-card{padding:14px}}
