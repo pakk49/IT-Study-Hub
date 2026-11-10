@@ -1,0 +1,6 @@
+# Cloudflare Workers: serve only actual website files.
+# All source, tests, scripts, secrets, and build artifacts must remain excluded.
+*
+!/assets/
+!/assets/**
+!/*.html
