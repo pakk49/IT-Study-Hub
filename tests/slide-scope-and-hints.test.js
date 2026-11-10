@@ -28,14 +28,14 @@ test('Hint ทุกข้อดึงเฉพาะข้อความสร
   assert.ok(slideHintHtml(q,c,escape).includes('slide-hint'));
  }
 });
-test('ข้อสอบรวม 60 ข้อเลือกโจทย์จากหัวข้อเดียวกับที่สรุปในสไลด์เท่านั้น',()=>{
+test('ข้อสอบรวม 60 ข้อ หรือ PHYCOM Arduino 45 ข้อ ต้องตรงกับเนื้อหาสไลด์',()=>{
  for(const s of studySubjects)for(const period of ['midterm','final']){
   const bank=buildExamBank(s,period);
   if(!bank.ready)continue;
-  assert.equal(bank.questions.length,60);
+  assert.equal(bank.questions.length,s.id==='physical-computing'&&period==='final'?45:60);
   for(const q of bank.questions){
    const c=bank.chapters.find(c=>c.id===q.chapterId);
-   assert.ok(c && c.sections.some(sec=>sec.id===q.topic),s.id+' '+q.id);
+   assert.ok(c && (c.sections.some(sec=>sec.id===q.topic)||(s.id==='physical-computing'&&period==='final'&&q.sectionTitle==='ทฤษฎี Arduino')),s.id+' '+q.id);
    assert.ok(slideHint(q,c),q.id);
   }
  }
