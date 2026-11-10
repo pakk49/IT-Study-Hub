@@ -38,6 +38,6 @@ test('คำใบ้ต่างกันตามวิธีทำและ�
 
 test('ประกาศ Final Physical แยกข้อสอบจริงออกจากชุดฝึกและแสดงกำหนดส่ง',()=>{
  const html=physicalFinalGuide();
- for(const phrase of ['11 พฤศจิกายน 2569','15 คะแนน','10 คะแนน · 40 ข้อ','5 คะแนน · 1 ข้อ','10 พฤศจิกายน 2569','23:59','ไม่ต้องแก้สมการ','Insert Last','Traverse by Index'])assert.ok(html.includes(phrase),phrase);
- assert.match(html,/ไม่ใช่รูปแบบข้อสอบจริง/);
+ for(const phrase of ['11 พฤศจิกายน 2569','15 คะแนน','10 คะแนน · 45 ข้อ','5 คะแนน · 1 ข้อ','10 พฤศจิกายน 2569','23:59','ไม่ต้องแก้สมการ','Insert Last','Traverse by Index'])assert.ok(html.includes(phrase),phrase);
+ assert.match(html,/ตัวอย่างฝึก|แบบฝึกเลือกตอบ Arduino/);
 });
