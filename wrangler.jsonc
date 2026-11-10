@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "it-study-hub",
+  "compatibility_date": "2026-11-11",
+  "assets": {
+    "directory": "./_site",
+    "html_handling": "none",
+    "not_found_handling": "404-page"
+  }
+}
