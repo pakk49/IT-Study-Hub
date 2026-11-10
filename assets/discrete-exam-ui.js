@@ -42,7 +42,7 @@ function answerLabel(question) {
   return question.answers.map(x=>LETTERS[x]+'. '+question.options[x]).join(' • ');
 }
 function stored() {
-  try {const data=JSON.parse(localStorage.getItem(SESSION_KEY)||'null');if(data&&Array.isArray(data.order)&&data.order.length===30&&data.answers&&data.checked&&data.drafts)return data;}catch{}
+  try {const data=JSON.parse(localStorage.getItem(SESSION_KEY)||'null');if(data&&Array.isArray(data.order)&&data.order.length>0&&data.order.length<=30&&data.order.every(id=>allItems.some(item=>itemId(item)===id))&&data.answers&&data.checked&&data.drafts)return data;}catch{}
   return null;
 }
 function persist(state) {
@@ -54,12 +54,21 @@ function remaining(state) {
 }
 function itemId(item) {return (item.options?'q':'essay')+String(item.number);}
 const allItems=[...questions,...essays];
+const examGroups=[
+ {id:'all',label:'ทั้งชุด · ปรนัยและข้อเขียน',include:()=>true},
+ {id:'number',label:'ทฤษฎีจำนวน · ข้อ 1–11',include:item=>Boolean(item.options)&&item.number<=11},
+ {id:'relation',label:'Relations · ข้อ 12–20',include:item=>Boolean(item.options)&&item.number>=12&&item.number<=20},
+ {id:'graph',label:'Graph Theory · ข้อ 21–28',include:item=>Boolean(item.options)&&item.number>=21},
+ {id:'essay',label:'ข้อเขียน · 2 ข้อ',include:item=>!item.options}
+];
 export function showDiscreteFinalExam(subject,period,root) {
   if(timerHandle)clearInterval(timerHandle);
   const base='#/year/'+subject.year+'/term/'+subject.term+'/subject/'+subject.id;
   root.innerHTML='<nav class="breadcrumbs"><a href="#/">คลังวิชา</a> / <a href="'+base+'">Discrete Mathematics</a> / Final ตามสไลด์</nav><div class="exam-hub dm-hub"><header class="exam-heading"><span>DISCRETE MATHEMATICS · FINAL</span><h1>ข้อสอบ Final ตามสไลด์ Week 8–13</h1><p>ปรนัย 28 ข้อ + ข้อเขียน 2 ข้อ · คัดข้อที่ตรงบทเรียนจาก PDF และเพิ่มโจทย์จากสไลด์แทนข้อที่อยู่นอกเนื้อหา · เฉลยจะแสดงหลังตรวจเท่านั้น</p></header><div id="dm-exam-stage"></div></div>';
   const target=root.querySelector('#dm-exam-stage');
   let state=stored();
+  const activeItems=()=>state?state.order.map(id=>allItems.find(item=>itemId(item)===id)).filter(Boolean):allItems;
+  const activeLabel=()=>examGroups.find(g=>g.id===state?.groupId)?.label||'ทั้งชุด · ปรนัยและข้อเขียน';
   function stopTimer() {if(timerHandle){clearInterval(timerHandle);timerHandle=null;}}
   function showTimer(){
     const timer=target.querySelector('#dm-timer');
@@ -74,9 +83,10 @@ export function showDiscreteFinalExam(subject,period,root) {
       showTimer();
     },500);
   }
-  function begin(minutes) {
+  function begin(minutes,groupId='all') {
     const seconds=Number(minutes)*60;
-    state={order:allItems.map(itemId),index:0,answers:{},checked:{},drafts:{},seconds,deadline:Date.now()+seconds*1000,paused:false,finished:false,expired:false,startedAt:Date.now()};
+    const group=examGroups.find(g=>g.id===groupId)||examGroups[0];
+    state={groupId:group.id,order:allItems.filter(group.include).map(itemId),index:0,answers:{},checked:{},drafts:{},seconds,deadline:Date.now()+seconds*1000,paused:false,finished:false,expired:false,startedAt:Date.now()};
     persist(state);render();runTimer();
   }
   function pause() {
@@ -86,8 +96,13 @@ export function showDiscreteFinalExam(subject,period,root) {
     persist(state);render();runTimer();
   }
   function renderHome() {
-    target.innerHTML='<section class="exam-panel exam-welcome"><h2>พร้อมเริ่มฝึกทำข้อสอบ</h2><p>โจทย์ที่ตรงสไลด์คงจาก PDF ส่วนข้อที่อยู่นอกสไลด์ปรับใหม่โดยอิงบทเรียนจริง · ข้อเขียนตรวจเทียบแนวคำตอบด้วยตนเอง</p><div class="exam-counts"><span><b>28</b> ปรนัย</span><span><b>2</b> ข้อเขียน</span><span><b>6</b> ชุดสไลด์</span></div><div class="dm-duration"><label for="dm-minutes">กำหนดเวลา</label><select id="dm-minutes"><option value="30">30 นาที</option><option value="60" selected>60 นาที</option><option value="90">90 นาที</option><option value="120">120 นาที</option></select><button class="button primary" id="dm-start">เริ่มทำข้อสอบ</button></div><p class="dm-source-note">ชุดฝึกนี้ไม่ใช่สำเนาข้อสอบ PDF ทั้งหมด: ข้อที่อยู่นอกหัวข้อ Week 8–13 ถูกเปลี่ยนเป็นโจทย์ฝึกที่อิงสไลด์ พร้อมระบุแหล่งที่มา</p></section>';
-    target.querySelector('#dm-start').onclick=()=>begin(target.querySelector('#dm-minutes').value);
+    const groupsHtml=examGroups.map(group=>{
+      const selected=allItems.filter(group.include);
+      const essaysCount=selected.filter(x=>!x.options).length;
+      return '<button type="button" class="exam-part-card" data-dm-group="'+group.id+'"><strong>'+escapeHtml(group.label)+'</strong><span>'+selected.length+' ข้อ'+(essaysCount?' (ข้อเขียน '+essaysCount+')':'')+'</span><small>เลือกเริ่มจากส่วนนี้</small></button>';
+    }).join('');
+    target.innerHTML='<section class="exam-panel exam-welcome"><h2>เลือกทำส่วนไหนก่อนก็ได้</h2><p>แยกฝึกทฤษฎีจำนวน, Relations, Graph Theory และข้อเขียน หรือทำทั้งชุด 30 ข้อก็ได้ · เฉลยแสดงหลังตรวจคำตอบ</p><div class="exam-counts"><span><b>28</b> ปรนัย</span><span><b>2</b> ข้อเขียน</span><span><b>4</b> ส่วนให้เลือกฝึก</span></div><div class="dm-duration"><label for="dm-minutes">กำหนดเวลาสำหรับชุดที่จะทำ</label><select id="dm-minutes"><option value="30">30 นาที</option><option value="60" selected>60 นาที</option><option value="90">90 นาที</option><option value="120">120 นาที</option></select></div></section><section class="exam-part-section"><h2>เลือกชุดข้อสอบ</h2><div class="exam-part-grid">'+groupsHtml+'</div></section><p class="dm-source-note">โจทย์ฝึกอ้างอิง PDF และสไลด์ Week 8–13 บางข้อปรับแทนเนื้อหานอกสไลด์; ข้อเขียนตรวจเทียบแนวคำตอบด้วยตนเอง</p>';
+    target.querySelectorAll('[data-dm-group]').forEach(button=>button.onclick=()=>begin(target.querySelector('#dm-minutes').value,button.dataset.dmGroup));
   }
   function finish() {
     state.seconds=remaining(state);
@@ -95,22 +110,27 @@ export function showDiscreteFinalExam(subject,period,root) {
   }
   function renderResult() {
     stopTimer();
+    const selectedQuestions=activeItems().filter(item=>Boolean(item.options));
+    const selectedEssays=activeItems().filter(item=>!item.options);
     const qAnswers={};
-    for(const q of questions)qAnswers[String(q.number)]=state.answers['q'+q.number]||[];
-    const score=discreteExamScore(qAnswers);
-    const warnings=questions.filter(q=>q.sourceWarning);
-    const wrong=questions.filter(q=>!isDiscreteAnswerCorrect(q,qAnswers[String(q.number)]));
-    target.innerHTML='<div class="exam-panel exam-result"><p class="exam-eyebrow">'+(state.expired?'หมดเวลาที่กำหนด':'ตรวจครบแล้ว')+'</p><h2>ผลข้อสอบ Discrete Math Final</h2><strong class="exam-percent">'+score.percent+'%</strong><p>ปรนัยถูก '+score.correct+' / '+score.total+' ข้อ · ข้อเขียน '+essays.length+' ข้อ ตรวจเทียบแนวคำตอบด้วยตนเอง</p><p>เวลาคงเหลือ '+formatDiscreteTime(state.seconds)+'</p><div class="exam-actions"><button class="button primary" id="dm-restart">เริ่มทำใหม่</button><a class="button secondary" href="'+base+'/final">กลับหน้าวิชา</a></div></div>'+
+    for(const q of selectedQuestions)qAnswers[String(q.number)]=state.answers['q'+q.number]||[];
+    const correct=selectedQuestions.filter(q=>isDiscreteAnswerCorrect(q,qAnswers[String(q.number)])).length;
+    const score={correct,total:selectedQuestions.length,percent:selectedQuestions.length?Math.round(correct/selectedQuestions.length*100):null};
+    const warnings=selectedQuestions.filter(q=>q.sourceWarning);
+    const wrong=selectedQuestions.filter(q=>!isDiscreteAnswerCorrect(q,qAnswers[String(q.number)]));
+    target.innerHTML='<div class="exam-panel exam-result"><p class="exam-eyebrow">'+(state.expired?'หมดเวลาที่กำหนด':'ตรวจครบแล้ว')+'</p><h2>ผลสอบ '+escapeHtml(activeLabel())+'</h2><strong class="exam-percent">'+(score.percent===null?'—':score.percent+'%')+'</strong><p>ปรนัยถูก '+score.correct+' / '+score.total+' ข้อ · ข้อเขียน '+selectedEssays.length+' ข้อ ตรวจเทียบแนวคำตอบด้วยตนเอง</p><p>เวลาคงเหลือ '+formatDiscreteTime(state.seconds)+'</p><div class="exam-actions"><button class="button primary" id="dm-restart">เริ่มทำใหม่</button><button class="button secondary" id="dm-home">เลือกทำส่วนอื่น</button><a class="button secondary" href="'+base+'/final">กลับหน้าวิชา</a></div></div>'+
       (wrong.length?'<section class="exam-review"><h2>ทบทวนข้อที่ยังไม่ถูก ('+wrong.length+')</h2>'+wrong.map(q=>'<article class="exam-panel"><small>ข้อ '+q.number+' · '+escapeHtml(q.sourceLabel||('PDF หน้า '+q.page))+'</small><h3>'+escapeHtml(q.prompt)+'</h3><p>คุณตอบ: '+escapeHtml((qAnswers[String(q.number)]||[]).map(i=>LETTERS[i]).join(', ')||'ไม่ได้ตอบ')+'</p><p><b>เฉลยพร้อมเหตุผล: '+escapeHtml(answerLabel(q))+'</b></p><p>'+escapeHtml(q.explanation)+'</p>'+(q.sourceWarning?'<p class="dm-warning">'+escapeHtml(q.sourceWarning)+'</p>':'')+'</article>').join('')+'</section>':'')+
-      '<section class="exam-review"><h2>ทบทวนข้อเขียน</h2>'+essays.map(e=>'<article class="exam-panel"><h3>ข้อเขียน '+e.number+'</h3><p><b>คำตอบของคุณ:</b> '+escapeHtml(state.answers['essay'+e.number]||'ยังไม่ได้ตอบ')+'</p><p><b>แนวเฉลย:</b> '+escapeHtml(e.reference)+'</p>'+(e.diagram?drawDiagram(e.diagram):'')+'</article>').join('')+'</section>'+
+      '<section class="exam-review"><h2>ทบทวนข้อเขียน</h2>'+selectedEssays.map(e=>'<article class="exam-panel"><h3>ข้อเขียน '+e.number+'</h3><p><b>คำตอบของคุณ:</b> '+escapeHtml(state.answers['essay'+e.number]||'ยังไม่ได้ตอบ')+'</p><p><b>แนวเฉลย:</b> '+escapeHtml(e.reference)+'</p>'+(e.diagram?drawDiagram(e.diagram):'')+'</article>').join('')+'</section>'+
       (warnings.length?'<p class="dm-warning">หมายเหตุ: เฉลยลายมือของข้อ '+warnings.map(q=>q.number).join(', ')+' มีข้อขัดแย้งที่ควรตรวจทานกับผู้สอน คะแนนที่แสดงนับตามวง/ลายมือในเอกสาร</p>':'');
-    target.querySelector('#dm-restart').onclick=()=>{try{localStorage.removeItem(SESSION_KEY);}catch{}state=null;renderHome();};
+    target.querySelector('#dm-restart').onclick=()=>{const id=state.groupId||'all';try{localStorage.removeItem(SESSION_KEY);}catch{}begin(60,id);};
+    target.querySelector('#dm-home').onclick=()=>{try{localStorage.removeItem(SESSION_KEY);}catch{}state=null;renderHome();};
   }
   function render() {
     if(!state){renderHome();return;}
     if(state.finished){renderResult();return;}
     if(!state.paused&&remaining(state)<=0){state.seconds=0;state.deadline=null;state.finished=true;state.expired=true;persist(state);renderResult();return;}
-    const item=allItems[state.index],id=itemId(item),isEssay=!item.options,checked=Boolean(state.checked[id]);
+    const items=activeItems();
+    const item=items[state.index],id=itemId(item),isEssay=!item.options,checked=Boolean(state.checked[id]);
     const answered=Object.keys(state.checked).length;
     const draft=state.drafts[id]??(isEssay?'':[]);
     const selected=checked?state.answers[id]:draft;
@@ -126,9 +146,13 @@ export function showDiscreteFinalExam(subject,period,root) {
       if(isEssay)detail='<section class="exam-explanation"><h3>แนวคำตอบพร้อมเหตุผล</h3><p>'+escapeHtml(item.reference)+'</p>'+'<p class="dm-source-note">ข้อเขียนตรวจเทียบด้วยตนเอง ไม่ให้คะแนนอัตโนมัติเพื่อไม่ตัดคำตอบที่อธิบายด้วยสำนวนอื่น</p></section>';
       else detail='<section class="exam-explanation"><h3>'+(isDiscreteAnswerCorrect(item,selected)?'✓ ตรงกับเฉลยที่บันทึก':'✕ ยังไม่ตรงกับเฉลย')+'</h3><p><b>เฉลย: '+escapeHtml(answerLabel(item))+'</b></p><p>'+escapeHtml(item.explanation)+'</p>'+(item.sourceWarning?'<p class="dm-warning">'+escapeHtml(item.sourceWarning)+'</p>':'')+'</section>';
     }
-    const done=answered===allItems.length;
-    target.innerHTML='<div class="dm-toolbar"><div class="dm-timebox"><span>เวลาที่เหลือ</span><strong id="dm-timer" aria-live="off">'+formatDiscreteTime(remaining(state))+'</strong></div><div><button class="button secondary" id="dm-pause">'+(state.paused?'เล่นต่อ':'หยุดเวลา')+'</button><button class="button secondary" id="dm-add">+5 นาที</button></div></div><div class="exam-progress"><span>ตรวจแล้ว '+answered+' / '+allItems.length+' ข้อ '+(state.paused?'· หยุดเวลาอยู่':'')+'</span><b>'+currentNumber+' · '+(state.index+1)+' / 30</b></div><div class="exam-progress-track"><div style="width:'+(100*answered/allItems.length)+'%"></div></div><article class="exam-panel exam-question"><small>'+escapeHtml(item.sourceLabel||('PDF ต้นฉบับ หน้า '+item.page))+' · '+(isEssay?'ข้อเขียน 4 คะแนน':'เลือก'+(MULTIPLE.has(item.number)||item.answers?.length>1?'ได้มากกว่า 1 ข้อ':'คำตอบที่ถูกต้อง'))+'</small><h2>'+escapeHtml(item.prompt)+'</h2>'+(!isEssay&&item.diagram?drawDiagram(item.diagram):'')+(isEssay&&item.number===3?drawBridge():'')+(isEssay&&item.diagram?drawDiagram(item.diagram):'')+options+detail+'<div class="exam-actions"><button class="button secondary" id="dm-prev" '+(state.index===0?'disabled':'')+'>← ข้อก่อนหน้า</button><button class="button primary" id="dm-next">'+(checked?(state.index===allItems.length-1?'ดูผลคะแนน':'ข้อถัดไป →'):'ตรวจคำตอบ')+'</button><button class="button secondary" id="dm-finish">ส่งข้อสอบ</button></div></article><p class="dm-source-note">สามารถย้อนกลับไปดูข้อที่ตรวจแล้วได้ · ไม่แสดงเฉลยก่อนกดตรวจคำตอบ</p>';
+    const done=answered===items.length;
+    target.innerHTML='<div class="dm-toolbar"><div class="dm-timebox"><span>เวลาที่เหลือ</span><strong id="dm-timer" aria-live="off">'+formatDiscreteTime(remaining(state))+'</strong></div><div><button class="button secondary" id="dm-pause">'+(state.paused?'เล่นต่อ':'หยุดเวลา')+'</button><button class="button secondary" id="dm-add">+5 นาที</button><button class="button secondary" id="dm-switch">เลือกส่วนอื่น</button></div></div><div class="exam-progress"><span>ตรวจแล้ว '+answered+' / '+items.length+' ข้อ '+(state.paused?'· หยุดเวลาอยู่':'')+'</span><b>'+currentNumber+' · '+(state.index+1)+' / '+items.length+'</b></div><div class="exam-progress-track"><div style="width:'+(100*answered/items.length)+'%"></div></div><article class="exam-panel exam-question"><small>'+escapeHtml(item.sourceLabel||('PDF ต้นฉบับ หน้า '+item.page))+' · '+(isEssay?'ข้อเขียน 4 คะแนน':'เลือก'+(MULTIPLE.has(item.number)||item.answers?.length>1?'ได้มากกว่า 1 ข้อ':'คำตอบที่ถูกต้อง'))+'</small><h2>'+escapeHtml(item.prompt)+'</h2>'+(!isEssay&&item.diagram?drawDiagram(item.diagram):'')+(isEssay&&item.number===3?drawBridge():'')+(isEssay&&item.diagram?drawDiagram(item.diagram):'')+options+detail+'<div class="exam-actions"><button class="button secondary" id="dm-prev" '+(state.index===0?'disabled':'')+'>← ข้อก่อนหน้า</button><button class="button primary" id="dm-next">'+(checked?(state.index===items.length-1?'ดูผลคะแนน':'ข้อถัดไป →'):'ตรวจคำตอบ')+'</button><button class="button secondary" id="dm-finish">ส่งข้อสอบ</button></div></article><p class="dm-source-note">สามารถย้อนกลับไปดูข้อที่ตรวจแล้วได้ · ไม่แสดงเฉลยก่อนกดตรวจคำตอบ</p>';
     target.querySelector('#dm-pause').onclick=pause;
+    target.querySelector('#dm-switch').onclick=()=>{
+      if(!confirm('ออกจากชุดปัจจุบันเพื่อเลือกส่วนอื่นหรือไม่? คำตอบในชุดนี้จะถูกล้าง'))return;
+      stopTimer();try{localStorage.removeItem(SESSION_KEY);}catch{}state=null;renderHome();
+    };
     target.querySelector('#dm-add').onclick=()=>{state.seconds=remaining(state)+300;if(!state.paused)state.deadline=Date.now()+state.seconds*1000;persist(state);showTimer();};
     target.querySelector('#dm-prev').onclick=()=>{if(state.index>0){state.index--;persist(state);render();}};
     target.querySelector('#dm-finish').onclick=()=>{if(confirm('ส่งข้อสอบตอนนี้หรือไม่? ข้อที่ยังไม่ตอบจะถือว่าไม่ได้คะแนน'))finish();};
@@ -147,7 +171,7 @@ export function showDiscreteFinalExam(subject,period,root) {
         if(isEssay?!selectedNow:selectedNow.length===0){alert('กรุณาตอบคำถามก่อนกดตรวจ');return;}
         state.answers[id]=selectedNow;state.checked[id]=true;persist(state);render();return;
       }
-      if(state.index===allItems.length-1){finish();return;}
+      if(state.index===items.length-1){finish();return;}
       state.index++;persist(state);render();
     };
     showTimer();
