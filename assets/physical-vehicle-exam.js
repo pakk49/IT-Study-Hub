@@ -74,7 +74,7 @@ function getFunction(source,name) {
   // Find the C function and return its declaration plus body without inspecting other functions.
   const match=new RegExp('\\b'+name+'\\s*\\(').exec(source);
   if(!match)return '';
-  const open=source.indexOf('(',match.index), start=match.index;
+  const open=source.indexOf('(',match.index), start=source.lastIndexOf('\n',match.index)+1;
   let parens=0, close=-1;
   for(let i=open;i<source.length;i++){
     if(source[i]==='(')parens++;
