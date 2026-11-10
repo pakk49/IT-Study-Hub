@@ -70,29 +70,54 @@ function has(source, regex) { return regex.test(source); }
 function stripped(code) {
   return String(code).replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g,'');
 }
+function getFunction(source,name) {
+  // Find the C function and return its declaration plus body without inspecting other functions.
+  const match=new RegExp('\\b'+name+'\\s*\\(').exec(source);
+  if(!match)return '';
+  const open=source.indexOf('(',match.index), start=match.index;
+  let parens=0, close=-1;
+  for(let i=open;i<source.length;i++){
+    if(source[i]==='(')parens++;
+    else if(source[i]===')'&&--parens===0){close=i;break;}
+  }
+  if(close<0)return '';
+  let bodyStart=close+1;
+  while(/\s/.test(source[bodyStart]||''))bodyStart++;
+  if(source[bodyStart]!=='{')return '';
+  let braces=0;
+  for(let i=bodyStart;i<source.length;i++){
+    if(source[i]==='{')braces++;
+    else if(source[i]==='}'&&--braces===0)return source.slice(start,i+1);
+  }
+  return source.slice(start);
+}
 function createCriteriaResult(t, code) {
   const c=stripped(code);
-  const a=(regex)=>has(c,regex);
+  const f=name=>getFunction(c,name);
+  const a=(src,regex)=>has(src,regex);
   const p={};
   if(t.id==='score'){
-    p.function=a(/\bint\s+totalScore\s*\(\s*(?:const\s+)?Vehicle\s*\*\s*\w+/);
-    p.traverse=a(/\b(?:while|for)\s*\(/)&&a(/->\s*next/)&&!a(/\bp\s*\+\+/);
-    p.sum=a(/->\s*score/)&&a(/\breturn\s+(?!0\s*;|NULL\s*;)[A-Za-z_]\w*\s*;/);
+    const body=f('totalScore');
+    p.function=a(body,/\bint\s+totalScore\s*\(\s*(?:const\s+)?Vehicle\s*\*\s*\w+/);
+    p.traverse=a(body,/\b(?:while|for)\s*\(/)&&a(body,/->\s*next/)&&!a(body,/\bp\s*\+\+/);
+    p.sum=a(body,/->\s*score/)&&a(body,/\breturn\s+(?!0\s*;|NULL\s*;)[A-Za-z_]\w*\s*;/);
   } else if(t.id==='struct'){
-    p.function=a(/\bint\s+insertVehicle\s*\(/)&&a(/Vehicle\s*\*\s*\*\s*head/);
-    p.allocate=a(/\b(?:malloc|calloc)\s*\(/);
-    p.populate=a(/->\s*plate/)&&a(/->\s*score/)&&a(/->\s*next\s*=\s*(?:NULL|0)/)&&a(/\b(?:strcpy|strncpy|snprintf|memcpy)\s*\(/);
-    p.empty=a(/\*\s*head\s*=\s*\w+\s*;/)&&a(/\bif\s*\(/);
-    p.last=a(/\b(?:while|for)\s*\(/)&&a(/->\s*next\s*=\s*(?!NULL\b|0\s*;)[A-Za-z_]\w*\s*;/)&&a(/\breturn\s+1\s*;/);
+    const body=f('insertVehicle');
+    p.function=a(body,/\bint\s+insertVehicle\s*\(/)&&a(body,/Vehicle\s*\*\s*\*\s*head/);
+    p.allocate=a(body,/\b(?:malloc|calloc)\s*\(/);
+    p.populate=a(body,/->\s*plate/)&&a(body,/->\s*score/)&&a(body,/->\s*next\s*=\s*(?:NULL|0)/)&&a(body,/\b(?:strcpy|strncpy|snprintf|memcpy)\s*\(/);
+    p.empty=a(body,/\*\s*head\s*=\s*\w+\s*;/)&&a(body,/\bif\s*\(/);
+    p.last=a(body,/\b(?:while|for)\s*\(/)&&a(body,/->\s*next\s*=\s*(?!NULL\b|0\s*;)[A-Za-z_]\w*\s*;/)&&a(body,/\breturn\s+1\s*;/);
   } else {
-    p.create=a(/Vehicle\s*\*\s*createVehicle\s*\(/)&&a(/(?:malloc|calloc)\s*\(/);
-    p.name=a(/->\s*name\s*=\s*(?:\([^)]+\)\s*)?(?:malloc|calloc)\s*\(/)&&a(/\bstrlen\s*\(/)&&a(/\b(?:strcpy|strncpy|memcpy|snprintf)\s*\(/);
-    p.scores=a(/->\s*scores\s*=\s*(?:\([^)]+\)\s*)?(?:malloc|calloc)\s*\(/)&&a(/\bcount\b/)&&a(/\bmemcpy\s*\(|->\s*scores\s*\[/);
-    p.allocation=a(/\bif\s*\(/)&&a(/(?:==\s*NULL|!\s*[A-Za-z_(])/);
-    p.cleanup=(c.match(/\bfree\s*\(/g)||[]).length>=3;
-    p.append=a(/\bint\s+appendVehicle\s*\(/)&&a(/\*\s*head/)&&a(/->\s*next/);
-    p.free=a(/\bvoid\s+freeVehicles\s*\(/)&&a(/\bfree\s*\(\s*\w+->\s*name\s*\)/)&&a(/\bfree\s*\(\s*\w+->\s*scores\s*\)/)&&a(/\bfree\s*\(\s*\w+\s*\)/);
-    p.head=a(/\*\s*head\s*=\s*(?:NULL|0)\s*;/);
+    const create=f('createVehicle'),append=f('appendVehicle'),clean=f('freeVehicles');
+    p.create=a(create,/Vehicle\s*\*\s*createVehicle\s*\(/)&&a(create,/(?:malloc|calloc)\s*\(/);
+    p.name=a(create,/->\s*name\s*=\s*(?:\([^)]+\)\s*)?(?:malloc|calloc)\s*\(/)&&a(create,/\bstrlen\s*\(/)&&a(create,/\b(?:strcpy|strncpy|memcpy|snprintf)\s*\(/);
+    p.scores=a(create,/->\s*scores\s*=\s*(?:\([^)]+\)\s*)?(?:malloc|calloc)\s*\(/)&&a(create,/\bcount\b)&&a(create,/\bmemcpy\s*\(|->\s*scores\s*\[/);
+    p.allocation=a(create,/\bif\s*\(/)&&a(create,/(?:==\s*NULL|!\s*[A-Za-z_(])/);
+    p.cleanup=(create.match(/\bfree\s*\(/g)||[]).length>=2;
+    p.append=a(append,/\bint\s+appendVehicle\s*\(/)&&a(append,/\*\s*head/)&&a(append,/->\s*next/)&&a(append,/\breturn\s+1\s*;/);
+    p.free=a(clean,/\bvoid\s+freeVehicles\s*\(/)&&a(clean,/\bfree\s*\(\s*\w+->\s*name\s*\)/)&&a(clean,/\bfree\s*\(\s*\w+->\s*scores\s*\)/)&&a(clean,/\bfree\s*\(\s*\w+\s*\)/);
+    p.head=a(clean,/\*\s*head\s*=\s*(?:NULL|0)\s*;/);
   }
   return t.criteria.map(item=>({...item,pass:Boolean(p[item.id])}));
 }
