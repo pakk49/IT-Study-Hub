@@ -112,7 +112,7 @@ function createCriteriaResult(t, code) {
     const create=f('createVehicle'),append=f('appendVehicle'),clean=f('freeVehicles');
     p.create=a(create,/Vehicle\s*\*\s*createVehicle\s*\(/)&&a(create,/(?:malloc|calloc)\s*\(/);
     p.name=a(create,/->\s*name\s*=\s*(?:\([^)]+\)\s*)?(?:malloc|calloc)\s*\(/)&&a(create,/\bstrlen\s*\(/)&&a(create,/\b(?:strcpy|strncpy|memcpy|snprintf)\s*\(/);
-    p.scores=a(create,/->\s*scores\s*=\s*(?:\([^)]+\)\s*)?(?:malloc|calloc)\s*\(/)&&a(create,/\bcount\b)&&a(create,/\bmemcpy\s*\(|->\s*scores\s*\[/);
+    p.scores=a(create,/->\s*scores\s*=\s*(?:\([^)]+\)\s*)?(?:malloc|calloc)\s*\(/)&&a(create,/\bcount\b/)&&a(create,/\bmemcpy\s*\(|->\s*scores\s*\[/);
     p.allocation=a(create,/\bif\s*\(/)&&a(create,/(?:==\s*NULL|!\s*[A-Za-z_(])/);
     p.cleanup=(create.match(/\bfree\s*\(/g)||[]).length>=2;
     p.append=a(append,/\bint\s+appendVehicle\s*\(/)&&a(append,/\*\s*head/)&&a(append,/->\s*next/)&&a(append,/\breturn\s+1\s*;/);
