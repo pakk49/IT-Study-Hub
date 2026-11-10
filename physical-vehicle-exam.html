@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ebf6ff">
+<title>Vehicle Exam · PHYCOM C / Linked List</title>
+<link rel="stylesheet" href="assets/physical-vehicle-exam.css">
+</head>
+<body>
+<header class="vh-header"><div class="vh-container vh-nav">
+<a class="vh-brand" href="index.html#/">it<span>·</span> STUDY HUB</a>
+<nav aria-label="เมนู"><a href="index.html#/year/2/term/1/subject/physical-computing/final">Physical Computing</a><a href="physical-code-practice.html">แนวฝึก C อื่น ๆ</a><a href="c-checker.html">C Checker</a></nav>
+</div></header>
+<main class="vh-container">
+<p class="vh-eyebrow">PHYSICAL COMPUTING · VEHICLE · LINKED LIST</p>
+<h1>แนวข้อสอบภาษา C — Vehicle</h1>
+<p class="vh-intro">ฝึก 3 ข้อแบบเลือกทำข้อไหนก่อนก็ได้ โดยมี <code>int main()</code> ให้แล้ว เติมเฉพาะฟังก์ชันในช่องเขียนโค้ด จากนั้นตรวจเงื่อนไขเบื้องต้นและเปรียบเทียบผลรัน GCC</p>
+<div class="vh-notice"><strong>โจทย์จำลองเพื่อฝึกก่อนสอบ</strong> ชื่อข้อและคะแนนอิงจากข้อมูลที่คุณส่งมา ส่วนรายละเอียด ฟังก์ชัน และ <code>main()</code> เป็นโจทย์ที่สร้างขึ้นเพื่อฝึก ไม่ได้คัดลอกโจทย์ eJudge จริง</div>
+<div id="vh-tabs" class="vh-tabs" role="group" aria-label="เลือกแนวข้อสอบ"></div>
+<div class="vh-workspace">
+<section class="vh-panel">
+<div class="vh-panel-head"><div><p class="vh-eyebrow">โจทย์ / YOUR CODE</p><h2 id="vh-title"></h2></div><span class="vh-points" id="vh-points"></span></div>
+<p id="vh-prompt"></p>
+<div id="vh-reqs" class="vh-reqs"></div>
+<div class="vh-field-title">Struct และ Header ที่กำหนด</div>
+<pre class="vh-fixed"><code id="vh-prefix"></code></pre>
+<div class="vh-field-title"><label for="vh-code">ฟังก์ชันที่ต้องเขียนเอง</label></div>
+<textarea spellcheck="false" autocapitalize="off" id="vh-code" aria-describedby="vh-code-help"></textarea>
+<p class="vh-help" id="vh-code-help">บันทึกโค้ดในเบราว์เซอร์อัตโนมัติ · สามารถอัปโหลด .c ที่เขียนใน VS Code ได้</p>
+<div class="vh-actions">
+<button type="button" id="vh-check" class="vh-primary">ตรวจโครงสร้างโค้ด</button>
+<button type="button" id="vh-download">ดาวน์โหลด .c</button>
+<button type="button" id="vh-copy">คัดลอกทั้งไฟล์</button>
+<label for="vh-upload" class="vh-upload">อัปโหลด .c</label><input type="file" id="vh-upload" accept=".c,text/x-c" hidden>
+<button type="button" id="vh-reset">ล้างคำตอบข้อนี้</button>
+</div>
+<p id="vh-message" role="status"></p>
+<section id="vh-report" class="vh-report" hidden aria-live="polite">
+<h3>ผลตรวจโครงสร้างเบื้องต้น</h3>
+<p id="vh-report-summary"></p>
+<div class="vh-meter"><span id="vh-meter-fill"></span></div>
+<div id="vh-checklist"></div>
+<p class="vh-warning">การตรวจนี้อ่านรูปแบบโค้ดแบบ Static ไม่ได้คอมไพล์หรือทดสอบ Pointer / Memory จริง ผลตรวจไม่ใช่คะแนนข้อสอบจริง แม้ผ่านครบก็ยังอาจมีบั๊ก</p>
+</section>
+</section>
+<aside class="vh-panel">
+<div class="vh-panel-head"><div><p class="vh-eyebrow">MAIN / TEST</p><h2><code>int main()</code> ที่ให้มา</h2></div></div>
+<p>อ่านอย่างเดียว — ไม่จำเป็นต้องแก้หรือเขียน <code>main()</code> เอง</p>
+<pre class="vh-fixed"><code id="vh-main"></code></pre>
+<div class="vh-field-title">ผลลัพธ์ที่คาดหวังจาก GCC</div>
+<pre class="vh-expected"><code id="vh-expected"></code></pre>
+<details class="vh-hints"><summary>ดูคำใบ้ (ยังไม่เฉลยโค้ด)</summary><ol id="vh-hints"></ol></details>
+<section class="vh-stdout-section">
+<h3>ตรวจผลการทำงานจริงจาก GCC</h3>
+<p>คอมไพล์ไฟล์ .c ที่ดาวน์โหลดด้วย GCC และรันโปรแกรมบนเครื่อง จากนั้นคัดลอกข้อความที่โปรแกรมพิมพ์มาใส่ช่องนี้ ระบบจะเทียบกับผลที่คาดหวัง</p>
+<div class="vh-cmd"><code id="vh-cmd"></code><button type="button" id="vh-copy-cmd">คัดลอกคำสั่ง</button></div>
+<label for="vh-stdout" class="vh-field-title">วางผลลัพธ์จาก Terminal</label>
+<textarea id="vh-stdout" class="vh-stdout" placeholder="วางผลลัพธ์จากโปรแกรมที่คอมไพล์จริง"></textarea>
+<button type="button" id="vh-compare" class="vh-primary">เทียบผลลัพธ์</button>
+<div id="vh-output-result" role="status"></div>
+<p class="vh-help">ช่องนี้ตรวจเฉพาะข้อความผลลัพธ์ ไม่ได้รับรองว่าโปรแกรมปลอดภัยจาก Memory Leak หรือทำงานถูกทุก Test Case</p>
+</section>
+</aside>
+</div>
+</main>
+<footer>IT Study Hub · Vehicle Score / Struct / Dynamic · แนวฝึกเพื่อการศึกษา</footer>
+<script type="module" src="assets/physical-vehicle-exam.js"></script>
+</body></html>
