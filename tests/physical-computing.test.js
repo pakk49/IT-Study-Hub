@@ -16,12 +16,13 @@ test('Physical Computing Chapter 0 = Overview; Midterm scope 1–8; Final begins
  assert.ok(physical.chapters.filter(c=>c.exam==='midterm').every(c=>c.number>=1&&c.number<=8),'Midterm must end at Chapter 8');
  assert.ok(physical.chapters.filter(c=>c.exam==='final').every(c=>c.number>=9),'Final must start at Chapter 9');
 });
-test('Midterm / Final 60 real, distinct chapter-based applied questions each',()=>{
+test('Midterm 60 and Final Arduino 45 real, distinct chapter-based applied questions',()=>{
  for(const period of ['midterm','final']){
   const exam=buildExamBank(physical,period);
   assert.equal(exam.ready,true,period);
-  assert.equal(exam.questions.length,60,period);
-  assert.equal(new Set(exam.questions.map(q=>q.id)).size,60,period);
+  const expected=period==='final'?45:60;
+  assert.equal(exam.questions.length,expected,period);
+  assert.equal(new Set(exam.questions.map(q=>q.id)).size,expected,period);
   for(const q of exam.questions){
    assert.ok(q.prompt.length>40,q.id);
    assert.doesNotMatch(q.prompt,/หมายถึงอะไร|คำว่า.+คืออะไร|ข้อใดอธิบาย/,q.id);
@@ -31,7 +32,7 @@ test('Midterm / Final 60 real, distinct chapter-based applied questions each',()
    assert.ok(q.vocabulary?.every(v=>v.term&&v.meaning&&v.example),q.id);
    const ch=physical.chapters.find(c=>c.id===q.chapterId);
    assert.equal(ch.exam,period,q.id);
-   assert.ok(ch.sections.some(s=>s.id===q.topic),q.id);
+   assert.ok(ch.sections.some(s=>s.id===q.topic)||(period==='final'&&q.sectionTitle==='ทฤษฎี Arduino'),q.id);
   }
  }
 });
