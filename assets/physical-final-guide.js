@@ -65,7 +65,7 @@ export function physicalFinalGuide(){
  <tr><td>ไฟฟ้าบนกระดาษ</td><td><b>5 คะแนน · 1 ข้อ</b></td><td>ตั้งสมการจากวงจรที่ได้รับ <b>ไม่ต้องแก้สมการหาคำตอบ</b> วงจรสอบจริงต่างจากรูปตัวอย่างในประกาศ</td></tr>
  </tbody></table></div>
  <p class="deadline-note"><b>กำหนดส่งแล็บ &lt;e&gt;Judge:</b> อังคาร 10 พฤศจิกายน 2569 เวลา <b>23:59 น.</b> ตามเวลาประเทศไทย</p>
- <div class="actions"><a class="button primary" href="physical-code-practice.html">💻 ฝึกข้อเขียน C แบบมี main() ให้แล้ว</a><a class="button secondary" href="c-checker.html">อัปโหลดไฟล์ .c เพื่อตรวจโค้ด</a></div><h3>เริ่มทบทวนตามนี้</h3><ol>
+ <div class="actions"><a class="button primary" href="physical-vehicle-exam.html">🚗 แนวสอบ Vehicle Score 3 / Struct 5 / Dynamic 8 พร้อมตรวจ</a><a class="button secondary" href="physical-code-practice.html">💻 ฝึกข้อเขียน C แบบมี main() ให้แล้ว</a><a class="button secondary" href="c-checker.html">อัปโหลดไฟล์ .c เพื่อตรวจโค้ด</a></div><h3>เริ่มทบทวนตามนี้</h3><ol>
  <li><b>ฝึกโค้ดก่อน:</b> วาดลิสต์และตามค่า <code>head</code>, <code>current</code>, <code>next</code> ให้ได้ ฝึกทั้งลิสต์ว่าง หนึ่งโหนด และหลายโหนด</li>
  <li><b>ทบทวน Arduino:</b> อ่านการเริ่มโปรแกรม การตั้งค่าขา การรับและส่งสัญญาณ เซนเซอร์ และการเชื่อมต่อที่มีในบทเรียน ใช้เอกสารอาจารย์เป็นขอบเขตรายละเอียดย่อย</li>
  <li><b>ฝึกตั้งสมการ:</b> เลือก Ground กำหนดแรงดันที่จุดต่อและทิศกระแส แล้วใช้กฎของโอห์มร่วมกับ KCL หรือ KVL ให้ตรงวงจร</li>
@@ -84,7 +84,7 @@ export function physicalFinalGuide(){
  <section class="exam-practice" aria-labelledby="exam-practice-title">
  <h3 id="exam-practice-title">แนวฝึกให้ตรงกับขอบเขตข้อสอบ</h3>
  <p>เนื้อหาส่วนนี้ยึดตามประกาศสอบในภาพ แบ่งเป็น 3 ส่วน รวม 30 คะแนน รายละเอียดรูปแบบย่อยของโจทย์ eJudge ให้ยึดตามโจทย์จริงในระบบ</p>
- <details><summary>ส่วนที่ 1 — eJudge: Linked List, Struct และ Pointer (15 คะแนน)</summary>
+ <details><summary>ส่วนที่ 1 — eJudge: Linked List, Struct และ Pointer (15 คะแนน)</summary><p><b>ชุดฝึกเพิ่มเติม:</b> <a href="physical-vehicle-exam.html">Vehicle Score (3), Vehicle Struct (5), Vehicle Dynamic (8)</a> มี main() ให้แล้ว พร้อมตรวจโครงสร้างโค้ดและผลลัพธ์จาก GCC เป็นแบบฝึกจำลอง ไม่ใช่ข้อสอบต้นฉบับ</p>
  <p>ข้อสอบเป็นแบบเลือกทำหลายข้อให้ได้คะแนนรวม 15 คะแนน หัวข้อที่ประกาศคือ Linked List: Insert Last และ Traverse by Index รวมถึง Struct และ Pointer <b>มี int main() ให้แล้ว</b> จึงฝึกเขียนฟังก์ชันให้ตรงกับ main โดยไม่ต้องสร้าง main ใหม่</p>
  <h4>โจทย์ฝึก A: สร้าง DataNode</h4>
  <p>ประกาศ <code>DataNode</code> ให้เก็บข้อความผ่าน <code>char *data</code> และ pointer ไปโหนดถัดไปผ่าน <code>struct DataNode *next</code> เขียนฟังก์ชัน <code>createDataNode(char *data)</code> ให้จองโหนดและสำเนาข้อความ กำหนด <code>next = NULL</code> จากนั้นพิมพ์ข้อมูลและค่าของ <code>next</code> ด้วย <code>%p</code> ระวังข้อความตัวอย่างอาจมีช่องว่าง และคืนหน่วยความจำที่จองเมื่อใช้เสร็จ</p>
